@@ -4,7 +4,7 @@ build:
 	javac *.java
 
 run:
-	java Bank
+	java BankATM
 
 clean:
 	rm *.class

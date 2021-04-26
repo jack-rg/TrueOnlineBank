@@ -1,3 +1,5 @@
+
+
 public class Stock{
   private String ticker;
   private double value;

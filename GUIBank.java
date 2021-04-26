@@ -1,12 +1,13 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JFrame;
 
-public class Bank extends JFrame {
+public class GUIBank extends JFrame {
     Container c;
     CardLayout cards;
 
-    public Bank() {
+    public GUIBank() {
         // Create a new frame
         JFrame frame = new JFrame();
 
@@ -72,7 +73,7 @@ public class Bank extends JFrame {
     }
 
     public static void run() {
-        Bank b = new Bank();
+        GUIBank b = new GUIBank();
     }
 
     public static void main(String[] args) {
