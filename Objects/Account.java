@@ -54,11 +54,14 @@ public abstract class Account {
 
     public void deposit(int funds) {
         value += funds;
+        addToTransactionLog(TransactionType.DEPOSIT);
+
     }
 
     public int withdrawal(int funds) {
         try {
             value -= funds;
+            addToTransactionLog(TransactionType.WITHDRAWL);
             return funds;
         } catch (Exception e) {
             return -1;
@@ -117,4 +120,28 @@ public abstract class Account {
             e1.printStackTrace();
         }
     }
+    
+    
+    
+    public void addToTransactionLog(TransactionType transaction) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(
+                    new FileOutputStream(file, true)));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+            String transactionFormatter = "%s | %s | %s | %s | %f | %s \n";
+            out.printf(accountFormatter, dtf.format(LocalDateTime.now()), userID, name, accountID, value, transaction.GetDescription());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    
+    
+    
+    
 }
