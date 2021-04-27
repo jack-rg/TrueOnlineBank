@@ -1,7 +1,15 @@
 package GUI;
 
+import Util.State;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class GUILogin extends JFrame {
     JPanel panel;
@@ -34,14 +42,6 @@ public class GUILogin extends JFrame {
         loginButton.setBounds(270, 310, 80, 40);
         panel.add(loginButton);
 
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Logged in...");
-                System.out.println(userText.getText());
-                System.out.println(passwordText.getPassword());
-            }
-        });
-
         goToRegisterButton = new JButton("New user? \nCreate an account.");
         goToRegisterButton.setBounds(170, 370, 280, 40);
         panel.add(goToRegisterButton);
@@ -63,5 +63,28 @@ public class GUILogin extends JFrame {
 
     public JButton getGoToRegisterButton() {
         return goToRegisterButton;
+    }
+
+    public boolean execute() {
+        String userName = userText.getText();
+        String password = String.valueOf(passwordText.getPassword());
+
+        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains("| " + userName + " |") && line.contains("| " + password + " |")) {
+                    return true;
+                }
+            }
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        return false;
     }
 }

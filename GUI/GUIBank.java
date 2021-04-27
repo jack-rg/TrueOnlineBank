@@ -37,7 +37,11 @@ public class GUIBank extends JFrame {
 
         login.getLoginButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cards.show(c, "Home");
+                if (login.execute()) {
+                    cards.show(c, "Home");
+                } else {
+                    System.out.println("Incorrect password or username.");
+                }
             }
         });
 
@@ -55,7 +59,11 @@ public class GUIBank extends JFrame {
 
         register.getRegisterButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cards.show(c, "Home");
+                if (register.execute()) {
+                    cards.show(c, "Home");
+                } else {
+                    System.out.println("User already exists. Please login.");
+                }
             }
         });
 
