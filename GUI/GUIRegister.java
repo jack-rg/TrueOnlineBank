@@ -66,7 +66,7 @@ public class GUIRegister extends JFrame {
         return goToLoginButton;
     }
 
-    public boolean execute() {
+    public User execute() {
         String userName = userText.getText();
         String password = String.valueOf(passwordText.getPassword());
 
@@ -79,7 +79,7 @@ public class GUIRegister extends JFrame {
 
             while ((line = br.readLine()) != null) {
                 if (line.contains("| " + userName + " |") && line.contains("| " + password + " |")) {
-                    return false;
+                    return null;
                 }
                 else {
                     traceFile.add(line);
@@ -88,12 +88,14 @@ public class GUIRegister extends JFrame {
 
             br.close();
 
-            User user = new User(userText.getText(), String.valueOf(passwordText.getPassword()), traceFile.size() + 1);
+            User user = new User(userText.getText(), String.valueOf(passwordText.getPassword()), "U" + (traceFile.size() + 1));
+            user.addToUserLog();
+            return user;
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
-        return true;
+        return null;
     }
 }

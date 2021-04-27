@@ -1,5 +1,6 @@
 package GUI;
 
+import Objects.User;
 import Util.State;
 
 import javax.swing.*;
@@ -65,7 +66,7 @@ public class GUILogin extends JFrame {
         return goToRegisterButton;
     }
 
-    public boolean execute() {
+    public User execute() {
         String userName = userText.getText();
         String password = String.valueOf(passwordText.getPassword());
 
@@ -77,7 +78,9 @@ public class GUILogin extends JFrame {
 
             while ((line = br.readLine()) != null) {
                 if (line.contains("| " + userName + " |") && line.contains("| " + password + " |")) {
-                    return true;
+                    String[] user = line.split(" \\| ");
+                    String userID = user[4];
+                    return new User(userName, password, userID);
                 }
             }
         } catch (IOException e1) {
@@ -85,6 +88,6 @@ public class GUILogin extends JFrame {
             e1.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 }

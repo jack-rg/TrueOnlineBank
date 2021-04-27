@@ -1,12 +1,24 @@
 package GUI;
 
+import Objects.Account;
+import Objects.User;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class GUIBank extends JFrame {
     Container c;
     CardLayout cards;
+
+//    GUILogin login;
+//    GUIRegister register;
+//    GUIHome home;
 
     public GUIBank() {
         // Create a new frame
@@ -26,8 +38,6 @@ public class GUIBank extends JFrame {
         addLogin();
         addRegister();
 
-        addHome();
-
         // Turn it on
         frame.setVisible(true);
     }
@@ -37,7 +47,12 @@ public class GUIBank extends JFrame {
 
         login.getLoginButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (login.execute()) {
+                User user = login.execute();
+                if (user != null) {
+                    user.loadAccounts();
+
+                    addHome(user.getRawAccounts());
+//                    home.setAccounts(user.getRawAccounts());
                     cards.show(c, "Home");
                 } else {
                     System.out.println("Incorrect password or username.");
@@ -59,7 +74,9 @@ public class GUIBank extends JFrame {
 
         register.getRegisterButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (register.execute()) {
+                User user = register.execute();
+                if (user != null) {
+                    addHome(user.getRawAccounts());
                     cards.show(c, "Home");
                 } else {
                     System.out.println("User already exists. Please login.");
@@ -76,16 +93,12 @@ public class GUIBank extends JFrame {
         c.add(register.getPanel(), "Register");
     }
 
-    private void addHome() {
-        GUIHome home = new GUIHome();
+    private void addHome(ArrayList<Account> accounts) {
+        GUIHome home = new GUIHome(accounts);
         c.add(home.getTabbedPane(), "Home");
     }
 
     public static void run() {
         GUIBank b = new GUIBank();
-    }
-
-    public static void main(String[] args) {
-        run();
     }
 }

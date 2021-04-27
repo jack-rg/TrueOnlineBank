@@ -9,40 +9,38 @@ import java.util.ArrayList;
 import Util.*;
 
 public abstract class Account {
-	private int accountID;
+	private String accountID;
+	private String userID;
 	private double value;
-	private String userName;
+	private String name;
 	private State status;
 
-	public Account(String userName, int accountID) {
-		this.userName = userName;
+	public Account(String userName, String accountID, String userID) {
+		this.name = userName;
 		this.accountID = accountID;
+		this.userID = userID;
 		value = 0;
 		status = State.ACTIVE;
-		addToAccountLog();
 	}
 
-	public Account(String userName, int accountID, double value) {
-		this.userName = userName;
-		this.accountID = accountID;
+	public Account(String userName, String accountID, String userID, double value) {
+		this(userName, accountID, userID);
 		this.value = value;
-		status = State.ACTIVE;
-		addToAccountLog();
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String newName) {
-		userName = newName;
+	public void setName(String newName) {
+		name = newName;
 	}
 
-	public int getAccountID() {
+	public String getAccountID() {
 		return accountID;
 	}
 
-	public void setAccountID(int newID) {
+	public void setAccountID(String newID) {
 		accountID = newID;
 	}
 
@@ -58,7 +56,7 @@ public abstract class Account {
 		value += funds;
 	}
 
-	public int withdrawl(int funds) {
+	public int withdrawal(int funds) {
 		try {
 			value -= funds;
 			return funds;
@@ -73,8 +71,8 @@ public abstract class Account {
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(
 					new FileOutputStream(file, true)));
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-			String accountFormatter = "%s | %s | %d | %f | %s \n";
-			out.printf(accountFormatter, dtf.format(LocalDateTime.now()), userName, accountID, value, "ACTIVE");
+			String accountFormatter = "%s | %s | %s | %s | %f | %s \n";
+			out.printf(accountFormatter, dtf.format(LocalDateTime.now()), userID, name, accountID, value, "ACTIVE");
 			out.flush();
 			out.close();
 
@@ -87,15 +85,17 @@ public abstract class Account {
 	public void deactivateAccount() {
 		status = State.INACTIVE;
 		String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
+
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			ArrayList<String> traceFile = new ArrayList<String>();
 			String line;
+
 			while ((line = br.readLine()) != null) {
-				if (line.contains("| " + userName + " |") && line.contains("| " + accountID + " |")) {
-					String[] accountInfo = line.split(" | ");
-					accountInfo[accountInfo.length-1] = "INACTIVE";
-					String replaced = String.join(" ", accountInfo);
+				if (line.contains("| " + userID + " |") && line.contains("| " + accountID + " |")) {
+					String[] accountInfo = line.split(" \\| ");
+					accountInfo[accountInfo.length - 1] = "INACTIVE";
+					String replaced = String.join(" | ", accountInfo);
 					traceFile.add(replaced);
 				}
 				else {

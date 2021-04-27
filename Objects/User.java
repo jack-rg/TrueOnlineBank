@@ -10,9 +10,8 @@ import java.time.format.DateTimeFormatter;
 
 public class User extends Person {
 
-    public User(String userName, String password, int userID) {
+    public User(String userName, String password, String userID) {
         super(userName, password, userID);
-        addToUserLog();
     }
 
     public void addToUserLog() {
@@ -21,7 +20,7 @@ public class User extends Person {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String accountFormatter = "%s | %s | %s | %d \n";
+            String accountFormatter = "%s | %s | %s | %s \n";
             out.printf(accountFormatter, dtf.format(LocalDateTime.now()), getUserName(), getPassword(), getUserID());
             out.flush();
             out.close();
