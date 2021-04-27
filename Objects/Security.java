@@ -2,12 +2,11 @@ package Objects;
 
 public class Security extends Account {
 
-	public Security(String userName, int accountID) {
-		super(userName, accountID);
-	}
+    public Security(String userName, String accountID, String userID) {
+        super(userName, accountID, userID);
+    }
 
-	public Security(String userName, int accountID, double value) {
-		super(userName, accountID, value);
-	}
-
+    public Security(String userName, String accountID, String userID, double value) {
+        super(userName, accountID, userID, value);
+    }
 }

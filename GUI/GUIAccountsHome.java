@@ -11,15 +11,6 @@ public class GUIAccountsHome {
     JPanel panel;
 
     public GUIAccountsHome(ArrayList<Account> accounts) {
-//        panel = new JPanel();
-//        panel.setLayout(null);
-//
-//        // for all the accounts a user has
-//        GUIAccount ac1 = new GUIAccount();
-//        panel.add(ac1.getPanel());
-
-        // Create a new Panel which uses a Grid Layout to
-        // create a 4x3 grid
         panel = new JPanel();
         panel.setLayout(new GridLayout(accounts.size(), 1));
         for (int i = 0; i < accounts.size(); i++) {

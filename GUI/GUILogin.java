@@ -20,7 +20,7 @@ public class GUILogin extends JFrame {
     JButton goToRegisterButton;
 
     public GUILogin() {
-        panel = new JPanel(); 
+        panel = new JPanel();
         panel.setLayout(null);
 
         JLabel userLabel = new JLabel("Username");
@@ -53,7 +53,7 @@ public class GUILogin extends JFrame {
             }
         });
     }
-    
+
     public JPanel getPanel() {
         return panel;
     }

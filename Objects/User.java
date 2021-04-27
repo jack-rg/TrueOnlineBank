@@ -16,6 +16,7 @@ public class User extends Person {
 
     public void addToUserLog() {
         String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
@@ -24,11 +25,9 @@ public class User extends Person {
             out.printf(accountFormatter, dtf.format(LocalDateTime.now()), getUserName(), getPassword(), getUserID());
             out.flush();
             out.close();
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-
 }

@@ -1,6 +1,4 @@
 package Util;
 
-
-public enum CurrencyExchangeRate{
-  
+public enum CurrencyExchangeRate {
 }

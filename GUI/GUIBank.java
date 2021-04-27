@@ -16,15 +16,9 @@ public class GUIBank extends JFrame {
     Container c;
     CardLayout cards;
 
-//    GUILogin login;
-//    GUIRegister register;
-//    GUIHome home;
-
     public GUIBank() {
-        // Create a new frame
         JFrame frame = new JFrame();
 
-        // Initialize frame information
         frame.setTitle("Bank");
         frame.setSize(600, 600);
         frame.setLocation(400, 100);
@@ -32,7 +26,7 @@ public class GUIBank extends JFrame {
 
         c = frame.getContentPane();
         cards = new CardLayout();
-        
+
         c.setLayout(cards);
 
         addLogin();
@@ -50,9 +44,7 @@ public class GUIBank extends JFrame {
                 User user = login.execute();
                 if (user != null) {
                     user.loadAccounts();
-
                     addHome(user.getRawAccounts());
-//                    home.setAccounts(user.getRawAccounts());
                     cards.show(c, "Home");
                 } else {
                     System.out.println("Incorrect password or username.");

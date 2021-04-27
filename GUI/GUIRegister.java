@@ -80,8 +80,7 @@ public class GUIRegister extends JFrame {
             while ((line = br.readLine()) != null) {
                 if (line.contains("| " + userName + " |") && line.contains("| " + password + " |")) {
                     return null;
-                }
-                else {
+                } else {
                     traceFile.add(line);
                 }
             }

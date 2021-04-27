@@ -10,8 +10,6 @@ import java.util.ArrayList;
 public class GUIHome extends JPanel {
     JTabbedPane tabbedPane;
 
-    GUIAccountsHome accountsHome;
-
     ArrayList<Account> accounts;
 
     public GUIHome(ArrayList<Account> accounts) {
@@ -22,16 +20,16 @@ public class GUIHome extends JPanel {
         tabbedPane = new JTabbedPane();
         ImageIcon icon = createImageIcon("images/middle.gif");
 
-        accountsHome = new GUIAccountsHome(accounts);
+        GUIAccountsHome accountsHome = new GUIAccountsHome(accounts);
         JComponent panel1 = accountsHome.getPanel();
         tabbedPane.addTab("Accounts", icon, panel1, null);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-        
+
         JComponent panel2 = makeTextPanel("Panel #2");
         tabbedPane.addTab("Pay and Transfer", icon, panel2,
                 "Does twice as much nothing");
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-        
+
         JComponent panel3 = makeTextPanel("Panel #3");
         tabbedPane.addTab("Invest", icon, panel3,
                 "Still does nothing");
@@ -51,8 +49,10 @@ public class GUIHome extends JPanel {
         panel.add(filler);
         return panel;
     }
-    
-    /** Returns an ImageIcon, or null if the path was invalid. */
+
+    /**
+     * Returns an ImageIcon, or null if the path was invalid.
+     */
     protected static ImageIcon createImageIcon(String path) {
         // java.net.URL imgURL = TabbedPaneDemo.class.getResource(path);
         // if (imgURL != null) {
