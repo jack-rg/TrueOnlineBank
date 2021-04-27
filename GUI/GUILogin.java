@@ -46,12 +46,6 @@ public class GUILogin extends JFrame {
         goToRegisterButton = new JButton("New user? \nCreate an account.");
         goToRegisterButton.setBounds(170, 370, 280, 40);
         panel.add(goToRegisterButton);
-
-        goToRegisterButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Going to registration");
-            }
-        });
     }
 
     public JPanel getPanel() {

@@ -10,16 +10,50 @@ import java.util.ArrayList;
 public class GUIAccountsHome {
     JPanel panel;
 
+    ArrayList<JButton> accountBtns;
+
     public GUIAccountsHome(ArrayList<Account> accounts) {
+        accountBtns = new ArrayList<JButton>();
+
         panel = new JPanel();
-        panel.setLayout(new GridLayout(accounts.size(), 1));
+        CardLayout cards = new CardLayout();
+        panel.setLayout(cards);
+
+        JPanel accountsPanel = new JPanel();
+        accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
         for (int i = 0; i < accounts.size(); i++) {
             Account a = accounts.get(i);
-            panel.add(new JButton(a.getName() + ": $" + a.getValue()));
+            JButton aBtn = new JButton(a.getName() + ": $" + a.getValue());
+            accountsPanel.add(aBtn);
+            accountBtns.add(aBtn);
+
+            GUIAccount acc = new GUIAccount(a);
+            panel.add(acc.getPanel(), a.getAccountID());
+
+            acc.getGoBackButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cards.show(panel, "AccountPanel");
+                }
+            });
+
+            aBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cards.show(panel, a.getAccountID());
+                }
+            });
         }
+
+        panel.add(accountsPanel, "AccountPanel");
+        cards.show(panel, "AccountPanel");
     }
 
     public JPanel getPanel() {
         return panel;
+    }
+
+    public ArrayList<JButton> getAccountBtns() {
+        return accountBtns;
     }
 }
