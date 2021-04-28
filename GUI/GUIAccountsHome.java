@@ -10,11 +10,7 @@ import java.util.ArrayList;
 public class GUIAccountsHome {
     JPanel panel;
 
-    ArrayList<JButton> accountBtns;
-
     public GUIAccountsHome(ArrayList<Account> accounts) {
-        accountBtns = new ArrayList<JButton>();
-
         panel = new JPanel();
         CardLayout cards = new CardLayout();
         panel.setLayout(cards);
@@ -25,7 +21,6 @@ public class GUIAccountsHome {
             Account a = accounts.get(i);
             JButton aBtn = new JButton(a.getName() + ": $" + a.getValue());
             accountsPanel.add(aBtn);
-            accountBtns.add(aBtn);
 
             GUIAccount acc = new GUIAccount(a);
             panel.add(acc.getPanel(), a.getAccountID());
@@ -51,9 +46,5 @@ public class GUIAccountsHome {
 
     public JPanel getPanel() {
         return panel;
-    }
-
-    public ArrayList<JButton> getAccountBtns() {
-        return accountBtns;
     }
 }

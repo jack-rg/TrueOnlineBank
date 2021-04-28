@@ -1,16 +1,13 @@
 package GUI;
 
 import Objects.User;
-import Util.State;
+import Util.DataManager;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class GUILogin extends JFrame {
     JPanel panel;
@@ -64,24 +61,6 @@ public class GUILogin extends JFrame {
         String userName = userText.getText();
         String password = String.valueOf(passwordText.getPassword());
 
-        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                if (line.contains("| " + userName + " |") && line.contains("| " + password + " |")) {
-                    String[] user = line.split(" \\| ");
-                    String userID = user[4];
-                    return new User(userName, password, userID);
-                }
-            }
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
-        return null;
+        return DataManager.userExists(userName, password, false);
     }
 }

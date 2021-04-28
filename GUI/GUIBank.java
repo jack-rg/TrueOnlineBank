@@ -2,6 +2,7 @@ package GUI;
 
 import Objects.Account;
 import Objects.User;
+import Util.DataManager;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -43,7 +44,7 @@ public class GUIBank extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 User user = login.execute();
                 if (user != null) {
-                    user.loadAccounts();
+                    DataManager.loadAccounts(user);
                     addHome(user.getRawAccounts());
                     cards.show(c, "Home");
                 } else {

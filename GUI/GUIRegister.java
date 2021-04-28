@@ -1,12 +1,10 @@
 package GUI;
 
 import Objects.User;
-import Util.State;
+import Util.DataManager;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -64,31 +62,6 @@ public class GUIRegister extends JFrame {
         String userName = userText.getText();
         String password = String.valueOf(passwordText.getPassword());
 
-        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                if (line.contains("| " + userName + " |") && line.contains("| " + password + " |")) {
-                    return null;
-                } else {
-                    traceFile.add(line);
-                }
-            }
-
-            br.close();
-
-            User user = new User(userText.getText(), String.valueOf(passwordText.getPassword()), "U" + (traceFile.size() + 1));
-            user.addToUserLog();
-            return user;
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
-        return null;
+        return DataManager.userExists(userName, password, true);
     }
 }

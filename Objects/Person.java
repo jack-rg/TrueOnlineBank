@@ -1,9 +1,7 @@
 package Objects;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
+import Util.DataManager;
+
 import java.util.*;
 
 public abstract class Person {
@@ -53,8 +51,10 @@ public abstract class Person {
         return accounts;
     }
 
+    public void setAccounts(ArrayList<Account> accounts) { this.accounts = accounts; }
+
     public void addNewAccount(Account newAccount) {
-        newAccount.addToAccountLog();
+        DataManager.writeAccount(newAccount);
         accounts.add(newAccount);
     }
 
@@ -73,35 +73,6 @@ public abstract class Person {
             sum += a.getValue();
         }
         return sum;
-    }
-
-    public void loadAccounts() {
-        accounts = new ArrayList<Account>();
-        String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                if (line.contains("| " + userID + " |") && line.contains("| " + "ACTIVE")) {
-                    String[] account = line.split(" \\| ");
-                    String accountType = account[3];
-                    String accountID = account[4];
-                    String userID = account[2];
-                    float value = Float.valueOf(account[5]);
-
-                    if (accountType.equals("Checking")) {
-                        accounts.add(new Checking("Checking", accountID, userID, value));
-                    } else {
-                        accounts.add(new Saving("Saving", accountID, userID, value));
-                    }
-                }
-            }
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
     }
 
     public Portfolio getPortfolio() {

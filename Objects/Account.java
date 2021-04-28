@@ -1,26 +1,27 @@
 package Objects;
 
-import java.io.*;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import Util.*;
+import Interfaces.TransactionInterface;
+import Types.AccountState;
+import Types.TransactionType;
+import Util.DataManager;
 
-public abstract class Account {
+public abstract class Account implements TransactionInterface {
     private String accountID;
     private String userID;
     private double value;
     private String name;
-    private State status;
+    private AccountState status;
+
+    private ArrayList<Transaction> transactions;
 
     public Account(String userName, String accountID, String userID) {
         this.name = userName;
         this.accountID = accountID;
         this.userID = userID;
         value = 0;
-        status = State.ACTIVE;
+        status = AccountState.ACTIVE;
     }
 
     public Account(String userName, String accountID, String userID, double value) {
@@ -44,6 +45,14 @@ public abstract class Account {
         accountID = newID;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String newID) {
+        userID = newID;
+    }
+
     public double getValue() {
         return value;
     }
@@ -52,96 +61,26 @@ public abstract class Account {
         value = newValue;
     }
 
-    public void deposit(int funds) {
+    public ArrayList<Transaction> getTransactions() { return transactions; }
+
+    public void setTransactions(ArrayList<Transaction> transactions) { this.transactions = transactions; }
+
+    public void deposit(float funds, String name) {
+        Transaction transaction = new Transaction(name, funds, TransactionType.DEPOSIT);
+        DataManager.writeTransaction(transaction, userID, accountID);
+
         value += funds;
-        addToTransactionLog(TransactionType.DEPOSIT);
-
     }
 
-    public int withdrawal(int funds) {
-        try {
+    public boolean withdrawal(float funds, String name) {
+        if (value - funds >= 0) {
+            Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
+            DataManager.writeTransaction(transaction, userID, accountID);
+
             value -= funds;
-            addToTransactionLog(TransactionType.WITHDRAWL);
-            return funds;
-        } catch (Exception e) {
-            return -1;
+            return true;
+        } else {
+            return false;
         }
     }
-
-    public void addToAccountLog() {
-        String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
-
-        try {
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(
-                    new FileOutputStream(file, true)));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String accountFormatter = "%s | %s | %s | %s | %f | %s \n";
-            out.printf(accountFormatter, dtf.format(LocalDateTime.now()), userID, name, accountID, value, "ACTIVE");
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public void deactivateAccount() {
-        status = State.INACTIVE;
-        String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                if (line.contains("| " + userID + " |") && line.contains("| " + accountID + " |")) {
-                    String[] accountInfo = line.split(" \\| ");
-                    accountInfo[accountInfo.length - 1] = "INACTIVE";
-                    String replaced = String.join(" | ", accountInfo);
-                    traceFile.add(replaced);
-                } else {
-                    traceFile.add(line);
-                }
-            }
-            br.close();
-
-            FileOutputStream fileOut = new FileOutputStream(file);
-
-            for (String output : traceFile) {
-                fileOut.write((output + "\n").toString().getBytes());
-            }
-
-            fileOut.flush();
-            fileOut.close();
-
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-    }
-    
-    
-    
-    public void addToTransactionLog(TransactionType transaction) {
-        String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
-
-        try {
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(
-                    new FileOutputStream(file, true)));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String transactionFormatter = "%s | %s | %s | %s | %f | %s \n";
-            out.printf(accountFormatter, dtf.format(LocalDateTime.now()), userID, name, accountID, value, transaction.GetDescription());
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    
-    
-    
-    
 }

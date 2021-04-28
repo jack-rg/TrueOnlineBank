@@ -28,14 +28,18 @@ public class GUIHome extends JPanel {
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         JComponent panel2 = makeTextPanel("Panel #2");
-        tabbedPane.addTab("Pay and Transfer", icon, panel2,
-                "Does twice as much nothing");
+        tabbedPane.addTab("Withdraw and Transfer", icon, panel2, null);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         JComponent panel3 = makeTextPanel("Panel #3");
         tabbedPane.addTab("Invest", icon, panel3,
                 "Still does nothing");
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+
+        JComponent panel4 = makeTextPanel("Panel #4");
+        tabbedPane.addTab("Settings", icon, panel4,
+                "blah blah");
+        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
         //Add the tabbed pane to this panel.
         add(tabbedPane);

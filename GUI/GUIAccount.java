@@ -1,10 +1,13 @@
 package GUI;
 
 import Objects.Account;
+import Objects.Transaction;
+import Util.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class GUIAccount {
     JPanel panel;
@@ -12,15 +15,18 @@ public class GUIAccount {
 
     public GUIAccount(Account account) {
         panel = new JPanel();
-        panel.setLayout(null);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(null);
 
         goBackButton = new JButton("Go back");
         goBackButton.setBounds(25, 25, 80, 40);
-        panel.add(goBackButton);
+        topPanel.add(goBackButton);
 
         JButton deleteAccountButton = new JButton("Delete this account");
         deleteAccountButton.setBounds(120, 25, 150, 40);
-        panel.add(deleteAccountButton);
+        topPanel.add(deleteAccountButton);
 
         deleteAccountButton.addActionListener(new ActionListener() {
             @Override
@@ -30,20 +36,34 @@ public class GUIAccount {
         });
 
         JLabel accountNameLabel = new JLabel(account.getName() + ": $" + account.getValue());
-        accountNameLabel.setBounds(30, 100, 150, 25);
-        panel.add(accountNameLabel);
+        accountNameLabel.setBounds(30, 80, 150, 25);
+        topPanel.add(accountNameLabel);
 
-        JPanel transactionsPanel = new JPanel();
-        transactionsPanel.setLayout(new GridLayout(4, 1)); // TODO: rows should be however many transactions there are attached to the account
-        for (int i = 0; i < 4; i++) {
-            // TODO: new GUITransaction()
+        panel.add(topPanel);
+
+        DataManager.loadTransactions(account);
+        ArrayList<Transaction> transactions = account.getTransactions();
+
+        if (transactions.size() > 0) {
+            JPanel transactionsPanel = new JPanel();
+            transactionsPanel.setLayout(new GridLayout(transactions.size(), 1));
+
+            for (int i = 0; i < transactions.size(); i++) {
+                Transaction t = transactions.get(i);
+                transactionsPanel.add((new GUITransaction(t)).getPanel());
+            }
+
+            panel.add(new JScrollPane(transactionsPanel));
         }
-        panel.add(transactionsPanel);
+
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
     public JPanel getPanel() {
         return panel;
     }
 
-    public JButton getGoBackButton() { return goBackButton; }
+    public JButton getGoBackButton() {
+        return goBackButton;
+    }
 }
