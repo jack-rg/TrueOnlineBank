@@ -1,6 +1,7 @@
 package Objects;
 
 
+import Types.AccountType;
 import Util.DataManager;
 
 import java.time.LocalDateTime;
@@ -28,12 +29,12 @@ public class SecurityAccount extends Account {
 
     private Map<String, StockPosition> stockName2position;
 
-    public SecurityAccount(String userName, String accountID, String userID) {
+    public SecurityAccount(AccountType userName, String accountID, String userID) {
         super(userName, accountID, userID);
         this.stockName2position = new HashMap<>();
     }
 
-    public SecurityAccount(String userName, String accountID, String userID, double value) {
+    public SecurityAccount(AccountType userName, String accountID, String userID, double value) {
         super(userName, accountID, userID, value);
         this.stockName2position = new HashMap<>();
     }
@@ -103,16 +104,16 @@ public class SecurityAccount extends Account {
     }
 
 
-    public static void main(String[] args){
-        SecurityAccount securityAccount = new SecurityAccount("Atlas", "SecurityAccount0", "UserSEC", 20000);
-        Stock targetStock0 = new Stock("TWTR", "Twitter", 20);
-       Stock targetStock1 = new Stock("AAPL", "Apple", 131);
-
-       securityAccount.updatePosition(targetStock0, true, 100);
-       securityAccount.updatePosition(targetStock1, true, 10);
-       securityAccount.updatePosition(targetStock0, false, 10);
-
-        // check position is manually requested by manager or user.
-        DataManager.writePositions(securityAccount);
-    }
+//    public static void main(String[] args){
+//        SecurityAccount securityAccount = new SecurityAccount("Atlas", "SecurityAccount0", "UserSEC", 20000);
+//        Stock targetStock0 = new Stock("TWTR", "Twitter", 20);
+//       Stock targetStock1 = new Stock("AAPL", "Apple", 131);
+//
+//       securityAccount.updatePosition(targetStock0, true, 100);
+//       securityAccount.updatePosition(targetStock1, true, 10);
+//       securityAccount.updatePosition(targetStock0, false, 10);
+//
+//        // check position is manually requested by manager or user.
+//        DataManager.writePositions(securityAccount);
+//    }
 }

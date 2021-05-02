@@ -1,12 +1,23 @@
 package Objects;
 
-public class Checking extends Account {
+import Types.AccountState;
+import Types.AccountType;
+import Types.CurrencyType;
 
-	public Checking(String userName, String accountID, String userID) {
-		super(userName, accountID, userID);
+public class Checking extends Account {
+	public Checking(AccountType accountType, String accountID, String userID) {
+		super(accountType, accountID, userID);
 	}
 
-	public Checking(String userName, String accountID, String userID, double value) {
-		super(userName, accountID, userID, value);
+	public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType) {
+		super(accountType, accountID, userID, currencyType);
+	}
+
+	public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState accountState) {
+		super(accountType, accountID, userID, currencyType, accountState);
+	}
+
+	public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState status, double value) {
+		super(accountType, accountID, userID, currencyType, status, value);
 	}
 }

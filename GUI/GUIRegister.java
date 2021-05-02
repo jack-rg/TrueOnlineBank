@@ -4,11 +4,7 @@ import Objects.User;
 import Util.DataManager;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.awt.*;
 
 public class GUIRegister extends JFrame {
     JPanel panel;
@@ -16,6 +12,7 @@ public class GUIRegister extends JFrame {
     JPasswordField passwordText;
     JButton registerButton;
     JButton goToLoginButton;
+    JLabel errorLabel;
 
     public GUIRegister() {
         panel = new JPanel();
@@ -44,6 +41,12 @@ public class GUIRegister extends JFrame {
         goToLoginButton = new JButton("Already have an account? \nLogin.");
         goToLoginButton.setBounds(170, 370, 280, 40);
         panel.add(goToLoginButton);
+
+        errorLabel = new JLabel("User already exists. Please login.");
+        errorLabel.setBounds(210, 420, 280, 40);
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
+        panel.add(errorLabel);
     }
 
     public JPanel getPanel() {
@@ -57,6 +60,8 @@ public class GUIRegister extends JFrame {
     public JButton getGoToLoginButton() {
         return goToLoginButton;
     }
+
+    public JLabel getErrorLabel() { return errorLabel; }
 
     public User execute() {
         String userName = userText.getText();

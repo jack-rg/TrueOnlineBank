@@ -2,6 +2,8 @@ package Util;
 
 import Objects.*;
 import Types.AccountState;
+import Types.AccountType;
+import Types.CurrencyType;
 import Types.TransactionType;
 
 import java.io.*;
@@ -36,9 +38,10 @@ public class DataManager {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String accountFormatter = "%s | %s | %s | %s | %f | %s \n";
-            out.printf(accountFormatter, dtf.format(LocalDateTime.now()), account.getUserID(), account.getName(),
-                    account.getAccountID(), account.getBalance(), "ACTIVE");
+
+            String accountFormatter = "%s | %s | %s | %s | %f | %s | %s \n";
+            out.printf(accountFormatter, dtf.format(LocalDateTime.now()), account.getUserID(), account.getAccountType(),
+                    account.getAccountID(), account.getBalance(), account.getStatus(), account.getCurrencyType());
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -52,7 +55,7 @@ public class DataManager {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String transactionFormatter = "%s | %s | %s | %s | %f | %s \n";
+            String transactionFormatter = "%s | %s | %s | %s | %f | %s\n";
             out.printf(transactionFormatter, dtf.format(LocalDateTime.now()), userID, accountID,
                     transaction.getName(), transaction.getAmount(), transaction.getType());
             out.flush();
@@ -135,16 +138,41 @@ public class DataManager {
             String line;
 
             while ((line = br.readLine()) != null) {
-                if (line.contains("| " + userID + " |") && line.contains("| " + "ACTIVE")) {
+                if (line.contains("| " + userID + " |")) {
                     String[] account = line.split(" \\| ");
                     String accountType = account[3];
                     String accountID = account[4];
-                    float value = Float.valueOf(account[5]);
+                    double value = Double.valueOf(account[5]);
+                    String status = account[6];
+                    String currencyType = account[7];
+
+                    AccountState accountState;
+                    if (status.equals("ACTIVE")) {
+                        accountState = AccountState.ACTIVE;
+                    } else {
+                        accountState = AccountState.INACTIVE;
+                    }
+
+                    CurrencyType cType;
+                    switch (currencyType) {
+                        case "EUR":
+                            cType = CurrencyType.EUR;
+                            break;
+                        case "INR":
+                            cType = CurrencyType.INR;
+                            break;
+                        case "GDP":
+                            cType = CurrencyType.GBP;
+                            break;
+                        default:
+                            cType = CurrencyType.USD;
+                            break;
+                    }
 
                     if (accountType.equals("Checking")) {
-                        accounts.add(new Checking("Checking", accountID, userID, value));
+                        accounts.add(new Checking(AccountType.CHECKING, accountID, userID, cType, accountState, value));
                     } else {
-                        accounts.add(new Saving("Saving", accountID, userID, value));
+                        accounts.add(new Saving(AccountType.SAVING, accountID, userID, cType, accountState, value));
                     }
                 }
             }
@@ -220,8 +248,74 @@ public class DataManager {
         return null;
     }
 
+    public static void updatePerson(Person person) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            ArrayList<String> traceFile = new ArrayList<String>();
+            String line;
+
+            String userID = person.getUserID();
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains("| " + userID)) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+                    traceFile.add(dtf.format(LocalDateTime.now()) + " | " + person.getUserName() + " | " + person.getPassword() + " | " + userID);
+                } else {
+                    traceFile.add(line);
+                }
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(file);
+
+            for (String output : traceFile) {
+                fileOut.write((output + "\n").toString().getBytes());
+            }
+
+            fileOut.flush();
+            fileOut.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public static void updateAccount(Account account) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            ArrayList<String> traceFile = new ArrayList<String>();
+            String line;
+
+            String accountID = account.getAccountID();
+            System.out.println(account.getBalance());
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains(" | " + accountID + " | ")) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+                    traceFile.add(dtf.format(LocalDateTime.now()) + " | " + account.getUserID() + " | " + account.getAccountType()
+                    + " | " + account.getAccountID() + " | " + account.getBalance() + " | " +  account.getStatus()
+                            + " | " + account.getCurrencyType());
+                } else {
+                    traceFile.add(line);
+                }
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(file);
+
+            for (String output : traceFile) {
+                fileOut.write((output + "\n").toString().getBytes());
+            }
+
+            fileOut.flush();
+            fileOut.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     public static void deactivateAccount(Account account) {
-        AccountState status = AccountState.INACTIVE;
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
 
         try {
@@ -232,7 +326,7 @@ public class DataManager {
             while ((line = br.readLine()) != null) {
                 if (line.contains("| " + account.getUserID() + " |") && line.contains("| " + account.getAccountID() + " |")) {
                     String[] accountInfo = line.split(" \\| ");
-                    accountInfo[accountInfo.length - 1] = "INACTIVE";
+                    accountInfo[accountInfo.length - 2] = "INACTIVE";
                     String replaced = String.join(" | ", accountInfo);
                     traceFile.add(replaced);
                 } else {
@@ -254,7 +348,4 @@ public class DataManager {
             e1.printStackTrace();
         }
     }
-
-
-
 }

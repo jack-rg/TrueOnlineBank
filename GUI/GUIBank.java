@@ -1,16 +1,10 @@
 package GUI;
 
-import Objects.Account;
 import Objects.User;
 import Util.DataManager;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class GUIBank extends JFrame {
@@ -33,7 +27,6 @@ public class GUIBank extends JFrame {
         addLogin();
         addRegister();
 
-        // Turn it on
         frame.setVisible(true);
     }
 
@@ -45,10 +38,10 @@ public class GUIBank extends JFrame {
                 User user = login.execute();
                 if (user != null) {
                     DataManager.loadAccounts(user);
-                    addHome(user.getRawAccounts());
+                    addHome(user);
                     cards.show(c, "Home");
                 } else {
-                    System.out.println("Incorrect password or username.");
+                    login.getErrorLabel().setVisible(true);
                 }
             }
         });
@@ -69,10 +62,10 @@ public class GUIBank extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 User user = register.execute();
                 if (user != null) {
-                    addHome(user.getRawAccounts());
+                    addHome(user);
                     cards.show(c, "Home");
                 } else {
-                    System.out.println("User already exists. Please login.");
+                    register.getErrorLabel().setVisible(true);
                 }
             }
         });
@@ -86,8 +79,8 @@ public class GUIBank extends JFrame {
         c.add(register.getPanel(), "Register");
     }
 
-    private void addHome(ArrayList<Account> accounts) {
-        GUIHome home = new GUIHome(accounts);
+    private void addHome(User user) {
+        GUIHome home = new GUIHome(user);
         c.add(home.getTabbedPane(), "Home");
     }
 

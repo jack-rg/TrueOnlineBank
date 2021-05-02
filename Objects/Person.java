@@ -1,5 +1,6 @@
 package Objects;
 
+import Types.AccountState;
 import Util.DataManager;
 
 import java.util.*;
@@ -25,6 +26,7 @@ public abstract class Person {
 
     public void setUserName(String newName) {
         userName = newName;
+        DataManager.updatePerson(this);
     }
 
     public String getPassword() {
@@ -33,6 +35,7 @@ public abstract class Person {
 
     public void setPassword(String newPass) {
         password = newPass;
+        DataManager.updatePerson(this);
     }
 
     public boolean authenPassword(String checkPass) {
@@ -43,15 +46,25 @@ public abstract class Person {
         return userID;
     }
 
-    public void setUserID(String newID) {
-        userID = newID;
-    }
+    public void setUserID(String newID) { userID = newID; }
 
     public ArrayList<Account> getRawAccounts() {
         return accounts;
     }
 
     public void setAccounts(ArrayList<Account> accounts) { this.accounts = accounts; }
+
+    public ArrayList<Account> getActiveAccounts() {
+        ArrayList<Account> active = new ArrayList<Account>();
+
+        for (Account a : accounts) {
+            if (a.getStatus() == AccountState.ACTIVE) {
+                active.add(a);
+            }
+        }
+
+        return active;
+    }
 
     public void addNewAccount(Account newAccount) {
         DataManager.writeAccount(newAccount);
