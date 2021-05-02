@@ -5,11 +5,6 @@ import Util.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class GUIRegister extends JFrame {
     JPanel panel;

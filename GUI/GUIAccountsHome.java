@@ -38,6 +38,10 @@ public class GUIAccountsHome extends JPanel {
         tabbedPane.addTab("Withdraw", withdraw.getPanel());
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
+        GUITransfer transfer = new GUITransfer(user, accountsOverview, tabbedPane);
+        tabbedPane.addTab("Transfer", transfer.getPanel());
+        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+
         add(tabbedPane);
     }
 

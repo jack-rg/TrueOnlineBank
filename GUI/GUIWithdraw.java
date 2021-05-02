@@ -2,7 +2,6 @@ package GUI;
 
 import Objects.Account;
 import Objects.User;
-import Types.CurrencyType;
 
 import javax.swing.*;
 import java.awt.*;

@@ -5,10 +5,6 @@ import Util.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
 
 public class GUILogin extends JFrame {
     JPanel panel;

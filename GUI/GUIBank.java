@@ -1,16 +1,10 @@
 package GUI;
 
-import Objects.Account;
 import Objects.User;
 import Util.DataManager;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class GUIBank extends JFrame {
