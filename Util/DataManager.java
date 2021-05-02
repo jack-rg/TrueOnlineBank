@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Currency;
 
 public class DataManager {
     public static void writeUser(User user) {
@@ -99,16 +98,17 @@ public class DataManager {
                             cType = CurrencyType.INR;
                             break;
                         case "GDP":
-                            cType = CurrencyType.GDP;
+                            cType = CurrencyType.GBP;
                             break;
                         default:
                             cType = CurrencyType.USD;
                             break;
                     }
+
                     if (accountType.equals("Checking")) {
-                        accounts.add(new Checking(AccountType.CHECKING, accountID, userID, value, cType, accountState));
+                        accounts.add(new Checking(AccountType.CHECKING, accountID, userID, cType, accountState, value));
                     } else {
-                        accounts.add(new Saving(AccountType.SAVING, accountID, userID, value, cType, accountState));
+                        accounts.add(new Saving(AccountType.SAVING, accountID, userID, cType, accountState, value));
                     }
                 }
             }
@@ -198,6 +198,41 @@ public class DataManager {
                 if (line.contains("| " + userID)) {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
                     traceFile.add(dtf.format(LocalDateTime.now()) + " | " + person.getUserName() + " | " + person.getPassword() + " | " + userID);
+                } else {
+                    traceFile.add(line);
+                }
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(file);
+
+            for (String output : traceFile) {
+                fileOut.write((output + "\n").toString().getBytes());
+            }
+
+            fileOut.flush();
+            fileOut.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public static void updateAccount(Account account) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            ArrayList<String> traceFile = new ArrayList<String>();
+            String line;
+
+            String accountID = account.getAccountID();
+            System.out.println(account.getValue());
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains(" | " + accountID + " | ")) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+                    traceFile.add(dtf.format(LocalDateTime.now()) + " | " + account.getUserID() + " | " + account.getAccountType()
+                    + " | " + account.getAccountID() + " | " + account.getValue() + " | " +  account.getStatus()
+                            + " | " + account.getCurrencyType());
                 } else {
                     traceFile.add(line);
                 }

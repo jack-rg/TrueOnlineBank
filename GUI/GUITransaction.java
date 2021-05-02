@@ -19,7 +19,7 @@ public class GUITransaction {
         JLabel nameLabel = new JLabel(transaction.getName());
         panel.add(nameLabel);
 
-        float amount = transaction.getAmount();
+        double amount = transaction.getAmount();
         JLabel amountLabel;
         if (transaction.getType().equals(TransactionType.WITHDRAWAL)) {
             amountLabel = new JLabel("-$" + amount);

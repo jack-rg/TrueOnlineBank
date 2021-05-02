@@ -7,12 +7,13 @@ import Types.AccountState;
 import Types.AccountType;
 import Types.CurrencyType;
 import Types.TransactionType;
+import Util.CurrencyConverter;
 import Util.DataManager;
 
 public abstract class Account implements TransactionInterface {
     private String accountID;
     private String userID;
-    private double value;
+    private float value;
     private AccountType accountType;
     private AccountState status;
     private CurrencyType currencyType;
@@ -38,7 +39,7 @@ public abstract class Account implements TransactionInterface {
         this.status = status;
     }
 
-    public Account(AccountType accountType, String accountID, String userID, CurrencyType currencyType, double value, AccountState status) {
+    public Account(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState status, float value) {
         this(accountType, accountID, userID, currencyType, status);
         this.value = value;
     }
@@ -67,11 +68,11 @@ public abstract class Account implements TransactionInterface {
         userID = newID;
     }
 
-    public double getValue() {
+    public float getValue() {
         return value;
     }
 
-    public void setValue(int newValue) {
+    public void setValue(float newValue) {
         value = newValue;
     }
 
@@ -85,11 +86,14 @@ public abstract class Account implements TransactionInterface {
 
     public AccountState getStatus() { return status; }
 
-    public void deposit(float funds, String name) {
-        Transaction transaction = new Transaction(name, funds, TransactionType.DEPOSIT);
+    public void deposit(float funds, String name, CurrencyType cType) {
+        float convertedFunds = CurrencyConverter.execute(cType, currencyType, funds);
+
+        Transaction transaction = new Transaction(name, convertedFunds, TransactionType.DEPOSIT);
         DataManager.writeTransaction(transaction, userID, accountID);
 
-        value += funds;
+        value += convertedFunds;
+        DataManager.updateAccount(this);
     }
 
     public boolean withdrawal(float funds, String name) {
@@ -107,5 +111,25 @@ public abstract class Account implements TransactionInterface {
     public void deactivate() {
         status = AccountState.INACTIVE;
         DataManager.deactivateAccount(this);
+    }
+
+    public String toString() {
+        String moneySign;
+        switch (currencyType) {
+            case EUR:
+                moneySign = "€";
+                break;
+            case INR:
+                moneySign = "₹";
+                break;
+            case GBP:
+                moneySign = "£";
+                break;
+            default:
+                moneySign = "$";
+                break;
+        }
+
+        return "(" + accountID + ") " + accountType + ": " + moneySign + value;
     }
 }

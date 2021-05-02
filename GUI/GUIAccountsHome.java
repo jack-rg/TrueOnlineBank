@@ -30,8 +30,14 @@ public class GUIAccountsHome extends JPanel {
         tabbedPane.addTab("Create a New Account", newAccount.getPanel());
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
-        JComponent panel3 = makeTextPanel("Panel #3");
-        tabbedPane.addTab("Deposit", panel3);
+        GUIDeposit deposit = new GUIDeposit(user, accountsOverview);
+        deposit.getSubmitBtn().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane.setSelectedIndex(0);
+            }
+        });
+        tabbedPane.addTab("Deposit", deposit.getPanel());
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
         add(tabbedPane);

@@ -1,7 +1,9 @@
 package Interfaces;
 
-public interface TransactionInterface {
-    public boolean withdrawal(float amount, String transactionName);
+import Types.CurrencyType;
 
-    public void deposit(float amount, String transactionName);
+public interface TransactionInterface {
+    public boolean withdrawal(float funds, String name);
+
+    public void deposit(float funds, String name, CurrencyType cType);
 }
