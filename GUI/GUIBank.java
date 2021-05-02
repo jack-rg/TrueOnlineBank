@@ -1,5 +1,6 @@
 package GUI;
 
+import Objects.Person;
 import Objects.User;
 import Util.DataManager;
 
@@ -35,10 +36,10 @@ public class GUIBank extends JFrame {
 
         login.getLoginButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                User user = login.execute();
-                if (user != null) {
-                    DataManager.loadAccounts(user);
-                    addHome(user);
+                Person person = login.execute();
+                if (person != null) {
+                    DataManager.loadAccounts(person);
+                    addHome(person);
                     cards.show(c, "Home");
                 } else {
                     login.getErrorLabel().setVisible(true);
@@ -60,9 +61,9 @@ public class GUIBank extends JFrame {
 
         register.getRegisterButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                User user = register.execute();
-                if (user != null) {
-                    addHome(user);
+                Person person = register.execute();
+                if (person != null) {
+                    addHome(person);
                     cards.show(c, "Home");
                 } else {
                     register.getErrorLabel().setVisible(true);
@@ -79,7 +80,7 @@ public class GUIBank extends JFrame {
         c.add(register.getPanel(), "Register");
     }
 
-    private void addHome(User user) {
+    private void addHome(Person user) {
         GUIHome home = new GUIHome(user);
         c.add(home.getTabbedPane(), "Home");
     }

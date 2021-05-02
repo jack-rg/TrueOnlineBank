@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class GUINewAccount extends JPanel {
     JPanel panel;
 
-    public GUINewAccount(User user, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
+    public GUINewAccount(Person person, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -57,7 +57,7 @@ public class GUINewAccount extends JPanel {
         errorLabel.setVisible(false);
         panel.add(errorLabel);
 
-        if (user.getActiveAccounts().size() > 0) {
+        if (person.getActiveAccounts().size() > 0) {
             JLabel depositLabel = new JLabel("Would you like to deposit money into this account?");
             depositLabel.setBounds(30, 190, 450, 25);
             panel.add(depositLabel);
@@ -79,7 +79,7 @@ public class GUINewAccount extends JPanel {
             accountChoiceLabel.setVisible(false);
             panel.add(accountChoiceLabel);
 
-            ArrayList<Account> accounts = user.getActiveAccounts();
+            ArrayList<Account> accounts = person.getActiveAccounts();
             HashMap<String, Account> accMap = new HashMap<String, Account>();
 
             for (Account a : accounts) {
@@ -134,15 +134,15 @@ public class GUINewAccount extends JPanel {
                         Account account = accMap.get(accountCB.getSelectedItem());
 
                         if (amount <= account.getBalance()) {
-                            String userID = user.getUserID();
-                            String accountID = "A" + userID.substring(1) + (user.getRawAccounts().size() + 1);
+                            String userID = person.getUserID();
+                            String accountID = "A" + userID.substring(1) + (person.getRawAccounts().size() + 1);
 
                             account.withdraw(amount, "Transfer to Account " + accountID);
 
                             if (savingRB.isSelected()) {
-                                user.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                person.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             } else {
-                                user.addNewAccount(new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                person.addNewAccount(new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             }
 
                             accountsOverview.update();
@@ -151,13 +151,13 @@ public class GUINewAccount extends JPanel {
                             errorLabel.setVisible(true);
                         }
                     } else {
-                        String userID = user.getUserID();
-                        String accountID = "A" + userID.substring(1) + (user.getRawAccounts().size() + 1);
+                        String userID = person.getUserID();
+                        String accountID = "A" + userID.substring(1) + (person.getRawAccounts().size() + 1);
 
                         if (savingRB.isSelected()) {
-                            user.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                            person.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                         } else {
-                            user.addNewAccount(new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                            person.addNewAccount(new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                         }
 
                         accountsOverview.update();
@@ -169,13 +169,13 @@ public class GUINewAccount extends JPanel {
             submitBtn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String userID = user.getUserID();
-                    String accountID = "A" + userID.substring(1) + (user.getRawAccounts().size() + 1);
+                    String userID = person.getUserID();
+                    String accountID = "A" + userID.substring(1) + (person.getRawAccounts().size() + 1);
 
                     if (savingRB.isSelected()) {
-                        user.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                        person.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     } else {
-                        user.addNewAccount(new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                        person.addNewAccount(new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     }
 
                     accountsOverview.update();

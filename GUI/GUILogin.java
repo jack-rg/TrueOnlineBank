@@ -1,5 +1,7 @@
 package GUI;
 
+import Objects.Manager;
+import Objects.Person;
 import Objects.User;
 import Util.DataManager;
 
@@ -63,10 +65,16 @@ public class GUILogin extends JFrame {
 
     public JLabel getErrorLabel() { return errorLabel; }
 
-    public User execute() {
+    public Person execute() {
         String userName = userText.getText();
         String password = String.valueOf(passwordText.getPassword());
-
+        
+        Manager m = DataManager.isManager(userName, password);
+        if(m != null){
+            return m;
+        }
+        else{
         return DataManager.userExists(userName, password, false);
+    }
     }
 }

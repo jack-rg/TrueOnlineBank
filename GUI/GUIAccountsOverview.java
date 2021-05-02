@@ -1,6 +1,7 @@
 package GUI;
 
 import Objects.Account;
+import Objects.Person;
 import Objects.User;
 
 import javax.swing.*;
@@ -13,14 +14,14 @@ public class GUIAccountsOverview {
     JPanel accountsPanel;
     CardLayout cards;
 
-    User user;
+    Person user;
 
-    public GUIAccountsOverview(User user) {
+    public GUIAccountsOverview(Person person) {
         panel = new JPanel();
         cards = new CardLayout();
         panel.setLayout(cards);
 
-        this.user = user;
+        this.user = person;
 
         update();
     }
