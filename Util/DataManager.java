@@ -157,6 +157,38 @@ public class DataManager {
         return null;
     }
 
+    public static void updatePerson(Person person) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            ArrayList<String> traceFile = new ArrayList<String>();
+            String line;
+
+            String userID = person.getUserID();
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains("| " + userID)) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+                    traceFile.add(dtf.format(LocalDateTime.now()) + " | " + person.getUserName() + " | " + person.getPassword() + " | " + userID);
+                } else {
+                    traceFile.add(line);
+                }
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(file);
+
+            for (String output : traceFile) {
+                fileOut.write((output + "\n").toString().getBytes());
+            }
+
+            fileOut.flush();
+            fileOut.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     public static void deactivateAccount(Account account) {
         AccountState status = AccountState.INACTIVE;
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";

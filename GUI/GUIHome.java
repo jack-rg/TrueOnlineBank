@@ -1,6 +1,7 @@
 package GUI;
 
 import Objects.Account;
+import Objects.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,17 +15,16 @@ public class GUIHome extends JPanel {
 
     ArrayList<Account> accounts;
 
-    public GUIHome(ArrayList<Account> accounts) {
+    public GUIHome(User user) {
         super(new GridLayout(1, 1));
 
-        this.accounts = accounts;
+        this.accounts = user.getRawAccounts();
 
         tabbedPane = new JTabbedPane();
         ImageIcon icon = createImageIcon("images/middle.gif");
 
         GUIAccountsHome accountsHome = new GUIAccountsHome(accounts);
-        JComponent panel1 = accountsHome.getPanel();
-        tabbedPane.addTab("Accounts", icon, panel1, null);
+        tabbedPane.addTab("Accounts", icon, accountsHome.getPanel(), null);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         JComponent panel2 = makeTextPanel("Panel #2");
@@ -36,9 +36,8 @@ public class GUIHome extends JPanel {
                 "Still does nothing");
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
-        JComponent panel4 = makeTextPanel("Panel #4");
-        tabbedPane.addTab("Settings", icon, panel4,
-                "blah blah");
+        GUISettings settings = new GUISettings(user);
+        tabbedPane.addTab("Settings", icon, settings.getPanel(), null);
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
         //Add the tabbed pane to this panel.

@@ -25,6 +25,7 @@ public abstract class Person {
 
     public void setUserName(String newName) {
         userName = newName;
+        DataManager.updatePerson(this);
     }
 
     public String getPassword() {
@@ -33,6 +34,7 @@ public abstract class Person {
 
     public void setPassword(String newPass) {
         password = newPass;
+        DataManager.updatePerson(this);
     }
 
     public boolean authenPassword(String checkPass) {
@@ -43,9 +45,7 @@ public abstract class Person {
         return userID;
     }
 
-    public void setUserID(String newID) {
-        userID = newID;
-    }
+    public void setUserID(String newID) { userID = newID; }
 
     public ArrayList<Account> getRawAccounts() {
         return accounts;
