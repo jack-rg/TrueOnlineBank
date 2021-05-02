@@ -96,7 +96,7 @@ public abstract class Account implements TransactionInterface {
         DataManager.updateAccount(this);
     }
 
-    public boolean withdrawal(float funds, String name) {
+    public boolean withdraw(float funds, String name) {
         if (value - funds >= 0) {
             Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
             DataManager.writeTransaction(transaction, userID, accountID);

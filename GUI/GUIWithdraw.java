@@ -35,7 +35,7 @@ public class GUIWithdraw extends JPanel {
         accountCB.setBounds(30, 80, 300, 25);
         panel.add(accountCB);
 
-        JLabel depositAmountLabel = new JLabel("Please enter the withdrawal amount:");
+        JLabel depositAmountLabel = new JLabel("Please enter the withdraw amount:");
         depositAmountLabel.setBounds(30, 140, 400, 25);
         panel.add(depositAmountLabel);
 
@@ -58,7 +58,7 @@ public class GUIWithdraw extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Account account = accMap.get(accountCB.getSelectedItem());
 
-                if (account.withdrawal(Float.parseFloat(depositTF.getText()), "ATM Withdrawal")) {
+                if (account.withdraw(Float.parseFloat(depositTF.getText()), "ATM Withdrawal")) {
                     accountsOverview.update();
                     tabbedPane.setSelectedIndex(0);
                 } else {

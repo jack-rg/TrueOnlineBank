@@ -16,7 +16,6 @@ import java.util.HashMap;
 
 public class GUINewAccount extends JPanel {
     JPanel panel;
-    JButton submitBtn;
 
     public GUINewAccount(User user, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
         panel = new JPanel();
@@ -48,7 +47,7 @@ public class GUINewAccount extends JPanel {
         currencyTypeCB.setBounds(250, 140, 90, 25);
         panel.add(currencyTypeCB);
 
-        submitBtn = new JButton("Submit");
+        JButton submitBtn = new JButton("Submit");
         submitBtn.setBounds(30, 370, 280, 40);
         panel.add(submitBtn);
 
@@ -138,7 +137,7 @@ public class GUINewAccount extends JPanel {
                             String userID = user.getUserID();
                             String accountID = "A" + userID.substring(1) + (user.getRawAccounts().size() + 1);
 
-                            account.withdrawal(amount, "Transfer to Account " + accountID);
+                            account.withdraw(amount, "Transfer to Account " + accountID);
 
                             if (savingRB.isSelected()) {
                                 user.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
@@ -187,6 +186,4 @@ public class GUINewAccount extends JPanel {
     }
 
     public JPanel getPanel() { return panel; }
-
-    public JButton getSubmitBtn() { return submitBtn; }
 }
