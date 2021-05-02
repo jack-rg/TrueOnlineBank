@@ -10,7 +10,7 @@ import Util.DataManager;
 public abstract class Account implements TransactionInterface {
     private String accountID;
     private String userID;
-    private double value;
+    private double balance;
     private String name;
     private AccountState status;
 
@@ -20,13 +20,13 @@ public abstract class Account implements TransactionInterface {
         this.name = userName;
         this.accountID = accountID;
         this.userID = userID;
-        value = 0;
+        balance = 0;
         status = AccountState.ACTIVE;
     }
 
     public Account(String userName, String accountID, String userID, double value) {
         this(userName, accountID, userID);
-        this.value = value;
+        this.balance = value;
     }
 
     public String getName() {
@@ -53,12 +53,12 @@ public abstract class Account implements TransactionInterface {
         userID = newID;
     }
 
-    public double getValue() {
-        return value;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setValue(int newValue) {
-        value = newValue;
+    public void setBalance(double newValue) {
+        balance = newValue;
     }
 
     public ArrayList<Transaction> getTransactions() { return transactions; }
@@ -69,15 +69,15 @@ public abstract class Account implements TransactionInterface {
         Transaction transaction = new Transaction(name, funds, TransactionType.DEPOSIT);
         DataManager.writeTransaction(transaction, userID, accountID);
 
-        value += funds;
+        balance += funds;
     }
 
     public boolean withdrawal(float funds, String name) {
-        if (value - funds >= 0) {
+        if (balance - funds >= 0) {
             Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
             DataManager.writeTransaction(transaction, userID, accountID);
 
-            value -= funds;
+            balance -= funds;
             return true;
         } else {
             return false;

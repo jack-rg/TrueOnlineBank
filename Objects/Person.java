@@ -70,7 +70,7 @@ public abstract class Person {
     public double getTotalAssets() {
         double sum = 0;
         for (Account a : accounts) {
-            sum += a.getValue();
+            sum += a.getBalance();
         }
         return sum;
     }

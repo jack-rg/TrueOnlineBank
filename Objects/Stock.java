@@ -1,27 +1,47 @@
 package Objects;
 
+/**
+ * stock:
+ *       1. symbol
+ *       2. name
+ *       3. lastPrice
+ */
+
 public class Stock {
-    private String ticker;
-    private double value;
 
-    public Stock(String ticker, double value) {
-        this.ticker = ticker;
-        this.value = value;
+    //    protected static String STOCK_INFO = "Stock Name: "
+    private String symbol; // abbreviate stock code
+    private String name;    // name
+    private double lastPrice; // the most recent price of stock
+
+
+    Stock(String symbol, String name, double lastPrice){
+        this.symbol = symbol;
+        this.name = name;
+        this.lastPrice = lastPrice;
     }
 
-    public double getValue() {
-        return value;
+    public double getLastPrice() {
+        return lastPrice;
     }
 
-    public void setValue(double newValue) {
-        value = newValue;
+    public String getName() {
+        return name;
     }
 
-    public String getTicker() {
-        return ticker;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setTicker(String newTicker) {
-        ticker = newTicker;
+    /**
+     * refresh the lastPrice
+     * @param lastPrice
+     */
+    public void setLastPrice(double lastPrice){
+        this.lastPrice = lastPrice;
+    }
+
+    public void stockInfoDisplay(){
+        System.out.println("Stock Symbol " + this.symbol + "Name: " + this.name + "LastPrice: " + this.lastPrice );
     }
 }

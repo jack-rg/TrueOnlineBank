@@ -35,7 +35,7 @@ public class GUIAccount {
             }
         });
 
-        JLabel accountNameLabel = new JLabel(account.getName() + ": $" + account.getValue());
+        JLabel accountNameLabel = new JLabel(account.getName() + ": $" + account.getBalance());
         accountNameLabel.setBounds(30, 80, 150, 25);
         topPanel.add(accountNameLabel);
 

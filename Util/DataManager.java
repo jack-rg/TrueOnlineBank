@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DataManager {
     public static void writeUser(User user) {
@@ -37,7 +38,7 @@ public class DataManager {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
             String accountFormatter = "%s | %s | %s | %s | %f | %s \n";
             out.printf(accountFormatter, dtf.format(LocalDateTime.now()), account.getUserID(), account.getName(),
-                    account.getAccountID(), account.getValue(), "ACTIVE");
+                    account.getAccountID(), account.getBalance(), "ACTIVE");
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -47,7 +48,6 @@ public class DataManager {
 
     public static void writeTransaction(Transaction transaction, String userID, String accountID) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
-
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
@@ -55,6 +55,72 @@ public class DataManager {
             String transactionFormatter = "%s | %s | %s | %s | %f | %s \n";
             out.printf(transactionFormatter, dtf.format(LocalDateTime.now()), userID, accountID,
                     transaction.getName(), transaction.getAmount(), transaction.getType());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writePositions(SecurityAccount securityAccount){
+        Map<String, StockPosition> positionMap = securityAccount.getStockName2position();
+        if(positionMap == null || positionMap.size() == 0){
+            return;
+        }
+        String file = Paths.get("").toAbsolutePath() + "/Logs/positionLog.txt";
+        // if already exists, simply delete one and create one.
+        File deleteFile = new File(file);
+        if(deleteFile.exists()){
+            deleteFile.delete();
+        }
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(
+                    new FileOutputStream(file, true)));
+            String transactionFormatter = "%s | %s | %s | %s | %f | %s \n";
+            for(String stockName : positionMap.keySet()){
+                StockPosition position = positionMap.get(stockName);
+                out.printf(transactionFormatter,
+                        position.getPositionStockName(),
+                        position.getPositionStockSymbol(),
+                        position.getMktValue(),
+                        position.getTotalCost(),
+                        position.getUnrealizedPL(),
+                        position.getUnrealizedPLRate()
+                        );
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeStockOrder(StockOrder stockOrder){
+        String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderRecord.txt";
+        // if already exists, simply delete one and create one.
+        File deleteFile = new File(file);
+        if(deleteFile.exists()){
+            deleteFile.delete();
+        }
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(
+                    new FileOutputStream(file, true)));
+            String transactionFormatter = "%s | %s | %f | %s \n";
+
+//            public void displayOrder(){
+//                System.out.println( "Symbol: " + stock.getSymbol() +
+//                        " Name: " + stock.getName() +
+//                        " Filled quantity: " + quantity +
+//                        " orderPlacedtime: " + this.orderPlacedTime
+//                );
+//            }
+            out.printf(transactionFormatter,
+                    stockOrder.getOrderStockName(),
+                    stockOrder.getOrderStockSymbol(),
+                    stockOrder.getOrderLastPrice(),
+                    stockOrder.getOrderPlacedTime()
+            );
+
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -191,4 +257,7 @@ public class DataManager {
             e1.printStackTrace();
         }
     }
+
+
+
 }

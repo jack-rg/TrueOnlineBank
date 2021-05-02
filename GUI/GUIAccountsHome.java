@@ -19,7 +19,7 @@ public class GUIAccountsHome {
         accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
         for (int i = 0; i < accounts.size(); i++) {
             Account a = accounts.get(i);
-            JButton aBtn = new JButton(a.getName() + ": $" + a.getValue());
+            JButton aBtn = new JButton(a.getName() + ": $" + a.getBalance());
             accountsPanel.add(aBtn);
 
             GUIAccount acc = new GUIAccount(a);
