@@ -4,6 +4,7 @@ import Objects.User;
 import Util.DataManager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class GUILogin extends JFrame {
     JPasswordField passwordText;
     JButton loginButton;
     JButton goToRegisterButton;
+    JLabel errorLabel;
 
     public GUILogin() {
         panel = new JPanel();
@@ -43,6 +45,12 @@ public class GUILogin extends JFrame {
         goToRegisterButton = new JButton("New user? \nCreate an account.");
         goToRegisterButton.setBounds(170, 370, 280, 40);
         panel.add(goToRegisterButton);
+
+        errorLabel = new JLabel("Incorrect password or username.");
+        errorLabel.setBounds(210, 420, 280, 40);
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
+        panel.add(errorLabel);
     }
 
     public JPanel getPanel() {
@@ -56,6 +64,8 @@ public class GUILogin extends JFrame {
     public JButton getGoToRegisterButton() {
         return goToRegisterButton;
     }
+
+    public JLabel getErrorLabel() { return errorLabel; }
 
     public User execute() {
         String userName = userText.getText();

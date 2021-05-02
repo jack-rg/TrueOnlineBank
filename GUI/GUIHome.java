@@ -40,7 +40,6 @@ public class GUIHome extends JPanel {
         tabbedPane.addTab("Settings", icon, settings.getPanel(), null);
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
-        //Add the tabbed pane to this panel.
         add(tabbedPane);
 
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);

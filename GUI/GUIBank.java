@@ -48,7 +48,7 @@ public class GUIBank extends JFrame {
                     addHome(user);
                     cards.show(c, "Home");
                 } else {
-                    System.out.println("Incorrect password or username.");
+                    login.getErrorLabel().setVisible(true);
                 }
             }
         });
@@ -72,7 +72,7 @@ public class GUIBank extends JFrame {
                     addHome(user);
                     cards.show(c, "Home");
                 } else {
-                    System.out.println("User already exists. Please login.");
+                    register.getErrorLabel().setVisible(true);
                 }
             }
         });
