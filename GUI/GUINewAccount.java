@@ -55,7 +55,7 @@ public class GUINewAccount extends JPanel {
         submitBtn.setBounds(30, 370, 280, 40);
         panel.add(submitBtn);
 
-        JLabel errorLabel = new JLabel("Trying to transfer insufficient funds");
+        JLabel errorLabel = new JLabel("Insufficient funds");
         errorLabel.setBounds(30, 410, 280, 40);
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
@@ -154,6 +154,18 @@ public class GUINewAccount extends JPanel {
                         } else {
                             errorLabel.setVisible(true);
                         }
+                    } else {
+                        String userID = user.getUserID();
+                        String accountID = "A" + userID.substring(1) + (user.getRawAccounts().size() + 1);
+
+                        if (savingRB.isSelected()) {
+                            user.addNewAccount(new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                        } else {
+                            user.addNewAccount(new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                        }
+
+                        accountsOverview.update();
+                        tabbedPane.setSelectedIndex(0);
                     }
                 }
             });

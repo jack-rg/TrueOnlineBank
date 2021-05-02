@@ -54,7 +54,7 @@ public class DataManager {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String transactionFormatter = "%s | %s | %s | %s | %f | %s \n";
+            String transactionFormatter = "%s | %s | %s | %s | %f | %s\n";
             out.printf(transactionFormatter, dtf.format(LocalDateTime.now()), userID, accountID,
                     transaction.getName(), transaction.getAmount(), transaction.getType());
             out.flush();

@@ -21,7 +21,7 @@ public class GUIAccountsHome extends JPanel {
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         GUINewAccount newAccount = new GUINewAccount(user, accountsOverview, tabbedPane);
-        tabbedPane.addTab("Create a New Account", newAccount.getPanel());
+        tabbedPane.addTab("Create New Account", newAccount.getPanel());
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         GUIDeposit deposit = new GUIDeposit(user, accountsOverview);
@@ -32,6 +32,10 @@ public class GUIAccountsHome extends JPanel {
             }
         });
         tabbedPane.addTab("Deposit", deposit.getPanel());
+        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+
+        GUIWithdraw withdraw = new GUIWithdraw(user, accountsOverview, tabbedPane);
+        tabbedPane.addTab("Withdraw", withdraw.getPanel());
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
         add(tabbedPane);

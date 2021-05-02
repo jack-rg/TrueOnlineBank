@@ -21,7 +21,7 @@ public class GUITransaction {
 
         double amount = transaction.getAmount();
         JLabel amountLabel;
-        if (transaction.getType().equals(TransactionType.WITHDRAWAL)) {
+        if (transaction.getType() == (TransactionType.WITHDRAWAL)) {
             amountLabel = new JLabel("-$" + amount);
             amountLabel.setForeground(Color.RED);
         } else {

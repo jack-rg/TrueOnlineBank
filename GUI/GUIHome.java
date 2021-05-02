@@ -22,17 +22,13 @@ public class GUIHome extends JPanel {
         tabbedPane.addTab("Accounts", accountsHome.getTabbedPane());
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        JComponent panel2 = makeTextPanel("Panel #2");
-        tabbedPane.addTab("Withdraw / Transfer", panel2);
-        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-
         JComponent panel3 = makeTextPanel("Panel #3");
         tabbedPane.addTab("Invest", panel3);
-        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+        tabbedPane.setMnemonicAt(1, KeyEvent.VK_3);
 
         GUISettings settings = new GUISettings(user);
         tabbedPane.addTab("Settings", settings.getPanel());
-        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+        tabbedPane.setMnemonicAt(2, KeyEvent.VK_4);
 
         add(tabbedPane);
 
