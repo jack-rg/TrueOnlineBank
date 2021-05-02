@@ -58,6 +58,10 @@ public class StockOrder {
     public String getOrderPlacedTime(){
         return this.orderPlacedTime;
     }
+
+    public int getQuantity(){
+        return this.quantity;
+    }
     // Order Test
     public static void main(String[] args){
 

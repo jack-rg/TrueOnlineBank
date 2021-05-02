@@ -3,6 +3,8 @@ package Objects;
 
 import Util.DataManager;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +60,7 @@ public class SecurityAccount extends Account {
      * @return true, if bill succeed.
      */
     public boolean updatePosition(Stock targetStock, boolean isBuyBill, int requestQuantity){
+        String billType;
         boolean requestSucceed = false;
         String targetStockName = targetStock.getName();
         // check balance
@@ -69,13 +72,20 @@ public class SecurityAccount extends Account {
         if(!stockName2position.containsKey(targetStockName)){
             stockName2position.put(targetStockName, new StockPosition(targetStock, 0));
         }
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+
         StockPosition targetPosition = stockName2position.get(targetStockName);
+
         if(isBuyBill){
+            billType = "BUY";
             requestSucceed = targetPosition.addStock(targetStock, requestQuantity);
             // update balance
             this.setBalance(this.getBalance() - targetStock.getLastPrice() * requestQuantity);
+
         }
         else{
+            billType = "SELL";
             requestSucceed = targetPosition.deductStock(targetStock, requestQuantity);
             // update balance
             this.setBalance(this.getBalance() + targetStock.getLastPrice() * requestQuantity);
@@ -85,9 +95,9 @@ public class SecurityAccount extends Account {
             return false;
         }
         this.accountPositionsDisplay();
-        //System.out.println(REQUEST_FINISH_INFO);
 
-        // write info to Order
+        StockOrder stockOrder = new StockOrder(targetStock,requestQuantity,billType,dtf.format(LocalDateTime.now()));
+        DataManager.writeStockOrder(stockOrder);
 
         return true;
     }
@@ -97,12 +107,12 @@ public class SecurityAccount extends Account {
         SecurityAccount securityAccount = new SecurityAccount("Atlas", "SecurityAccount0", "UserSEC", 20000);
         Stock targetStock0 = new Stock("TWTR", "Twitter", 20);
        Stock targetStock1 = new Stock("AAPL", "Apple", 131);
-//        Stock targetStock2 = new Stock("TWTR", "Twitter", 40);
-        securityAccount.updatePosition(targetStock0, true, 100);
-       securityAccount.updatePosition(targetStock1, true, 10);
-//        securityAccount.updatePosition(targetStock2, true, 100);
-        securityAccount.updatePosition(targetStock0, false, 100);
 
+       securityAccount.updatePosition(targetStock0, true, 100);
+       securityAccount.updatePosition(targetStock1, true, 10);
+       securityAccount.updatePosition(targetStock0, false, 10);
+
+        // check position is manually requested by manager or user.
         DataManager.writePositions(securityAccount);
     }
 }

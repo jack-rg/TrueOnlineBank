@@ -98,14 +98,10 @@ public class DataManager {
     public static void writeStockOrder(StockOrder stockOrder){
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderRecord.txt";
         // if already exists, simply delete one and create one.
-        File deleteFile = new File(file);
-        if(deleteFile.exists()){
-            deleteFile.delete();
-        }
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            String transactionFormatter = "%s | %s | %f | %s \n";
+            String transactionFormatter = "%s | %s | %s | %s | %f \n";
 
 //            public void displayOrder(){
 //                System.out.println( "Symbol: " + stock.getSymbol() +
@@ -115,10 +111,11 @@ public class DataManager {
 //                );
 //            }
             out.printf(transactionFormatter,
+                    stockOrder.getOrderPlacedTime(),
                     stockOrder.getOrderStockName(),
                     stockOrder.getOrderStockSymbol(),
-                    stockOrder.getOrderLastPrice(),
-                    stockOrder.getOrderPlacedTime()
+                    stockOrder.getQuantity(),
+                    stockOrder.getOrderLastPrice()
             );
 
             out.flush();
