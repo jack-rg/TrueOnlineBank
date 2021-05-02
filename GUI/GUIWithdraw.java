@@ -1,6 +1,7 @@
 package GUI;
 
 import Objects.Account;
+import Objects.Person;
 import Objects.User;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class GUIWithdraw extends JPanel {
     JPanel panel;
     JButton submitBtn;
 
-    public GUIWithdraw(User user, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
+    public GUIWithdraw(Person person, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -22,7 +23,7 @@ public class GUIWithdraw extends JPanel {
         accountChoiceLabel.setBounds(30, 50, 400, 25);
         panel.add(accountChoiceLabel);
 
-        ArrayList<Account> accounts = user.getActiveAccounts();
+        ArrayList<Account> accounts = person.getActiveAccounts();
         HashMap<String, Account> accMap = new HashMap<String, Account>();
 
         for (Account a : accounts) {

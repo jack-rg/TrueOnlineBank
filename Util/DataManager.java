@@ -128,8 +128,8 @@ public class DataManager {
         }
     }
 
-    public static void loadAccounts(User user) {
-        String userID = user.getUserID();
+    public static void loadAccounts(Person person) {
+        String userID = person.getUserID();
         ArrayList<Account> accounts = new ArrayList<Account>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
 
@@ -180,7 +180,7 @@ public class DataManager {
             e1.printStackTrace();
         }
 
-        user.setAccounts(accounts);
+        person.setAccounts(accounts);
     }
 
     public static void loadTransactions(Account account) {
@@ -249,7 +249,13 @@ public class DataManager {
     }
 
     public static void updatePerson(Person person) {
-        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+    	String file;
+    	if(person instanceof Manager) {
+    		file = Paths.get("").toAbsolutePath() + "/Logs/managerLog.txt";
+    	}
+    	else {
+    		file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+    	}
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -279,6 +285,35 @@ public class DataManager {
             e1.printStackTrace();
         }
     }
+    
+
+    public static Manager isManager(String username, String password) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/managerLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            ArrayList<String> traceFile = new ArrayList<String>();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains("| " + username + " |") && line.contains("| " + password + " |")) {
+                        String[] user = line.split(" \\| ");
+                        String userID = user[4];
+                        return new Manager(username, password, userID);
+                } else {
+                    traceFile.add(line);
+                }
+            }
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        return null;
+    }
+
+    
+    
 
     public static void updateAccount(Account account) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";

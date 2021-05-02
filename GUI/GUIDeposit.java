@@ -1,6 +1,7 @@
 package GUI;
 
 import Objects.Account;
+import Objects.Person;
 import Objects.User;
 import Types.CurrencyType;
 
@@ -14,7 +15,7 @@ public class GUIDeposit extends JPanel {
     JPanel panel;
     JButton submitBtn;
 
-    public GUIDeposit(User user, GUIAccountsOverview accountsOverview) {
+    public GUIDeposit(Person person, GUIAccountsOverview accountsOverview) {
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -22,7 +23,7 @@ public class GUIDeposit extends JPanel {
         accountChoiceLabel.setBounds(30, 50, 400, 25);
         panel.add(accountChoiceLabel);
 
-        ArrayList<Account> accounts = user.getActiveAccounts();
+        ArrayList<Account> accounts = person.getActiveAccounts();
         HashMap<String, Account> accMap = new HashMap<String, Account>();
 
         for (Account a : accounts) {

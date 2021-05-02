@@ -1,5 +1,6 @@
 package GUI;
 
+import Objects.Person;
 import Objects.User;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.awt.event.ActionListener;
 public class GUISettings {
     JPanel panel;
 
-    public GUISettings(User user) {
+    public GUISettings(Person person) {
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -17,7 +18,7 @@ public class GUISettings {
         currentUsernameLabel.setBounds(30, 25, 120, 25);
         panel.add(currentUsernameLabel);
 
-        JLabel usernameLabel = new JLabel(user.getUserName());
+        JLabel usernameLabel = new JLabel(person.getUserName());
         usernameLabel.setBounds(180, 25, 70, 25);
         panel.add(usernameLabel);
 
@@ -49,7 +50,7 @@ public class GUISettings {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameTxt.getText();
                 if (!username.equals("")) {
-                    user.setUserName(username);
+                    person.setUserName(username);
                     usernameLabel.setText(username);
                 }
 
@@ -66,7 +67,7 @@ public class GUISettings {
         panel.add(changeUsernameBtn);
         panel.add(usernameSubmitBtn);
 
-        String password = user.getPassword();
+        String password = person.getPassword();
         JLabel currentPasswordLabel = new JLabel("Current password: ");
         currentPasswordLabel.setBounds(30, 50, 120, 25);
         panel.add(currentPasswordLabel);
@@ -106,7 +107,7 @@ public class GUISettings {
             public void actionPerformed(ActionEvent e) {
                 String password = String.valueOf(passwordTxt.getPassword());
                 if (!password.equals("")) {
-                    user.setPassword(password);
+                    person.setPassword(password);
                     passwordLabel.setText(password.substring(0, 2) + "*".repeat(password.length() - 2));
                 }
 

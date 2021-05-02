@@ -1,6 +1,7 @@
 package GUI;
 
 import Objects.Account;
+import Objects.Person;
 import Objects.User;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 public class GUITransfer extends JPanel {
     JPanel panel;
 
-    public GUITransfer(User user, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
+    public GUITransfer(Person person, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -40,7 +41,7 @@ public class GUITransfer extends JPanel {
         fromAccountChoiceLabel.setVisible(false);
         panel.add(fromAccountChoiceLabel);
 
-        ArrayList<Account> accounts = user.getActiveAccounts();
+        ArrayList<Account> accounts = person.getActiveAccounts();
         HashMap<String, Account> accMap = new HashMap<String, Account>();
 
         for (Account a : accounts) {
