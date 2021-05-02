@@ -102,6 +102,7 @@ public abstract class Account implements TransactionInterface {
             DataManager.writeTransaction(transaction, userID, accountID);
 
             value -= funds;
+            DataManager.updateAccount(this);
             return true;
         } else {
             return false;
