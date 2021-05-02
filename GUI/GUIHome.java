@@ -5,9 +5,7 @@ import Objects.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GUIHome extends JPanel {
@@ -18,26 +16,22 @@ public class GUIHome extends JPanel {
     public GUIHome(User user) {
         super(new GridLayout(1, 1));
 
-        this.accounts = user.getRawAccounts();
-
         tabbedPane = new JTabbedPane();
-        ImageIcon icon = createImageIcon("images/middle.gif");
 
-        GUIAccountsHome accountsHome = new GUIAccountsHome(accounts);
-        tabbedPane.addTab("Accounts", icon, accountsHome.getPanel(), null);
+        GUIAccountsHome accountsHome = new GUIAccountsHome(user);
+        tabbedPane.addTab("Accounts", accountsHome.getTabbedPane());
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         JComponent panel2 = makeTextPanel("Panel #2");
-        tabbedPane.addTab("Withdraw and Transfer", icon, panel2, null);
+        tabbedPane.addTab("Withdraw / Transfer", panel2);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         JComponent panel3 = makeTextPanel("Panel #3");
-        tabbedPane.addTab("Invest", icon, panel3,
-                "Still does nothing");
+        tabbedPane.addTab("Invest", panel3);
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
         GUISettings settings = new GUISettings(user);
-        tabbedPane.addTab("Settings", icon, settings.getPanel(), null);
+        tabbedPane.addTab("Settings", settings.getPanel());
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
         add(tabbedPane);
@@ -52,20 +46,6 @@ public class GUIHome extends JPanel {
         panel.setLayout(new GridLayout(1, 1));
         panel.add(filler);
         return panel;
-    }
-
-    /**
-     * Returns an ImageIcon, or null if the path was invalid.
-     */
-    protected static ImageIcon createImageIcon(String path) {
-        // java.net.URL imgURL = TabbedPaneDemo.class.getResource(path);
-        // if (imgURL != null) {
-        //     return new ImageIcon(imgURL);
-        // } else {
-        //     System.err.println("Couldn't find file: " + path);
-        //     return null;
-        // }
-        return null; // set to null for know, could change to show icons if we wanted
     }
 
     public JTabbedPane getTabbedPane() {

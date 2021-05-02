@@ -33,7 +33,6 @@ public class GUIBank extends JFrame {
         addLogin();
         addRegister();
 
-        // Turn it on
         frame.setVisible(true);
     }
 

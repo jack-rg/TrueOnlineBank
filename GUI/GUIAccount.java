@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class GUIAccount {
     JPanel panel;
     JButton goBackButton;
+    JButton deleteAccountButton;
 
     public GUIAccount(Account account) {
         panel = new JPanel();
@@ -24,18 +25,18 @@ public class GUIAccount {
         goBackButton.setBounds(25, 25, 80, 40);
         topPanel.add(goBackButton);
 
-        JButton deleteAccountButton = new JButton("Delete this account");
+        deleteAccountButton = new JButton("Delete this account");
         deleteAccountButton.setBounds(120, 25, 150, 40);
         topPanel.add(deleteAccountButton);
 
         deleteAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: delete account lol
+                account.deactivate();
             }
         });
 
-        JLabel accountNameLabel = new JLabel(account.getName() + ": $" + account.getValue());
+        JLabel accountNameLabel = new JLabel(account.getAccountType() + ": $" + account.getValue());
         accountNameLabel.setBounds(30, 80, 150, 25);
         topPanel.add(accountNameLabel);
 
@@ -66,4 +67,6 @@ public class GUIAccount {
     public JButton getGoBackButton() {
         return goBackButton;
     }
+
+    public JButton getDeleteAccountButton() { return deleteAccountButton; }
 }

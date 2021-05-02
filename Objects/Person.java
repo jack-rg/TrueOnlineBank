@@ -1,5 +1,6 @@
 package Objects;
 
+import Types.AccountState;
 import Util.DataManager;
 
 import java.util.*;
@@ -52,6 +53,18 @@ public abstract class Person {
     }
 
     public void setAccounts(ArrayList<Account> accounts) { this.accounts = accounts; }
+
+    public ArrayList<Account> getActiveAccounts() {
+        ArrayList<Account> active = new ArrayList<Account>();
+
+        for (Account a : accounts) {
+            if (a.getStatus() == AccountState.ACTIVE) {
+                active.add(a);
+            }
+        }
+
+        return active;
+    }
 
     public void addNewAccount(Account newAccount) {
         DataManager.writeAccount(newAccount);

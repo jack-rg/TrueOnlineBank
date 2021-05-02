@@ -2,6 +2,8 @@ package Util;
 
 import Objects.*;
 import Types.AccountState;
+import Types.AccountType;
+import Types.CurrencyType;
 import Types.TransactionType;
 
 import java.io.*;
@@ -9,6 +11,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Currency;
 
 public class DataManager {
     public static void writeUser(User user) {
@@ -35,9 +38,9 @@ public class DataManager {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String accountFormatter = "%s | %s | %s | %s | %f | %s \n";
-            out.printf(accountFormatter, dtf.format(LocalDateTime.now()), account.getUserID(), account.getName(),
-                    account.getAccountID(), account.getValue(), "ACTIVE");
+            String accountFormatter = "%s | %s | %s | %s | %f | %s | %s \n";
+            out.printf(accountFormatter, dtf.format(LocalDateTime.now()), account.getUserID(), account.getAccountType(),
+                    account.getAccountID(), account.getValue(), account.getStatus(), account.getCurrencyType());
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -72,16 +75,40 @@ public class DataManager {
             String line;
 
             while ((line = br.readLine()) != null) {
-                if (line.contains("| " + userID + " |") && line.contains("| " + "ACTIVE")) {
+                if (line.contains("| " + userID + " |")) {
                     String[] account = line.split(" \\| ");
                     String accountType = account[3];
                     String accountID = account[4];
                     float value = Float.valueOf(account[5]);
+                    String status = account[6];
+                    String currencyType = account[7];
 
-                    if (accountType.equals("Checking")) {
-                        accounts.add(new Checking("Checking", accountID, userID, value));
+                    AccountState accountState;
+                    if (status.equals("ACTIVE")) {
+                        accountState = AccountState.ACTIVE;
                     } else {
-                        accounts.add(new Saving("Saving", accountID, userID, value));
+                        accountState = AccountState.INACTIVE;
+                    }
+
+                    CurrencyType cType;
+                    switch (currencyType) {
+                        case "EUR":
+                            cType = CurrencyType.EUR;
+                            break;
+                        case "INR":
+                            cType = CurrencyType.INR;
+                            break;
+                        case "GDP":
+                            cType = CurrencyType.GDP;
+                            break;
+                        default:
+                            cType = CurrencyType.USD;
+                            break;
+                    }
+                    if (accountType.equals("Checking")) {
+                        accounts.add(new Checking(AccountType.CHECKING, accountID, userID, value, cType, accountState));
+                    } else {
+                        accounts.add(new Saving(AccountType.SAVING, accountID, userID, value, cType, accountState));
                     }
                 }
             }
@@ -190,7 +217,6 @@ public class DataManager {
     }
 
     public static void deactivateAccount(Account account) {
-        AccountState status = AccountState.INACTIVE;
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
 
         try {
@@ -201,7 +227,7 @@ public class DataManager {
             while ((line = br.readLine()) != null) {
                 if (line.contains("| " + account.getUserID() + " |") && line.contains("| " + account.getAccountID() + " |")) {
                     String[] accountInfo = line.split(" \\| ");
-                    accountInfo[accountInfo.length - 1] = "INACTIVE";
+                    accountInfo[accountInfo.length - 2] = "INACTIVE";
                     String replaced = String.join(" | ", accountInfo);
                     traceFile.add(replaced);
                 } else {

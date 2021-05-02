@@ -1,13 +1,14 @@
 package Types;
 
-public enum CurrencyExchangeRate {
+public enum CurrencyType {
+    USD(1F), // US Dollar
     EUR(0.82780F), // Euro
     INR(74.6229F), // Rupee
     GDP(0.71954F); // Pound
 
     private final float value;
 
-    CurrencyExchangeRate(float value) {
+    CurrencyType(float value) {
         this.value = value;
     }
 
