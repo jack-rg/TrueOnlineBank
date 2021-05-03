@@ -72,16 +72,16 @@ public class MD5Util {
         }
     }
 
-    public static void main(String[] args) {
-        // Salt
-        String salt = "helloworld";
-        MD5Util encoderMD5Util = new MD5Util(salt, "MD5");
-        String encode = encoderMD5Util.encode("test");
-        // MD5 with salt
-        System.out.println("MD5 with salt " + encode);
-        // MD5 without salt
-        System.out.println("MD5 without salt " + new MD5Util(null, "MD5").encode("test"));
-
-    }
+//    public static void main(String[] args) {
+//        // Salt
+//        String salt = "helloworld";
+//        MD5Util encoderMD5Util = new MD5Util(salt, "MD5");
+//        String encode = encoderMD5Util.encode("test");
+//        // MD5 with salt
+//        System.out.println("MD5 with salt " + encode);
+//        // MD5 without salt
+//        System.out.println("MD5 without salt " + new MD5Util(null, "MD5").encode("test"));
+//
+//    }
 
 }

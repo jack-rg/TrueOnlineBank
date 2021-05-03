@@ -17,7 +17,7 @@ public abstract class Person {
         this.userName = userName;
         this.password = password;
         this.userID = userID;
-        accounts = new ArrayList<Account>();
+        accounts = new ArrayList<>();
         String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
         securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, userID);
     }
@@ -26,9 +26,13 @@ public abstract class Person {
         return userName;
     }
 
-    public void setUserName(String newName) {
-        userName = newName;
-        DataManager.updatePerson(this);
+    public boolean setUserName(String newName) {
+        if (DataManager.updatePerson(this, newName, null)) {
+            userName = newName;
+            return true;
+        }
+
+        return false;
     }
 
     public String getPassword() {
@@ -37,7 +41,7 @@ public abstract class Person {
 
     public void setPassword(String newPass) {
         password = newPass;
-        DataManager.updatePerson(this);
+        DataManager.updatePerson(this, null, newPass);
     }
 
     public boolean authenPassword(String checkPass) {
@@ -57,7 +61,7 @@ public abstract class Person {
     public void setAccounts(ArrayList<Account> accounts) { this.accounts = accounts; }
 
     public ArrayList<Account> getActiveAccounts() {
-        ArrayList<Account> active = new ArrayList<Account>();
+        ArrayList<Account> active = new ArrayList<>();
 
         for (Account a : accounts) {
             if (a.getStatus() == AccountState.ACTIVE) {

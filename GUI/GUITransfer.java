@@ -2,7 +2,6 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
-import Objects.User;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -15,6 +14,8 @@ import java.util.HashMap;
 
 public class GUITransfer extends JPanel {
     JPanel panel;
+
+    HashMap<String, Account> accMap;
 
     public GUITransfer(Person person, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
         panel = new JPanel();
@@ -41,26 +42,22 @@ public class GUITransfer extends JPanel {
         fromAccountChoiceLabel.setVisible(false);
         panel.add(fromAccountChoiceLabel);
 
-        ArrayList<Account> accounts = person.getActiveAccounts();
-        HashMap<String, Account> accMap = new HashMap<String, Account>();
-
-        for (Account a : accounts) {
-            accMap.put(a.toString(), a);
-        }
-
-        String[] keyArray = accMap.keySet().toArray(new String[0]);
-
-        JComboBox<String> fromAccountCB = new JComboBox<String>(keyArray);
+        JComboBox<String> fromAccountCB = new JComboBox<>(getAccountKeys(person.getActiveAccounts()));
         fromAccountCB.setBounds(30, 150, 300, 25);
         fromAccountCB.setVisible(false);
         panel.add(fromAccountCB);
 
-        JLabel toAccountChoiceLabel = new JLabel("Please choose an account to transfer to:");
-        toAccountChoiceLabel.setBounds(30, 180, 400, 25);
+        JLabel toAccountChoiceLabel = new JLabel();
+        toAccountChoiceLabel.setBounds(30, 190, 400, 25);
         toAccountChoiceLabel.setVisible(false);
         panel.add(toAccountChoiceLabel);
 
-        JComboBox<String> toAccountCB = new JComboBox<>(keyArray);
+        JTextField accountIDTF = new JTextField(20);
+        accountIDTF.setBounds(300, 190, 165, 25);
+        accountIDTF.setVisible(false);
+        panel.add(accountIDTF);
+
+        JComboBox<String> toAccountCB = new JComboBox<>(getAccountKeys(person.getActiveAccounts()));
         toAccountCB.setBounds(30, 210, 300, 25);
         toAccountCB.setVisible(false);
         panel.add(toAccountCB);
@@ -92,8 +89,11 @@ public class GUITransfer extends JPanel {
                 fromAccountChoiceLabel.setVisible(true);
                 fromAccountCB.setVisible(true);
 
+                toAccountChoiceLabel.setText("Please choose an account to transfer to:");
                 toAccountChoiceLabel.setVisible(true);
                 toAccountCB.setVisible(true);
+
+                accountIDTF.setVisible(false);
 
                 depositAmountLabel.setVisible(true);
                 transferTF.setVisible(true);
@@ -106,8 +106,11 @@ public class GUITransfer extends JPanel {
                 fromAccountChoiceLabel.setVisible(true);
                 fromAccountCB.setVisible(true);
 
-                toAccountChoiceLabel.setVisible(false);
+                toAccountChoiceLabel.setText("Please enter the accountID to transfer to:");
+                toAccountChoiceLabel.setVisible(true);
                 toAccountCB.setVisible(false);
+
+                accountIDTF.setVisible(true);
 
                 depositAmountLabel.setVisible(true);
                 transferTF.setVisible(true);
@@ -120,21 +123,34 @@ public class GUITransfer extends JPanel {
                 Account fromAccount = accMap.get(fromAccountCB.getSelectedItem());
                 Account toAccount = accMap.get(toAccountCB.getSelectedItem());
 
-                if (fromAccount.getAccountID().equals(toAccount.getAccountID())) {
+                String toAccountID;
+                if (accountTransferRB.isSelected()) {
+                    toAccountID = toAccount.getAccountID();
+                } else {
+                    toAccountID = accountIDTF.getText();
+                }
+
+                if (fromAccount.getAccountID().equals(toAccountID)) {
                     errorLabel.setText("Cannot transfer funds across the same account.");
                     errorLabel.setVisible(true);
                 } else if (transferTF.getText().equals("")) {
                     errorLabel.setText("Please enter a transfer amount.");
                     errorLabel.setVisible(true);
                 } else {
-                    Float amount = Float.parseFloat(transferTF.getText());
+                    double amount = Double.parseDouble(transferTF.getText());
 
                     if (amount > fromAccount.getBalance()) {
                         errorLabel.setText("Insufficient funds.");
                         errorLabel.setVisible(true);
                     } else {
-                        fromAccount.withdraw(amount, "Transfer to " + toAccount.getAccountID());
-                        toAccount.deposit(amount, "Transfer from " + fromAccount.getAccountID(), fromAccount.getCurrencyType());
+                        if (accountTransferRB.isSelected()) {
+                            fromAccount.transferTo(toAccount, amount);
+                        } else {
+                            if (!fromAccount.transferTo(toAccountID, amount)) {
+                                errorLabel.setText("Account not found.");
+                                errorLabel.setVisible(true);
+                            }
+                        }
 
                         accountsOverview.update();
                         tabbedPane.setSelectedIndex(0);
@@ -145,4 +161,14 @@ public class GUITransfer extends JPanel {
     }
 
     public JPanel getPanel() { return panel; }
+
+    private String[] getAccountKeys(ArrayList<Account> accounts) {
+        accMap = new HashMap<>();
+
+        for (Account a : accounts) {
+            accMap.put(a.toString(), a);
+        }
+
+        return accMap.keySet().toArray(new String[0]);
+    }
 }

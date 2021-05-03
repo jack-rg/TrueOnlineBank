@@ -116,12 +116,12 @@ public class StockPosition {
     }
 
 
-    public static void main(String[] args){
-        StockPosition stockPosition = new StockPosition(new Stock("TWTR", "Twitter", 55.28), 100);
-        stockPosition.positionInfoDisplay();
-        stockPosition.addStock(new Stock("TWTR", "Twitter", 20), 100);
-        stockPosition.deductStock(new Stock("TWTR", "Twitter", 20), 100);
-        stockPosition.positionInfoDisplay();
-
-    }
+//    public static void main(String[] args){
+//        StockPosition stockPosition = new StockPosition(new Stock("TWTR", "Twitter", 55.28), 100);
+//        stockPosition.positionInfoDisplay();
+//        stockPosition.addStock(new Stock("TWTR", "Twitter", 20), 100);
+//        stockPosition.deductStock(new Stock("TWTR", "Twitter", 20), 100);
+//        stockPosition.positionInfoDisplay();
+//
+//    }
 }

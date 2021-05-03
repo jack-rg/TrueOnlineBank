@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 public class GUIHome extends JPanel {
     JTabbedPane tabbedPane;
-
-    ArrayList<Account> accounts;
+    JButton logOutBtn;
 
     public GUIHome(Person person) {
         super(new GridLayout(1, 1));
@@ -24,7 +23,6 @@ public class GUIHome extends JPanel {
         tabbedPane.addTab("Accounts", accountsHome.getTabbedPane());
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        //JComponent panel3 = makeTextPanel("Panel #3");
         GUIInvestmentHome investmentHome = new GUIInvestmentHome(person);
         tabbedPane.addTab("Invest", investmentHome.getPanel());
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
@@ -33,18 +31,18 @@ public class GUIHome extends JPanel {
         tabbedPane.addTab("Settings", settings.getPanel());
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
-        if(person instanceof Manager){
+        logOutBtn = settings.getLogOutBtn();
+
+        if (person instanceof Manager) {
             JComponent panel4 = makeTextPanel("Panel #5");
-           tabbedPane.addTab("Manage", panel4);
+            tabbedPane.addTab("Manage", panel4);
             tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
-            
+
             JComponent panel5 = makeTextPanel("Panel #6");
-           tabbedPane.addTab("Update Stocks", panel5);
+            tabbedPane.addTab("Update Stocks", panel5);
             tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
-            
         }
-        
-        
+
         add(tabbedPane);
 
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -62,4 +60,6 @@ public class GUIHome extends JPanel {
     public JTabbedPane getTabbedPane() {
         return tabbedPane;
     }
+
+    public JButton getLogOutBtn() { return logOutBtn; }
 }

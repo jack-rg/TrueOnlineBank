@@ -1,16 +1,17 @@
 package GUI;
 
 import Objects.Person;
-import Objects.User;
 import Util.DataManager;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class GUIBank extends JFrame {
     Container c;
     CardLayout cards;
+
+    JButton logOutBtn;
 
     public GUIBank() {
         JFrame frame = new JFrame();
@@ -83,6 +84,14 @@ public class GUIBank extends JFrame {
     private void addHome(Person user) {
         GUIHome home = new GUIHome(user);
         c.add(home.getTabbedPane(), "Home");
+
+        logOutBtn = home.getLogOutBtn();
+        logOutBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cards.show(c, "Login");
+            }
+        });
     }
 
     public static void run() {

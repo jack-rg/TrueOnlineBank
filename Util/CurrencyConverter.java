@@ -3,7 +3,7 @@ package Util;
 import Types.CurrencyType;
 
 public class CurrencyConverter {
-    public static float execute(CurrencyType convertFrom, CurrencyType convertTo, float amount) {
+    public static double execute(CurrencyType convertFrom, CurrencyType convertTo, double amount) {
         switch (convertFrom) {
             case EUR:
                 return EURTo(convertTo, amount);
@@ -16,7 +16,7 @@ public class CurrencyConverter {
         }
     }
 
-    private static float EURTo(CurrencyType convertTo, float amount) {
+    private static double EURTo(CurrencyType convertTo, double amount) {
         switch (convertTo) {
             case EUR:
                 return amount;
@@ -29,7 +29,7 @@ public class CurrencyConverter {
         }
     }
 
-    private static float INRTo(CurrencyType convertTo, float amount) {
+    private static double INRTo(CurrencyType convertTo, double amount) {
         switch (convertTo) {
             case EUR:
                 return amount / CurrencyType.INR.getValue() * CurrencyType.EUR.getValue();
@@ -42,7 +42,7 @@ public class CurrencyConverter {
         }
     }
 
-    private static float GBPTo(CurrencyType convertTo, float amount) {
+    private static double GBPTo(CurrencyType convertTo, double amount) {
         switch (convertTo) {
             case EUR:
                 return amount / CurrencyType.GBP.getValue() * CurrencyType.EUR.getValue();
@@ -55,7 +55,7 @@ public class CurrencyConverter {
         }
     }
 
-    private static float USDTo(CurrencyType convertTo, float amount) {
+    private static double USDTo(CurrencyType convertTo, double amount) {
         switch (convertTo) {
             case EUR:
                 return amount * CurrencyType.EUR.getValue();

@@ -1,14 +1,15 @@
 package GUI;
 
 import Objects.Person;
-import Objects.User;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUISettings {
     JPanel panel;
+    JButton logOutBtn;
 
     public GUISettings(Person person) {
         panel = new JPanel();
@@ -34,6 +35,12 @@ public class GUISettings {
         usernameSubmitBtn.setBounds(250, 25, 80, 25);
         usernameSubmitBtn.setVisible(false);
 
+        JLabel errorLabel = new JLabel();
+        errorLabel.setBounds(30, 410, 400, 40);
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
+        panel.add(errorLabel);
+
         changeUsernameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,8 +57,13 @@ public class GUISettings {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameTxt.getText();
                 if (!username.equals("")) {
-                    person.setUserName(username);
-                    usernameLabel.setText(username);
+                    if (person.setUserName(username)) {
+                        usernameLabel.setText(username);
+                        errorLabel.setVisible(false);
+                    } else {
+                        errorLabel.setText("Username already exists.");
+                        errorLabel.setVisible(true);
+                    }
                 }
 
                 usernameTxt.setText("");
@@ -88,8 +100,13 @@ public class GUISettings {
         passwordSubmitBtn.setBounds(250, 50, 80, 25);
         passwordSubmitBtn.setVisible(false);
 
+        logOutBtn = new JButton("Log Out");
+        logOutBtn.setBounds(30, 100, 80, 40);
+        logOutBtn.setVisible(true);
+
         panel.add(changePasswordBtn);
         panel.add(passwordSubmitBtn);
+        panel.add(logOutBtn);
 
         changePasswordBtn.addActionListener(new ActionListener() {
             @Override
@@ -125,4 +142,6 @@ public class GUISettings {
     public JPanel getPanel() {
         return panel;
     }
+
+    public JButton getLogOutBtn() { return logOutBtn; }
 }

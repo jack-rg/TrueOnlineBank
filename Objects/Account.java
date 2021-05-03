@@ -91,8 +91,8 @@ public abstract class Account implements TransactionInterface {
 
     public AccountState getStatus() { return status; }
 
-    public void deposit(float funds, String name, CurrencyType cType) {
-        float convertedFunds = CurrencyConverter.execute(cType, currencyType, funds);
+    public void deposit(double funds, String name, CurrencyType cType) {
+        double convertedFunds = CurrencyConverter.execute(cType, currencyType, funds);
 
         Transaction transaction = new Transaction(name, convertedFunds, TransactionType.DEPOSIT);
         DataManager.writeTransaction(transaction, userID, accountID);
@@ -101,7 +101,7 @@ public abstract class Account implements TransactionInterface {
         DataManager.updateAccount(this);
     }
 
-    public boolean withdraw(float funds, String name) {
+    public boolean withdraw(double funds, String name) {
         if (balance - funds >= 0) {
             Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
             DataManager.writeTransaction(transaction, userID, accountID);
@@ -112,6 +112,21 @@ public abstract class Account implements TransactionInterface {
         } else {
             return false;
         }
+    }
+
+    public boolean transferTo(Account account, double amount) {
+        withdraw(amount, "Transfer to " + account.getAccountID());
+        account.deposit(amount, "Transfer from " + accountID, currencyType);
+        return true;
+    }
+
+    public boolean transferTo(String accountID, double amount) {
+        Account account = DataManager.loadAccount(accountID);
+        if (account != null) {
+            return transferTo(account, amount);
+        }
+
+        return false;
     }
 
     public void deactivate() {

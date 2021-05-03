@@ -49,8 +49,7 @@ public class GUIAccount {
             JPanel transactionsPanel = new JPanel();
             transactionsPanel.setLayout(new GridLayout(transactions.size(), 1));
 
-            for (int i = 0; i < transactions.size(); i++) {
-                Transaction t = transactions.get(i);
+            for (Transaction t : transactions) {
                 transactionsPanel.add((new GUITransaction(t)).getPanel());
             }
 
