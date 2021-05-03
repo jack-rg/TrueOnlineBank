@@ -3,6 +3,7 @@ package GUI;
 import Objects.Account;
 import Objects.Person;
 import Objects.User;
+import Util.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +14,17 @@ import java.util.HashMap;
 
 public class GUIWithdraw extends JPanel {
     JPanel panel;
-    JButton submitBtn;
+    JComboBox<String> accountCB;
+    JTextField withdrawTF;
+    JLabel errorLabel;
 
-    public GUIWithdraw(Person person, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
+    HashMap<String, Account> accMap;
+
+    Person person;
+
+    public GUIWithdraw(Person person, GUIAccountsHome home) {
+        this.person = person;
+
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -23,16 +32,9 @@ public class GUIWithdraw extends JPanel {
         accountChoiceLabel.setBounds(30, 50, 400, 25);
         panel.add(accountChoiceLabel);
 
-        ArrayList<Account> accounts = person.getActiveAccounts();
-        HashMap<String, Account> accMap = new HashMap<String, Account>();
+        accMap = AccountManager.getAccMap(person);
 
-        for (Account a : accounts) {
-            accMap.put(a.toString(), a);
-        }
-
-        String[] keyArray = accMap.keySet().toArray(new String[0]);
-
-        JComboBox<String> accountCB = new JComboBox<String>(keyArray);
+        accountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
         accountCB.setBounds(30, 80, 300, 25);
         panel.add(accountCB);
 
@@ -41,14 +43,14 @@ public class GUIWithdraw extends JPanel {
         panel.add(depositAmountLabel);
 
         // TODO: validation on input
-        JTextField depositTF = new JTextField(20);
-        depositTF.setBounds(270, 140, 165, 25);
-        panel.add(depositTF);
+        withdrawTF = new JTextField(20);
+        withdrawTF.setBounds(270, 140, 165, 25);
+        panel.add(withdrawTF);
 
-        submitBtn = new JButton("Submit");
+        JButton submitBtn = new JButton("Submit");
         submitBtn.setBounds(30, 370, 280, 40);
 
-        JLabel errorLabel = new JLabel("Insufficient funds");
+        errorLabel = new JLabel("Insufficient funds");
         errorLabel.setBounds(30, 410, 280, 40);
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
@@ -59,9 +61,8 @@ public class GUIWithdraw extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Account account = accMap.get(accountCB.getSelectedItem());
 
-                if (account.withdraw(Float.parseFloat(depositTF.getText()), "ATM Withdrawal")) {
-                    accountsOverview.update();
-                    tabbedPane.setSelectedIndex(0);
+                if (account.withdraw(Float.parseFloat(withdrawTF.getText()), "ATM Withdrawal")) {
+                    home.updateAll();
                 } else {
                     errorLabel.setVisible(true);
                 }
@@ -71,11 +72,19 @@ public class GUIWithdraw extends JPanel {
         panel.add(submitBtn);
     }
 
-    public JPanel getPanel() {
-        return panel;
+    public void update() {
+        withdrawTF.setText("");
+
+        accountCB.removeAllItems();
+        accMap = AccountManager.getAccMap(person);
+        for (String a : AccountManager.getAccKeys(accMap)) {
+            accountCB.addItem(a);
+        }
+
+        errorLabel.setVisible(false);
     }
 
-    public JButton getSubmitBtn() {
-        return submitBtn;
+    public JPanel getPanel() {
+        return panel;
     }
 }

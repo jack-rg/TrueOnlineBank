@@ -1,5 +1,5 @@
 2021/05/02 | 17:32:04 | U0 | Savings | A01 | 800.00 | ACTIVE | USD
-2021/05/03 | 13:53:40 | U1 | Savings | A11 | 500.0 | ACTIVE | EUR
-2021/05/03 | 13:53:55 | U1 | Checking | A12 | 0.0 | ACTIVE | USD
+2021/05/03 | 16:28:17 | U1 | Savings | A11 | 500.0 | ACTIVE | USD
+2021/05/03 | 16:28:55 | U1 | Checking | A12 | 1000.0 | ACTIVE | USD
 2021/05/03 | 13:53:55 | U2 | Savings | A21 | 2622.0 | ACTIVE | USD
-2021/04/26 | 22:04:46 | U2 | Checking | A22 | 0.00 | INACTIVE | USD
+2021/05/03 | 16:28:55 | U2 | Checking | A22 | 250.0 | INACTIVE | USD

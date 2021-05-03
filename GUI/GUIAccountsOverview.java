@@ -9,12 +9,15 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GUIAccountsOverview {
-    JPanel panel;
-    JPanel accountsPanel;
+    JPanel panel, accountsPanel;
     CardLayout cards;
     Person user;
 
-    public GUIAccountsOverview(Person person) {
+    GUIAccountsHome home;
+
+    public GUIAccountsOverview(Person person, GUIAccountsHome home) {
+        this.home = home;
+
         panel = new JPanel();
         cards = new CardLayout();
         panel.setLayout(cards);
@@ -51,6 +54,8 @@ public class GUIAccountsOverview {
                 public void actionPerformed(ActionEvent e) {
                     accountsPanel.remove(aBtn);
                     cards.show(panel, "AccountPanel");
+
+                    home.updateAll();
                 }
             });
 

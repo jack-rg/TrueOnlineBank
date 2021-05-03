@@ -10,8 +10,7 @@ public class GUIRegister extends JFrame {
     JPanel panel;
     JTextField userText;
     JPasswordField passwordText;
-    JButton registerButton;
-    JButton goToLoginButton;
+    JButton registerButton, goToLoginButton;
     JLabel errorLabel;
 
     public GUIRegister() {

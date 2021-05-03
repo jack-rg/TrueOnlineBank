@@ -10,9 +10,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GUIAccount {
-    JButton goBackButton;
-    JButton deleteAccountButton;
     JPanel panel;
+    JButton goBackButton, deleteAccountButton;
 
     public GUIAccount(Account account) {
         panel = new JPanel();

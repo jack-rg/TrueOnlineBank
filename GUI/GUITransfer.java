@@ -2,6 +2,7 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
+import Util.AccountManager;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -14,12 +15,23 @@ import java.util.HashMap;
 
 public class GUITransfer extends JPanel {
     JPanel panel;
+    JComboBox<String> toAccountCB, fromAccountCB;
+    ButtonGroup transferTypeBG;
+    JLabel toAccountChoiceLabel, fromAccountChoiceLabel, depositAmountLabel, errorLabel;
+    JTextField accountIDTF, transferTF;
+    JButton submitBtn;
 
     HashMap<String, Account> accMap;
 
-    public GUITransfer(Person person, GUIAccountsOverview accountsOverview, JTabbedPane tabbedPane) {
+    Person person;
+
+    public GUITransfer(Person person, GUIAccountsHome home) {
+        this.person = person;
+
         panel = new JPanel();
         panel.setLayout(null);
+
+        accMap = AccountManager.getAccMap(person);
 
         JLabel transferLabel = new JLabel("What type of transfer would you like to do?");
         transferLabel.setBounds(30, 50, 450, 25);
@@ -33,51 +45,52 @@ public class GUITransfer extends JPanel {
         userTransferRB.setBounds(230, 80, 200, 25);
         panel.add(userTransferRB);
 
-        ButtonGroup G2 = new ButtonGroup();
-        G2.add(accountTransferRB);
-        G2.add(userTransferRB);
+        transferTypeBG = new ButtonGroup();
+        transferTypeBG.add(accountTransferRB);
+        transferTypeBG.add(userTransferRB);
 
-        JLabel fromAccountChoiceLabel = new JLabel("Please choose an account to transfer from:");
+        fromAccountChoiceLabel = new JLabel("Please choose an account to transfer from:");
         fromAccountChoiceLabel.setBounds(30, 120, 400, 25);
         fromAccountChoiceLabel.setVisible(false);
         panel.add(fromAccountChoiceLabel);
 
-        JComboBox<String> fromAccountCB = new JComboBox<>(getAccountKeys(person.getActiveAccounts()));
+        fromAccountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
         fromAccountCB.setBounds(30, 150, 300, 25);
         fromAccountCB.setVisible(false);
         panel.add(fromAccountCB);
 
-        JLabel toAccountChoiceLabel = new JLabel();
+        toAccountChoiceLabel = new JLabel();
         toAccountChoiceLabel.setBounds(30, 190, 400, 25);
         toAccountChoiceLabel.setVisible(false);
         panel.add(toAccountChoiceLabel);
 
-        JTextField accountIDTF = new JTextField(20);
+        accountIDTF = new JTextField(20);
         accountIDTF.setBounds(300, 190, 165, 25);
         accountIDTF.setVisible(false);
         panel.add(accountIDTF);
 
-        JComboBox<String> toAccountCB = new JComboBox<>(getAccountKeys(person.getActiveAccounts()));
+        toAccountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
         toAccountCB.setBounds(30, 210, 300, 25);
         toAccountCB.setVisible(false);
         panel.add(toAccountCB);
 
-        JLabel depositAmountLabel = new JLabel("Please enter the transfer amount:");
+        depositAmountLabel = new JLabel("Please enter the transfer amount:");
         depositAmountLabel.setBounds(30, 250, 400, 25);
         depositAmountLabel.setVisible(false);
         panel.add(depositAmountLabel);
 
         // TODO: validation on input
-        JTextField transferTF = new JTextField(20);
+        transferTF = new JTextField(20);
         transferTF.setBounds(250, 250, 165, 25);
         transferTF.setVisible(false);
         panel.add(transferTF);
 
-        JButton submitBtn = new JButton("Submit");
+        submitBtn = new JButton("Submit");
         submitBtn.setBounds(30, 370, 280, 40);
+        submitBtn.setVisible(false);
         panel.add(submitBtn);
 
-        JLabel errorLabel = new JLabel();
+        errorLabel = new JLabel();
         errorLabel.setBounds(30, 410, 400, 40);
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
@@ -97,6 +110,8 @@ public class GUITransfer extends JPanel {
 
                 depositAmountLabel.setVisible(true);
                 transferTF.setVisible(true);
+
+                submitBtn.setVisible(true);
             }
         });
 
@@ -114,6 +129,8 @@ public class GUITransfer extends JPanel {
 
                 depositAmountLabel.setVisible(true);
                 transferTF.setVisible(true);
+
+                submitBtn.setVisible(true);
             }
         });
 
@@ -152,25 +169,46 @@ public class GUITransfer extends JPanel {
                             }
                         }
 
-                        accountsOverview.update();
-                        tabbedPane.setSelectedIndex(0);
+                        home.updateAll();
                     }
                 }
             }
         });
     }
 
-    public JPanel getPanel() {
-        return panel;
-    }
+    public void update() {
+        transferTypeBG.clearSelection();
 
-    private String[] getAccountKeys(ArrayList<Account> accounts) {
-        accMap = new HashMap<>();
+        fromAccountChoiceLabel.setVisible(false);
+        fromAccountCB.setVisible(false);
 
-        for (Account a : accounts) {
-            accMap.put(a.toString(), a);
+        toAccountChoiceLabel.setVisible(false);
+        toAccountCB.setVisible(false);
+
+        accountIDTF.setText("");
+        accountIDTF.setVisible(false);
+
+        depositAmountLabel.setVisible(false);
+
+        transferTF.setText("");
+        transferTF.setVisible(false);
+
+        submitBtn.setVisible(false);
+
+        accMap = AccountManager.getAccMap(person);
+
+        toAccountCB.removeAllItems();
+        fromAccountCB.removeAllItems();
+
+        for (String a : AccountManager.getAccKeys(accMap)) {
+            toAccountCB.addItem(a);
+            fromAccountCB.addItem(a);
         }
 
-        return accMap.keySet().toArray(new String[0]);
+        errorLabel.setVisible(false);
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 }
