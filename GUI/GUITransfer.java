@@ -160,7 +160,9 @@ public class GUITransfer extends JPanel {
         });
     }
 
-    public JPanel getPanel() { return panel; }
+    public JPanel getPanel() {
+        return panel;
+    }
 
     private String[] getAccountKeys(ArrayList<Account> accounts) {
         accMap = new HashMap<>();

@@ -81,15 +81,25 @@ public abstract class Account implements TransactionInterface {
         balance = newValue;
     }
 
-    public CurrencyType getCurrencyType() { return currencyType; }
+    public CurrencyType getCurrencyType() {
+        return currencyType;
+    }
 
-    public void setCurrencyType(CurrencyType currencyType) { this.currencyType = currencyType; }
+    public void setCurrencyType(CurrencyType currencyType) {
+        this.currencyType = currencyType;
+    }
 
-    public ArrayList<Transaction> getTransactions() { return transactions; }
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
 
-    public void setTransactions(ArrayList<Transaction> transactions) { this.transactions = transactions; }
+    public void setTransactions(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
-    public AccountState getStatus() { return status; }
+    public AccountState getStatus() {
+        return status;
+    }
 
     public void deposit(double funds, String name, CurrencyType cType) {
         double convertedFunds = CurrencyConverter.execute(cType, currencyType, funds);

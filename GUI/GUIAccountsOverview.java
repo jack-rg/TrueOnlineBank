@@ -2,7 +2,6 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
-import Objects.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,6 @@ public class GUIAccountsOverview {
     JPanel panel;
     JPanel accountsPanel;
     CardLayout cards;
-
     Person user;
 
     public GUIAccountsOverview(Person person) {

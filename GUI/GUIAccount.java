@@ -10,9 +10,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GUIAccount {
-    JPanel panel;
     JButton goBackButton;
     JButton deleteAccountButton;
+    JPanel panel;
 
     public GUIAccount(Account account) {
         panel = new JPanel();
@@ -67,5 +67,7 @@ public class GUIAccount {
         return goBackButton;
     }
 
-    public JButton getDeleteAccountButton() { return deleteAccountButton; }
+    public JButton getDeleteAccountButton() {
+        return deleteAccountButton;
+    }
 }

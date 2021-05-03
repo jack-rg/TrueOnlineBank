@@ -143,5 +143,7 @@ public class GUISettings {
         return panel;
     }
 
-    public JButton getLogOutBtn() { return logOutBtn; }
+    public JButton getLogOutBtn() {
+        return logOutBtn;
+    }
 }

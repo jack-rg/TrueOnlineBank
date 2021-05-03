@@ -61,7 +61,9 @@ public class GUIRegister extends JFrame {
         return goToLoginButton;
     }
 
-    public JLabel getErrorLabel() { return errorLabel; }
+    public JLabel getErrorLabel() {
+        return errorLabel;
+    }
 
     public User execute() {
         String userName = userText.getText();

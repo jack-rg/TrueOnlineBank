@@ -10,7 +10,6 @@ import javax.swing.*;
 public class GUIBank extends JFrame {
     Container c;
     CardLayout cards;
-
     JButton logOutBtn;
 
     public GUIBank() {

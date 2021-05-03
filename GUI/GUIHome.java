@@ -1,14 +1,11 @@
 package GUI;
 
-import Objects.Account;
 import Objects.Manager;
 import Objects.Person;
-import Objects.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class GUIHome extends JPanel {
     JTabbedPane tabbedPane;
@@ -61,5 +58,7 @@ public class GUIHome extends JPanel {
         return tabbedPane;
     }
 
-    public JButton getLogOutBtn() { return logOutBtn; }
+    public JButton getLogOutBtn() {
+        return logOutBtn;
+    }
 }

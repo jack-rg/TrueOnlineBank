@@ -73,7 +73,11 @@ public class GUIDeposit extends JPanel {
         panel.add(submitBtn);
     }
 
-    public JPanel getPanel() { return panel; }
+    public JPanel getPanel() {
+        return panel;
+    }
 
-    public JButton getSubmitBtn() { return submitBtn; }
+    public JButton getSubmitBtn() {
+        return submitBtn;
+    }
 }

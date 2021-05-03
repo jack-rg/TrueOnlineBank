@@ -2,9 +2,9 @@ package Objects;
 
 /**
  * stock:
- *       1. symbol
- *       2. name
- *       3. lastPrice
+ * 1. symbol
+ * 2. name
+ * 3. lastPrice
  */
 
 public class Stock {
@@ -15,7 +15,7 @@ public class Stock {
     private double lastPrice; // the most recent price of stock
 
 
-    Stock(String symbol, String name, double lastPrice){
+    Stock(String symbol, String name, double lastPrice) {
         this.symbol = symbol;
         this.name = name;
         this.lastPrice = lastPrice;
@@ -35,13 +35,14 @@ public class Stock {
 
     /**
      * refresh the lastPrice
+     *
      * @param lastPrice
      */
-    public void setLastPrice(double lastPrice){
+    public void setLastPrice(double lastPrice) {
         this.lastPrice = lastPrice;
     }
 
-    public void stockInfoDisplay(){
-        System.out.println("Stock Symbol " + this.symbol + "Name: " + this.name + "LastPrice: " + this.lastPrice );
+    public void stockInfoDisplay() {
+        System.out.println("Stock Symbol " + this.symbol + "Name: " + this.name + "LastPrice: " + this.lastPrice);
     }
 }

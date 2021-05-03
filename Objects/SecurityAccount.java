@@ -11,19 +11,19 @@ import java.util.Map;
 
 /**
  * Key elements for a broker account are:
- *      1. ticker
- *      2. Num Of Stocks
- *      3. average Price
- *      4. current Price
- *      6. Unrealized P&L
- *      7. total Market Value
+ * 1. ticker
+ * 2. Num Of Stocks
+ * 3. average Price
+ * 4. current Price
+ * 6. Unrealized P&L
+ * 7. total Market Value
  */
 
 public class SecurityAccount extends Account {
 
     protected static String INADEQUATE_BALANCE_WARN = "Sorry, you dont have enough balance ";
     protected static String CURRENT_BALANCE_INFO = "The current balance is: ";
-    protected static String REQUEST_FINISH_INFO  = "Requested finished, position updated";
+    protected static String REQUEST_FINISH_INFO = "Requested finished, position updated";
     protected static String EMPTY_POSITION_INFO = "You dont have andy position ";
     protected static String FAILED_REQUEST_INFO = "Request failed";
 
@@ -40,37 +40,38 @@ public class SecurityAccount extends Account {
     }
 
 
-    public void accountPositionsDisplay(){
-        if(stockName2position == null || stockName2position.size() == 0){
+    public void accountPositionsDisplay() {
+        if (stockName2position == null || stockName2position.size() == 0) {
             System.out.println(EMPTY_POSITION_INFO);
             return;
         }
-        for(String stockName : stockName2position.keySet()){
+        for (String stockName : stockName2position.keySet()) {
             StockPosition position = stockName2position.get(stockName);
             position.positionInfoDisplay();
         }
         System.out.println("Current Balance: " + this.getBalance());
     }
 
-    public Map<String, StockPosition> getStockName2position(){
+    public Map<String, StockPosition> getStockName2position() {
         return this.stockName2position;
     }
 
     /**
      * buy or sell one specific stocks
+     *
      * @return true, if bill succeed.
      */
-    public boolean updatePosition(Stock targetStock, boolean isBuyBill, int requestQuantity){
+    public boolean updatePosition(Stock targetStock, boolean isBuyBill, int requestQuantity) {
         String billType;
         boolean requestSucceed = false;
         String targetStockName = targetStock.getName();
         // check balance
-        if(targetStock.getLastPrice() * requestQuantity > this.getBalance()){
+        if (targetStock.getLastPrice() * requestQuantity > this.getBalance()) {
             System.out.println(INADEQUATE_BALANCE_WARN + CURRENT_BALANCE_INFO + this.getBalance());
             return false;
         }
         // Not contains position already, create one
-        if(!stockName2position.containsKey(targetStockName)){
+        if (!stockName2position.containsKey(targetStockName)) {
             stockName2position.put(targetStockName, new StockPosition(targetStock, 0));
         }
 
@@ -78,26 +79,25 @@ public class SecurityAccount extends Account {
 
         StockPosition targetPosition = stockName2position.get(targetStockName);
 
-        if(isBuyBill){
+        if (isBuyBill) {
             billType = "BUY";
             requestSucceed = targetPosition.addStock(targetStock, requestQuantity);
             // update balance
             this.setBalance(this.getBalance() - targetStock.getLastPrice() * requestQuantity);
 
-        }
-        else{
+        } else {
             billType = "SELL";
             requestSucceed = targetPosition.deductStock(targetStock, requestQuantity);
             // update balance
             this.setBalance(this.getBalance() + targetStock.getLastPrice() * requestQuantity);
         }
-        if(!requestSucceed){
+        if (!requestSucceed) {
             System.out.println(FAILED_REQUEST_INFO);
             return false;
         }
         this.accountPositionsDisplay();
 
-        StockOrder stockOrder = new StockOrder(targetStock,requestQuantity,billType,dtf.format(LocalDateTime.now()));
+        StockOrder stockOrder = new StockOrder(targetStock, requestQuantity, billType, dtf.format(LocalDateTime.now()));
         DataManager.writeStockOrder(stockOrder);
 
         return true;

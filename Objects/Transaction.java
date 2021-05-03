@@ -19,11 +19,19 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public double getAmount() { return amount; }
+    public double getAmount() {
+        return amount;
+    }
 
-    public String getDate() { return date; }
+    public String getDate() {
+        return date;
+    }
 
-    public TransactionType getType() { return type; }
+    public TransactionType getType() {
+        return type;
+    }
 }

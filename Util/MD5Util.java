@@ -9,7 +9,7 @@ public class MD5Util {
      * Several Security rules are:
      * 1. Only Manager has the authority to look throught the User Database / Logs
      * 2. Manager can only see a encrypted password
-     *
+     * <p>
      * Note: MD5 + salt encrypted
      */
     // HEX_DIGITS
@@ -83,5 +83,4 @@ public class MD5Util {
 //        System.out.println("MD5 without salt " + new MD5Util(null, "MD5").encode("test"));
 //
 //    }
-
 }

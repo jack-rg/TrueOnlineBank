@@ -52,13 +52,17 @@ public abstract class Person {
         return userID;
     }
 
-    public void setUserID(String newID) { userID = newID; }
+    public void setUserID(String newID) {
+        userID = newID;
+    }
 
     public ArrayList<Account> getRawAccounts() {
         return accounts;
     }
 
-    public void setAccounts(ArrayList<Account> accounts) { this.accounts = accounts; }
+    public void setAccounts(ArrayList<Account> accounts) {
+        this.accounts = accounts;
+    }
 
     public ArrayList<Account> getActiveAccounts() {
         ArrayList<Account> active = new ArrayList<>();
