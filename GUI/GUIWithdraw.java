@@ -50,7 +50,7 @@ public class GUIWithdraw extends JPanel {
         JButton submitBtn = new JButton("Submit");
         submitBtn.setBounds(30, 370, 280, 40);
 
-        errorLabel = new JLabel("Insufficient funds");
+        errorLabel = new JLabel();
         errorLabel.setBounds(30, 410, 280, 40);
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
@@ -59,11 +59,17 @@ public class GUIWithdraw extends JPanel {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Account account = accMap.get(accountCB.getSelectedItem());
+                try {
+                    Account account = accMap.get(accountCB.getSelectedItem());
 
-                if (account.withdraw(Float.parseFloat(withdrawTF.getText()), "ATM Withdrawal")) {
-                    home.updateAll();
-                } else {
+                    if (account.withdraw(Float.parseFloat(withdrawTF.getText()), "ATM Withdrawal")) {
+                        home.updateAll();
+                    } else {
+                        errorLabel.setText("Insufficient funds");
+                        errorLabel.setVisible(true);
+                    }
+                } catch (Exception exception) {
+                    errorLabel.setText("Please enter a valid withdrawal amount.");
                     errorLabel.setVisible(true);
                 }
             }

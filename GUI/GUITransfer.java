@@ -163,9 +163,16 @@ public class GUITransfer extends JPanel {
                         if (accountTransferRB.isSelected()) {
                             fromAccount.transferTo(toAccount, amount);
                         } else {
+                            if (toAccountID.equals("")) {
+                                errorLabel.setText("Please enter an account ID.");
+                                errorLabel.setVisible(true);
+                                return;
+                            }
+
                             if (!fromAccount.transferTo(toAccountID, amount)) {
                                 errorLabel.setText("Account not found.");
                                 errorLabel.setVisible(true);
+                                return;
                             }
                         }
 

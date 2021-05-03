@@ -67,7 +67,7 @@ public class GUINewAccount extends JPanel {
         submitBtn.setBounds(30, 370, 280, 40);
         panel.add(submitBtn);
 
-        errorL = new JLabel("Insufficient funds");
+        errorL = new JLabel();
         errorL.setBounds(30, 410, 280, 40);
         errorL.setForeground(Color.RED);
         errorL.setVisible(false);
@@ -145,19 +145,37 @@ public class GUINewAccount extends JPanel {
             submitBtn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    if (accountTypeBG.getSelection() == null) {
+                        errorL.setText("Please select a type of account.");
+                        errorL.setVisible(true);
+                        return;
+                    }
+
+                    if (depositBG.getSelection() == null) {
+                        errorL.setText("Please select whether you'd like to deposit.");
+                        errorL.setVisible(true);
+                        return;
+                    }
+
                     if (yesRB.isSelected()) {
-                        Double amount = Double.parseDouble(depositTF.getText());
-                        Account account = accMap.get(accountCB.getSelectedItem());
+                        try {
+                            Double amount = Double.parseDouble(depositTF.getText());
+                            Account account = accMap.get(accountCB.getSelectedItem());
 
-                        if (amount <= account.getBalance()) {
-                            account.withdraw(amount, "Transfer to Account " + accountID);
+                            if (amount <= account.getBalance()) {
+                                account.withdraw(amount, "Transfer to Account " + accountID);
 
-                            if (savingRB.isSelected()) {
-                                createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                if (savingRB.isSelected()) {
+                                    createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                } else {
+                                    createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                }
                             } else {
-                                createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                errorL.setText("Insufficient funds");
+                                errorL.setVisible(true);
                             }
-                        } else {
+                        } catch (Exception exception) {
+                            errorL.setText("Please enter a valid deposit amount.");
                             errorL.setVisible(true);
                         }
                     } else {
@@ -173,6 +191,12 @@ public class GUINewAccount extends JPanel {
             submitBtn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    if (accountTypeBG.getSelection() == null) {
+                        errorL.setText("Please select a type of account.");
+                        errorL.setVisible(true);
+                        return;
+                    }
+
                     if (savingRB.isSelected()) {
                         createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     } else {

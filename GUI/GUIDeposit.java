@@ -7,6 +7,7 @@ import Types.CurrencyType;
 import Util.AccountManager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class GUIDeposit extends JPanel {
     JPanel panel;
     JComboBox<String> accountCB;
     JTextField depositTF;
+    JLabel errorLabel;
 
     HashMap<String, Account> accMap;
 
@@ -58,15 +60,26 @@ public class GUIDeposit extends JPanel {
         JButton submitBtn = new JButton("Submit");
         submitBtn.setBounds(30, 370, 280, 40);
 
+        errorLabel = new JLabel("Insufficient funds");
+        errorLabel.setBounds(30, 410, 280, 40);
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
+        panel.add(errorLabel);
+
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Account account = accMap.get(accountCB.getSelectedItem());
-                CurrencyType cType = (CurrencyType) currencyTypeCB.getSelectedItem();
+                try {
+                    Account account = accMap.get(accountCB.getSelectedItem());
+                    CurrencyType cType = (CurrencyType) currencyTypeCB.getSelectedItem();
 
-                account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit", cType);
+                    account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit", cType);
 
-                home.updateAll();
+                    home.updateAll();
+                } catch (Exception exception) {
+                    errorLabel.setText("Please enter a valid deposit amount.");
+                    errorLabel.setVisible(true);
+                }
             }
         });
 
@@ -81,6 +94,8 @@ public class GUIDeposit extends JPanel {
         for (String a : AccountManager.getAccKeys(accMap)) {
             accountCB.addItem(a);
         }
+
+        errorLabel.setVisible(false);
     }
 
     public JPanel getPanel() {
