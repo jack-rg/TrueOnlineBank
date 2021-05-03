@@ -4,7 +4,6 @@ import Objects.Person;
 import Util.DataManager;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class GUIBank extends JFrame {
@@ -34,24 +33,18 @@ public class GUIBank extends JFrame {
     private void addLogin() {
         GUILogin login = new GUILogin();
 
-        login.getLoginButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Person person = login.execute();
-                if (person != null) {
-                    DataManager.loadAccounts(person);
-                    addHome(person);
-                    cards.show(c, "Home");
-                } else {
-                    login.getErrorLabel().setVisible(true);
-                }
+        login.getLoginButton().addActionListener(e -> {
+            Person person = login.execute();
+            if (person != null) {
+                DataManager.loadAccounts(person);
+                addHome(person);
+                cards.show(c, "Home");
+            } else {
+                login.getErrorLabel().setVisible(true);
             }
         });
 
-        login.getGoToRegisterButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cards.show(c, "Register");
-            }
-        });
+        login.getGoToRegisterButton().addActionListener(e -> cards.show(c, "Register"));
 
         c.add(login.getPanel(), "Login");
     }
@@ -59,23 +52,17 @@ public class GUIBank extends JFrame {
     private void addRegister() {
         GUIRegister register = new GUIRegister();
 
-        register.getRegisterButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Person person = register.execute();
-                if (person != null) {
-                    addHome(person);
-                    cards.show(c, "Home");
-                } else {
-                    register.getErrorLabel().setVisible(true);
-                }
+        register.getRegisterButton().addActionListener(e -> {
+            Person person = register.execute();
+            if (person != null) {
+                addHome(person);
+                cards.show(c, "Home");
+            } else {
+                register.getErrorLabel().setVisible(true);
             }
         });
 
-        register.getGoToLoginButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cards.show(c, "Login");
-            }
-        });
+        register.getGoToLoginButton().addActionListener(e -> cards.show(c, "Login"));
 
         c.add(register.getPanel(), "Register");
     }
@@ -85,15 +72,6 @@ public class GUIBank extends JFrame {
         c.add(home.getTabbedPane(), "Home");
 
         logOutBtn = home.getLogOutBtn();
-        logOutBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cards.show(c, "Login");
-            }
-        });
-    }
-
-    public static void run() {
-        GUIBank b = new GUIBank();
+        logOutBtn.addActionListener(e -> cards.show(c, "Login"));
     }
 }

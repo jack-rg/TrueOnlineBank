@@ -5,7 +5,6 @@ import Objects.Person;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GUIAccountsOverview {
@@ -34,37 +33,23 @@ public class GUIAccountsOverview {
 
         accountsPanel = new JPanel();
         accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
-        for (int i = 0; i < accounts.size(); i++) {
-            Account a = accounts.get(i);
+        for (Account a : accounts) {
             JButton aBtn = new JButton(a.toString());
             accountsPanel.add(aBtn);
 
             GUIAccount acc = new GUIAccount(a);
             panel.add(acc.getPanel(), a.getAccountID());
 
-            acc.getGoBackButton().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cards.show(panel, "AccountPanel");
-                }
+            acc.getGoBackButton().addActionListener(e -> cards.show(panel, "AccountPanel"));
+
+            acc.getDeleteAccountButton().addActionListener(e -> {
+                accountsPanel.remove(aBtn);
+                cards.show(panel, "AccountPanel");
+
+                home.updateAll();
             });
 
-            acc.getDeleteAccountButton().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    accountsPanel.remove(aBtn);
-                    cards.show(panel, "AccountPanel");
-
-                    home.updateAll();
-                }
-            });
-
-            aBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cards.show(panel, a.getAccountID());
-                }
-            });
+            aBtn.addActionListener(e -> cards.show(panel, a.getAccountID()));
         }
 
         panel.add(accountsPanel, "AccountPanel");

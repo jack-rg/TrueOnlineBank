@@ -5,7 +5,7 @@ public class BankATM {
 
     public BankATM() {
         //Run user interface
-        GUIBank.run();
+        new GUIBank();
     }
 
     public static void main(String args[]) {

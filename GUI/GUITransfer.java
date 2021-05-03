@@ -5,12 +5,7 @@ import Objects.Person;
 import Util.AccountManager;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUITransfer extends JPanel {
@@ -54,7 +49,7 @@ public class GUITransfer extends JPanel {
         fromAccountChoiceLabel.setVisible(false);
         panel.add(fromAccountChoiceLabel);
 
-        fromAccountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
+        fromAccountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         fromAccountCB.setBounds(30, 150, 300, 25);
         fromAccountCB.setVisible(false);
         panel.add(fromAccountCB);
@@ -69,7 +64,7 @@ public class GUITransfer extends JPanel {
         accountIDTF.setVisible(false);
         panel.add(accountIDTF);
 
-        toAccountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
+        toAccountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         toAccountCB.setBounds(30, 210, 300, 25);
         toAccountCB.setVisible(false);
         panel.add(toAccountCB);
@@ -95,88 +90,79 @@ public class GUITransfer extends JPanel {
         errorLabel.setVisible(false);
         panel.add(errorLabel);
 
-        accountTransferRB.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                fromAccountChoiceLabel.setVisible(true);
-                fromAccountCB.setVisible(true);
+        accountTransferRB.addChangeListener(e -> {
+            fromAccountChoiceLabel.setVisible(true);
+            fromAccountCB.setVisible(true);
 
-                toAccountChoiceLabel.setText("Please choose an account to transfer to:");
-                toAccountChoiceLabel.setVisible(true);
-                toAccountCB.setVisible(true);
+            toAccountChoiceLabel.setText("Please choose an account to transfer to:");
+            toAccountChoiceLabel.setVisible(true);
+            toAccountCB.setVisible(true);
 
-                accountIDTF.setVisible(false);
+            accountIDTF.setVisible(false);
 
-                depositAmountLabel.setVisible(true);
-                transferTF.setVisible(true);
+            depositAmountLabel.setVisible(true);
+            transferTF.setVisible(true);
 
-                submitBtn.setVisible(true);
-            }
+            submitBtn.setVisible(true);
         });
 
-        userTransferRB.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                fromAccountChoiceLabel.setVisible(true);
-                fromAccountCB.setVisible(true);
+        userTransferRB.addChangeListener(e -> {
+            fromAccountChoiceLabel.setVisible(true);
+            fromAccountCB.setVisible(true);
 
-                toAccountChoiceLabel.setText("Please enter the accountID to transfer to:");
-                toAccountChoiceLabel.setVisible(true);
-                toAccountCB.setVisible(false);
+            toAccountChoiceLabel.setText("Please enter the accountID to transfer to:");
+            toAccountChoiceLabel.setVisible(true);
+            toAccountCB.setVisible(false);
 
-                accountIDTF.setVisible(true);
+            accountIDTF.setVisible(true);
 
-                depositAmountLabel.setVisible(true);
-                transferTF.setVisible(true);
+            depositAmountLabel.setVisible(true);
+            transferTF.setVisible(true);
 
-                submitBtn.setVisible(true);
-            }
+            submitBtn.setVisible(true);
         });
 
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Account fromAccount = accMap.get(fromAccountCB.getSelectedItem());
-                Account toAccount = accMap.get(toAccountCB.getSelectedItem());
+        submitBtn.addActionListener(e -> {
+            Account fromAccount = accMap.get(fromAccountCB.getSelectedItem());
+            Account toAccount = accMap.get(toAccountCB.getSelectedItem());
 
-                String toAccountID;
-                if (accountTransferRB.isSelected()) {
-                    toAccountID = toAccount.getAccountID();
-                } else {
-                    toAccountID = accountIDTF.getText();
-                }
+            String toAccountID;
+            if (accountTransferRB.isSelected()) {
+                toAccountID = toAccount.getAccountID();
+            } else {
+                toAccountID = accountIDTF.getText();
+            }
 
-                if (fromAccount.getAccountID().equals(toAccountID)) {
-                    errorLabel.setText("Cannot transfer funds across the same account.");
+            if (fromAccount.getAccountID().equals(toAccountID)) {
+                errorLabel.setText("Cannot transfer funds across the same account.");
+                errorLabel.setVisible(true);
+            } else if (transferTF.getText().equals("")) {
+                errorLabel.setText("Please enter a transfer amount.");
+                errorLabel.setVisible(true);
+            } else {
+                double amount = Double.parseDouble(transferTF.getText());
+
+                if (amount > fromAccount.getBalance()) {
+                    errorLabel.setText("Insufficient funds.");
                     errorLabel.setVisible(true);
-                } else if (transferTF.getText().equals("")) {
-                    errorLabel.setText("Please enter a transfer amount.");
-                    errorLabel.setVisible(true);
                 } else {
-                    double amount = Double.parseDouble(transferTF.getText());
-
-                    if (amount > fromAccount.getBalance()) {
-                        errorLabel.setText("Insufficient funds.");
-                        errorLabel.setVisible(true);
+                    if (accountTransferRB.isSelected()) {
+                        fromAccount.transferTo(toAccount, amount);
                     } else {
-                        if (accountTransferRB.isSelected()) {
-                            fromAccount.transferTo(toAccount, amount);
-                        } else {
-                            if (toAccountID.equals("")) {
-                                errorLabel.setText("Please enter an account ID.");
-                                errorLabel.setVisible(true);
-                                return;
-                            }
-
-                            if (!fromAccount.transferTo(toAccountID, amount)) {
-                                errorLabel.setText("Account not found.");
-                                errorLabel.setVisible(true);
-                                return;
-                            }
+                        if (toAccountID.equals("")) {
+                            errorLabel.setText("Please enter an account ID.");
+                            errorLabel.setVisible(true);
+                            return;
                         }
 
-                        home.updateAll();
+                        if (!fromAccount.transferTo(toAccountID, amount)) {
+                            errorLabel.setText("Account not found.");
+                            errorLabel.setVisible(true);
+                            return;
+                        }
                     }
+
+                    home.updateAll();
                 }
             }
         });

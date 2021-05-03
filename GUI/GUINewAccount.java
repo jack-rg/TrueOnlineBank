@@ -7,12 +7,7 @@ import Types.CurrencyType;
 import Util.AccountManager;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUINewAccount extends JPanel {
@@ -59,7 +54,7 @@ public class GUINewAccount extends JPanel {
         panel.add(currencyTypeL);
 
         CurrencyType[] currencyTypes = CurrencyType.values();
-        JComboBox<CurrencyType> currencyTypeCB = new JComboBox<CurrencyType>(currencyTypes);
+        JComboBox<CurrencyType> currencyTypeCB = new JComboBox<>(currencyTypes);
         currencyTypeCB.setBounds(250, 140, 90, 25);
         panel.add(currencyTypeCB);
 
@@ -99,7 +94,7 @@ public class GUINewAccount extends JPanel {
 
         accMap = AccountManager.getAccMap(person);
 
-        accountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
+        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         accountCB.setBounds(30, 280, 300, 25);
         accountCB.setVisible(false);
         panel.add(accountCB);
@@ -115,26 +110,20 @@ public class GUINewAccount extends JPanel {
         depositTF.setVisible(false);
         panel.add(depositTF);
 
-        yesRB.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                accountChoiceL.setVisible(true);
-                accountCB.setVisible(true);
+        yesRB.addChangeListener(e -> {
+            accountChoiceL.setVisible(true);
+            accountCB.setVisible(true);
 
-                depositAmountL.setVisible(true);
-                depositTF.setVisible(true);
-            }
+            depositAmountL.setVisible(true);
+            depositTF.setVisible(true);
         });
 
-        noRB.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                accountChoiceL.setVisible(false);
-                accountCB.setVisible(false);
+        noRB.addChangeListener(e -> {
+            accountChoiceL.setVisible(false);
+            accountCB.setVisible(false);
 
-                depositAmountL.setVisible(false);
-                depositTF.setVisible(false);
-            }
+            depositAmountL.setVisible(false);
+            depositTF.setVisible(false);
         });
 
         if (person.getActiveAccounts().size() > 0) {
@@ -142,66 +131,60 @@ public class GUINewAccount extends JPanel {
             yesRB.setVisible(true);
             noRB.setVisible(true);
 
-            submitBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (accountTypeBG.getSelection() == null) {
-                        errorL.setText("Please select a type of account.");
-                        errorL.setVisible(true);
-                        return;
-                    }
+            submitBtn.addActionListener(e -> {
+                if (accountTypeBG.getSelection() == null) {
+                    errorL.setText("Please select a type of account.");
+                    errorL.setVisible(true);
+                    return;
+                }
 
-                    if (depositBG.getSelection() == null) {
-                        errorL.setText("Please select whether you'd like to deposit.");
-                        errorL.setVisible(true);
-                        return;
-                    }
+                if (depositBG.getSelection() == null) {
+                    errorL.setText("Please select whether you'd like to deposit.");
+                    errorL.setVisible(true);
+                    return;
+                }
 
-                    if (yesRB.isSelected()) {
-                        try {
-                            Double amount = Double.parseDouble(depositTF.getText());
-                            Account account = accMap.get(accountCB.getSelectedItem());
+                if (yesRB.isSelected()) {
+                    try {
+                        double amount = Double.parseDouble(depositTF.getText());
+                        Account account = accMap.get(accountCB.getSelectedItem());
 
-                            if (amount <= account.getBalance()) {
-                                account.withdraw(amount, "Transfer to Account " + accountID);
+                        if (amount <= account.getBalance()) {
+                            account.withdraw(amount, "Transfer to Account " + accountID);
 
-                                if (savingRB.isSelected()) {
-                                    createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
-                                } else {
-                                    createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
-                                }
+                            if (savingRB.isSelected()) {
+                                createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             } else {
-                                errorL.setText("Insufficient funds");
-                                errorL.setVisible(true);
+                                createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             }
-                        } catch (Exception exception) {
-                            errorL.setText("Please enter a valid deposit amount.");
+                        } else {
+                            errorL.setText("Insufficient funds");
                             errorL.setVisible(true);
                         }
-                    } else {
-                        if (savingRB.isSelected()) {
-                            createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
-                        } else {
-                            createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
-                        }
-                    }
-                }
-            });
-        } else {
-            submitBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (accountTypeBG.getSelection() == null) {
-                        errorL.setText("Please select a type of account.");
+                    } catch (Exception exception) {
+                        errorL.setText("Please enter a valid deposit amount.");
                         errorL.setVisible(true);
-                        return;
                     }
-
+                } else {
                     if (savingRB.isSelected()) {
                         createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     } else {
                         createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     }
+                }
+            });
+        } else {
+            submitBtn.addActionListener(e -> {
+                if (accountTypeBG.getSelection() == null) {
+                    errorL.setText("Please select a type of account.");
+                    errorL.setVisible(true);
+                    return;
+                }
+
+                if (savingRB.isSelected()) {
+                    createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                } else {
+                    createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 }
             });
         }

@@ -6,7 +6,6 @@ import Util.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GUIAccount {
@@ -28,12 +27,7 @@ public class GUIAccount {
         deleteAccountButton.setBounds(120, 25, 150, 40);
         topPanel.add(deleteAccountButton);
 
-        deleteAccountButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                account.deactivate();
-            }
-        });
+        deleteAccountButton.addActionListener(e -> account.deactivate());
 
         JLabel accountNameLabel = new JLabel(account.getAccountType() + ": $" + account.getBalance());
         accountNameLabel.setBounds(30, 80, 150, 25);

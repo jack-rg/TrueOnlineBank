@@ -2,15 +2,11 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
-import Objects.User;
 import Types.CurrencyType;
 import Util.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUIDeposit extends JPanel {
@@ -34,7 +30,7 @@ public class GUIDeposit extends JPanel {
         panel.add(accountChoiceLabel);
 
         accMap = AccountManager.getAccMap(person);
-        accountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
+        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         accountCB.setBounds(30, 80, 300, 25);
         panel.add(accountCB);
 
@@ -44,7 +40,7 @@ public class GUIDeposit extends JPanel {
 
         CurrencyType[] currencyTypes = CurrencyType.values();
 
-        JComboBox<CurrencyType> currencyTypeCB = new JComboBox<CurrencyType>(currencyTypes);
+        JComboBox<CurrencyType> currencyTypeCB = new JComboBox<>(currencyTypes);
         currencyTypeCB.setBounds(350, 120, 90, 25);
         panel.add(currencyTypeCB);
 
@@ -65,20 +61,17 @@ public class GUIDeposit extends JPanel {
         errorLabel.setVisible(false);
         panel.add(errorLabel);
 
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Account account = accMap.get(accountCB.getSelectedItem());
-                    CurrencyType cType = (CurrencyType) currencyTypeCB.getSelectedItem();
+        submitBtn.addActionListener(e -> {
+            try {
+                Account account = accMap.get(accountCB.getSelectedItem());
+                CurrencyType cType = (CurrencyType) currencyTypeCB.getSelectedItem();
 
-                    account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit", cType);
+                account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit", cType);
 
-                    home.updateAll();
-                } catch (Exception exception) {
-                    errorLabel.setText("Please enter a valid deposit amount.");
-                    errorLabel.setVisible(true);
-                }
+                home.updateAll();
+            } catch (Exception exception) {
+                errorLabel.setText("Please enter a valid deposit amount.");
+                errorLabel.setVisible(true);
             }
         });
 

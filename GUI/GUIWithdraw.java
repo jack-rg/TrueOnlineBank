@@ -2,14 +2,10 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
-import Objects.User;
 import Util.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUIWithdraw extends JPanel {
@@ -34,7 +30,7 @@ public class GUIWithdraw extends JPanel {
 
         accMap = AccountManager.getAccMap(person);
 
-        accountCB = new JComboBox<String>(AccountManager.getAccKeys(accMap));
+        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         accountCB.setBounds(30, 80, 300, 25);
         panel.add(accountCB);
 
@@ -55,22 +51,19 @@ public class GUIWithdraw extends JPanel {
         errorLabel.setVisible(false);
         panel.add(errorLabel);
 
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Account account = accMap.get(accountCB.getSelectedItem());
+        submitBtn.addActionListener(e -> {
+            try {
+                Account account = accMap.get(accountCB.getSelectedItem());
 
-                    if (account.withdraw(Float.parseFloat(withdrawTF.getText()), "ATM Withdrawal")) {
-                        home.updateAll();
-                    } else {
-                        errorLabel.setText("Insufficient funds");
-                        errorLabel.setVisible(true);
-                    }
-                } catch (Exception exception) {
-                    errorLabel.setText("Please enter a valid withdrawal amount.");
+                if (account.withdraw(Float.parseFloat(withdrawTF.getText()), "ATM Withdrawal")) {
+                    home.updateAll();
+                } else {
+                    errorLabel.setText("Insufficient funds");
                     errorLabel.setVisible(true);
                 }
+            } catch (Exception exception) {
+                errorLabel.setText("Please enter a valid withdrawal amount.");
+                errorLabel.setVisible(true);
             }
         });
 

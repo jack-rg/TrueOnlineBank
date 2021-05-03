@@ -4,8 +4,6 @@ import Objects.Person;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUISettings {
     JPanel panel;
@@ -41,39 +39,33 @@ public class GUISettings {
         errorLabel.setVisible(false);
         panel.add(errorLabel);
 
-        changeUsernameBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usernameLabel.setVisible(false);
-                usernameTxt.setVisible(true);
+        changeUsernameBtn.addActionListener(e -> {
+            usernameLabel.setVisible(false);
+            usernameTxt.setVisible(true);
 
-                changeUsernameBtn.setVisible(false);
-                usernameSubmitBtn.setVisible(true);
-            }
+            changeUsernameBtn.setVisible(false);
+            usernameSubmitBtn.setVisible(true);
         });
 
-        usernameSubmitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameTxt.getText();
-                if (!username.equals("")) {
-                    if (person.setUserName(username)) {
-                        usernameLabel.setText(username);
-                        errorLabel.setVisible(false);
-                    } else {
-                        errorLabel.setText("Username already exists.");
-                        errorLabel.setVisible(true);
-                    }
+        usernameSubmitBtn.addActionListener(e -> {
+            String username = usernameTxt.getText();
+            if (!username.equals("")) {
+                if (person.setUserName(username)) {
+                    usernameLabel.setText(username);
+                    errorLabel.setVisible(false);
+                } else {
+                    errorLabel.setText("Username already exists.");
+                    errorLabel.setVisible(true);
                 }
-
-                usernameTxt.setText("");
-
-                usernameLabel.setVisible(true);
-                usernameTxt.setVisible(false);
-
-                changeUsernameBtn.setVisible(true);
-                usernameSubmitBtn.setVisible(false);
             }
+
+            usernameTxt.setText("");
+
+            usernameLabel.setVisible(true);
+            usernameTxt.setVisible(false);
+
+            changeUsernameBtn.setVisible(true);
+            usernameSubmitBtn.setVisible(false);
         });
 
         panel.add(changeUsernameBtn);
@@ -108,34 +100,28 @@ public class GUISettings {
         panel.add(passwordSubmitBtn);
         panel.add(logOutBtn);
 
-        changePasswordBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                passwordLabel.setVisible(false);
-                passwordTxt.setVisible(true);
+        changePasswordBtn.addActionListener(e -> {
+            passwordLabel.setVisible(false);
+            passwordTxt.setVisible(true);
 
-                changePasswordBtn.setVisible(false);
-                passwordSubmitBtn.setVisible(true);
-            }
+            changePasswordBtn.setVisible(false);
+            passwordSubmitBtn.setVisible(true);
         });
 
-        passwordSubmitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String password = String.valueOf(passwordTxt.getPassword());
-                if (!password.equals("")) {
-                    person.setPassword(password);
-                    passwordLabel.setText(password.substring(0, 2) + "*".repeat(password.length() - 2));
-                }
-
-                passwordTxt.setText("");
-
-                passwordLabel.setVisible(true);
-                passwordTxt.setVisible(false);
-
-                changePasswordBtn.setVisible(true);
-                passwordSubmitBtn.setVisible(false);
+        passwordSubmitBtn.addActionListener(e -> {
+            String password1 = String.valueOf(passwordTxt.getPassword());
+            if (!password1.equals("")) {
+                person.setPassword(password1);
+                passwordLabel.setText(password1.substring(0, 2) + "*".repeat(password1.length() - 2));
             }
+
+            passwordTxt.setText("");
+
+            passwordLabel.setVisible(true);
+            passwordTxt.setVisible(false);
+
+            changePasswordBtn.setVisible(true);
+            passwordSubmitBtn.setVisible(false);
         });
     }
 
