@@ -2,6 +2,10 @@ package Objects;
 
 import java.util.*;
 
+/**
+ * SecurityAccount does the same function
+ */
+@Deprecated
 public class Portfolio {
     private ArrayList<Stock> stocks;
 

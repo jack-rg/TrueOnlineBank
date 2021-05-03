@@ -11,5 +11,10 @@ public enum AccountType {
         public String toString() {
             return "Savings";
         }
+    }, SECURITY{
+        @Override
+        public String toString() {
+            return "Security";
+        }
     };
 }

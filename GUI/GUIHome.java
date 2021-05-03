@@ -24,8 +24,9 @@ public class GUIHome extends JPanel {
         tabbedPane.addTab("Accounts", accountsHome.getTabbedPane());
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        JComponent panel3 = makeTextPanel("Panel #3");
-        tabbedPane.addTab("Invest", panel3);
+        //JComponent panel3 = makeTextPanel("Panel #3");
+        GUIInvestmentHome investmentHome = new GUIInvestmentHome(person);
+        tabbedPane.addTab("Invest", investmentHome.getPanel());
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         GUISettings settings = new GUISettings(person);

@@ -1,6 +1,7 @@
 package Objects;
 
 import Types.AccountState;
+import Types.AccountType;
 import Util.DataManager;
 
 import java.util.*;
@@ -10,14 +11,15 @@ public abstract class Person {
     private String password;
     private String userID;
     private ArrayList<Account> accounts;
-    private Portfolio portfolio;
+    private SecurityAccount securityAccount;
 
     public Person(String userName, String password, String userID) {
         this.userName = userName;
         this.password = password;
         this.userID = userID;
         accounts = new ArrayList<Account>();
-        portfolio = new Portfolio();
+        String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
+        securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, userID);
     }
 
     public String getUserName() {
@@ -88,7 +90,7 @@ public abstract class Person {
         return sum;
     }
 
-    public Portfolio getPortfolio() {
-        return portfolio;
+    public SecurityAccount getSecurityAccount() {
+        return securityAccount;
     }
 }
