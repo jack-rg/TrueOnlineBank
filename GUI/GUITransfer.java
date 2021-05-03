@@ -79,7 +79,6 @@ public class GUITransfer extends JPanel {
         depositAmountLabel.setVisible(false);
         panel.add(depositAmountLabel);
 
-        // TODO: validation on input
         transferTF = new JTextField(20);
         transferTF.setBounds(250, 250, 165, 25);
         transferTF.setVisible(false);

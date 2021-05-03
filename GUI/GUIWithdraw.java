@@ -42,7 +42,6 @@ public class GUIWithdraw extends JPanel {
         depositAmountLabel.setBounds(30, 140, 400, 25);
         panel.add(depositAmountLabel);
 
-        // TODO: validation on input
         withdrawTF = new JTextField(20);
         withdrawTF.setBounds(270, 140, 165, 25);
         panel.add(withdrawTF);

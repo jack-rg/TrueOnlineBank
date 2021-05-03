@@ -52,7 +52,6 @@ public class GUIDeposit extends JPanel {
         depositAmountLabel.setBounds(30, 170, 400, 25);
         panel.add(depositAmountLabel);
 
-        // TODO: validation on input
         depositTF = new JTextField(20);
         depositTF.setBounds(250, 170, 165, 25);
         panel.add(depositTF);
