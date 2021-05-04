@@ -115,7 +115,9 @@ public abstract class Person {
         Date d = c.getTime();
 
         Loan loan = new Loan(loanAmount, 0.00, d);
-        setLoan(loan);
+        DataManager.writeLoan(loan, this);
+
+        this.loan = loan;
     }
 
     public SecurityAccount getSecurityAccount() {

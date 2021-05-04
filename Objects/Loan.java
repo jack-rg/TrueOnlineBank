@@ -12,4 +12,10 @@ public class Loan {
         this.paidAmount = paidAmount;
         this.dueDate = dueDate;
     }
+
+    public double getLoanAmount() { return loanAmount; }
+
+    public double getPaidAmount() { return paidAmount; }
+
+    public Date dueDate() { return dueDate; }
 }

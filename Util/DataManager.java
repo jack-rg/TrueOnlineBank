@@ -65,6 +65,23 @@ public class DataManager {
         }
     }
 
+    public static void writeLoan(Loan loan, Person person) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/loanLog.txt";
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(
+                    new FileOutputStream(file, true)));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+            String transactionFormatter = "%s | %s | %f | %f | %s\n";
+            out.printf(transactionFormatter, dtf.format(LocalDateTime.now()), loan.getLoanAmount(),
+                    loan.getLoanAmount(), person.getUserID());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void writePositions(SecurityAccount securityAccount) {
         Map<String, StockPosition> positionMap = securityAccount.getStockName2position();
         if (positionMap == null || positionMap.size() == 0) {
