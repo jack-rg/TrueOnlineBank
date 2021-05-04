@@ -130,6 +130,12 @@ public class GUILoan extends JPanel {
             submitBtn.addActionListener(e -> {
                 try {
                     double paymentAmount = Double.parseDouble(paymentAmountTF.getText());
+                    if (paymentAmount > person.getLoan().getLoanBalance() || paymentAmount < 1) {
+                        errorLabel.setText("Please enter a payment amount between $1 and $" + person.getLoan().getLoanBalance());
+                        errorLabel.setVisible(true);
+                        return;
+                    }
+
                     Account account = accMap.get(accountCB.getSelectedItem());
 
                     if (account.transferToBank(paymentAmount, "Loan Payment")) {
@@ -138,7 +144,7 @@ public class GUILoan extends JPanel {
                         update();
                         updateOthers();
                     } else {
-                        errorLabel.setText("Insufficient funds");
+                        errorLabel.setText("Insufficient funds.");
                         errorLabel.setVisible(true);
                     }
                 } catch (Exception exception) {
