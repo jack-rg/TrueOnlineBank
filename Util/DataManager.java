@@ -265,6 +265,31 @@ public class DataManager {
 
         account.setTransactions(transactions);
     }
+    
+    
+    public static ArrayList<User> loadUsers() {
+        ArrayList<User> users = new ArrayList<User>();
+        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                    String[] userInfo = line.split(" \\| ");
+                    String userName = userInfo[2];
+                    String password = userInfo[3];
+                    String userID = userInfo[4];
+
+                    users.add(new User(userName, password, userID));
+               
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return users;
+    }
+    
 
     public static User userExists(String username, String password, boolean register) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
