@@ -42,12 +42,17 @@ public class GUINewAccount extends JPanel {
         panel.add(checkingRB);
 
         JRadioButton savingRB = new JRadioButton("Savings");
-        savingRB.setBounds(160, 90, 120, 25);
+        savingRB.setBounds(140, 90, 120, 25);
         panel.add(savingRB);
+
+        JRadioButton securityRB = new JRadioButton("Security");
+        securityRB.setBounds(230, 90, 120, 25);
+        panel.add(securityRB);
 
         accountTypeBG = new ButtonGroup();
         accountTypeBG.add(checkingRB);
         accountTypeBG.add(savingRB);
+        accountTypeBG.add(securityRB);
 
         JLabel currencyTypeL = new JLabel("Please choose a type of currency:");
         currencyTypeL.setBounds(30, 140, 250, 25);
@@ -154,8 +159,10 @@ public class GUINewAccount extends JPanel {
 
                             if (savingRB.isSelected()) {
                                 createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
-                            } else {
+                            } else if (checkingRB.isSelected()) {
                                 createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                            } else {
+                                createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             }
                         } else {
                             errorL.setText("Insufficient funds");
@@ -168,8 +175,10 @@ public class GUINewAccount extends JPanel {
                 } else {
                     if (savingRB.isSelected()) {
                         createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
-                    } else {
+                    } else if (checkingRB.isSelected()) {
                         createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                    } else {
+                        createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     }
                 }
             });
@@ -183,8 +192,10 @@ public class GUINewAccount extends JPanel {
 
                 if (savingRB.isSelected()) {
                     createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
-                } else {
+                } else if (checkingRB.isSelected()) {
                     createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                } else {
+                    createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 }
             });
         }
