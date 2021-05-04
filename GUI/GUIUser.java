@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 
 import Objects.Account;
 import Objects.User;
@@ -23,7 +25,10 @@ public class GUIUser {
     public GUIUser(User user) {
         panel = new JPanel();
         cards = new CardLayout();
-        panel.setLayout(new GridLayout(2, 1));
+        panel.setLayout(new BorderLayout());
+        
+        JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        sp.setResizeWeight(0.2);
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(null);
@@ -35,8 +40,9 @@ public class GUIUser {
         JLabel userNameLabel = new JLabel("Username: " + user.getUserName() + " - UserID: "+user.getUserID());
         userNameLabel.setBounds(30, 80, 400, 25);
         topPanel.add(userNameLabel);
-
-        panel.add(topPanel);
+        
+        
+        sp.add(topPanel);
 
         
         JPanel bottomPanel = new JPanel();
@@ -57,8 +63,9 @@ public class GUIUser {
             
             bottomPanel.add(new JScrollPane(accountsPanel));
             
-            panel.add(bottomPanel);
+            sp.add(bottomPanel);
         }
+        panel.add(sp, BorderLayout.CENTER);
 
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
