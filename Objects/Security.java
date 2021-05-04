@@ -3,6 +3,7 @@ package Objects;
 import Types.Status;
 import Types.AccountType;
 import Types.CurrencyType;
+import Types.StockOrderType;
 import Util.DataManager;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class Security extends Account {
     protected static String FAILED_REQUEST_INFO = "Request failed";
 
     ArrayList<Position> positions;
+    ArrayList<StockOrder> orders;
     private Map<String, Position> stockName2position;
 
     public Security(AccountType accountType, String accountID, String userID) {
@@ -43,6 +45,11 @@ public class Security extends Account {
         return positions;
     }
 
+    public ArrayList<StockOrder> getOrders() {
+        orders = DataManager.loadStockOrders(accountID);
+        return orders;
+    }
+
     public void accountPositionsDisplay() {
         if (stockName2position == null || stockName2position.size() == 0) {
             System.out.println(EMPTY_POSITION_INFO);
@@ -65,11 +72,11 @@ public class Security extends Account {
      * @return true, if bill succeed.
      */
     public boolean updatePosition(Stock targetStock, boolean isBuyBill, int requestQuantity) {
-        String billType;
+        StockOrderType billType;
         boolean requestSucceed = false;
         String targetStockName = targetStock.getName();
         // check balance
-        if (targetStock.getLastPrice() * requestQuantity > this.getBalance()) {
+        if (targetStock.getPrice() * requestQuantity > this.getBalance()) {
             System.out.println(INADEQUATE_BALANCE_WARN + CURRENT_BALANCE_INFO + this.getBalance());
             return false;
         }
@@ -83,16 +90,16 @@ public class Security extends Account {
         Position targetPosition = stockName2position.get(targetStockName);
 
         if (isBuyBill) {
-            billType = "BUY";
+            billType = StockOrderType.BUY;
             requestSucceed = targetPosition.addStock(targetStock, requestQuantity);
             // update balance
-            this.setBalance(this.getBalance() - targetStock.getLastPrice() * requestQuantity);
+            this.setBalance(this.getBalance() - targetStock.getPrice() * requestQuantity);
 
         } else {
-            billType = "SELL";
+            billType = StockOrderType.SELL;
             requestSucceed = targetPosition.deductStock(targetStock, requestQuantity);
             // update balance
-            this.setBalance(this.getBalance() + targetStock.getLastPrice() * requestQuantity);
+            this.setBalance(this.getBalance() + targetStock.getPrice() * requestQuantity);
         }
         if (!requestSucceed) {
             System.out.println(FAILED_REQUEST_INFO);
@@ -100,24 +107,9 @@ public class Security extends Account {
         }
         this.accountPositionsDisplay();
 
-        StockOrder stockOrder = new StockOrder(targetStock,requestQuantity,billType,dtf.format(LocalDateTime.now()));
-        DataManager.writeUserStockOrder(stockOrder, this.getUserID());
+        StockOrder stockOrder = new StockOrder(LocalDateTime.now(), targetStock, requestQuantity, targetStock.getPrice(), billType);
+        DataManager.writeStockOrder(stockOrder, this.getUserID());
 
         return true;
     }
-
-
-//    public static void main(String[] args){
-//        SecurityAccount securityAccount = new SecurityAccount(AccountType.SECURITY, "SecurityAccount0", "Yuan", 20000);
-//        Stock targetStock0 = new Stock("TWTR", "Twitter", 20);
-//       Stock targetStock1 = new Stock("AAPL", "Apple", 131);
-//
-//       securityAccount.updatePosition(targetStock0, true, 100);
-//       securityAccount.updatePosition(targetStock1, true, 10);
-//       securityAccount.updatePosition(targetStock0, false, 10);
-//
-//        // check position is manually requested by manager or user.
-//        DataManager.writeUserPositions(securityAccount, "Yuan");
-//    }
-
 }

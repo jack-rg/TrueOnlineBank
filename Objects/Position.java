@@ -30,7 +30,7 @@ public class Position {
     public Position(Stock stock, int quantity, double totalCost){
         this.quantity = quantity;
         this.stock = stock;
-        this.mktValue = stock.getLastPrice() * quantity;
+        this.mktValue = stock.getPrice() * quantity;
         this.totalCost = totalCost;
 //        this.totalCost = stock.getLastPrice() * quantity;
         this.avgPrice = totalCost / (double) quantity;
@@ -68,7 +68,7 @@ public class Position {
 
     // Add stocks to position
     public boolean addStock(Stock addStock, int addQuantity){
-        double currPrice = addStock.getLastPrice();
+        double currPrice = addStock.getPrice();
         this.totalCost += currPrice * addQuantity;
         this.quantity += addQuantity;
         this.mktValue = quantity * currPrice;
@@ -85,7 +85,7 @@ public class Position {
             return false;
         }
 
-        double currPrice = addStock.getLastPrice();
+        double currPrice = addStock.getPrice();
         this.totalCost -= currPrice * deductQuantity;
         this.quantity -= deductQuantity;
         this.mktValue = quantity * currPrice;

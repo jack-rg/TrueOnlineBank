@@ -1,17 +1,13 @@
 package Util;
 
 import Objects.*;
-import Types.Status;
-import Types.AccountType;
-import Types.CurrencyType;
-import Types.TransactionType;
+import Types.*;
 
 import java.io.*;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DataManager {
     public static void writeUser(User user) {
@@ -80,43 +76,9 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-//
-//    public static void writeUserPositions(SecurityAccount securityAccount, String UserID){
-//        Map<String, Position> positionMap = securityAccount.getStockName2position();
-//        if (positionMap == null || positionMap.size() == 0) {
-//            return;
-//        }
-//
-//        String file = Paths.get("").toAbsolutePath() + "/Logs/positionLog_" + UserID + ".txt";
-//        // if already exists, simply delete one and create one.
-//        File deleteFile = new File(file);
-//        if (deleteFile.exists()) {
-//            deleteFile.delete();
-//        }
-//        try {
-//            PrintWriter out = new PrintWriter(new OutputStreamWriter(
-//                    new FileOutputStream(file, true)));
-//            String transactionFormatter = "%s | %s | %s | %s | %f | %s \n";
-//            for (String stockName : positionMap.keySet()) {
-//                Position position = positionMap.get(stockName);
-//                out.printf(transactionFormatter,
-//                        position.getPositionStockName(),
-//                        position.getPositionStockSymbol(),
-//                        position.getMktValue(),
-//                        position.getTotalCost(),
-//                        position.getUnrealizedPL(),
-//                        position.getUnrealizedPLRate()
-//                );
-//            }
-//            out.flush();
-//            out.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-    public static void writeUserStockOrder(StockOrder stockOrder, String UserID){
-        String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderRecord" + "_" + UserID+".txt";
+    public static void writeStockOrder(StockOrder stockOrder, String UserID) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderLog.txt";
         // if already exists, simply delete one and create one.
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
@@ -124,11 +86,10 @@ public class DataManager {
             String transactionFormatter = "%s | %s | %s | %s | %f \n";
 
             out.printf(transactionFormatter,
-                    stockOrder.getOrderPlacedTime(),
-                    stockOrder.getOrderStockName(),
+                    stockOrder.getOrderDate(),
                     stockOrder.getOrderStockSymbol(),
                     stockOrder.getQuantity(),
-                    stockOrder.getOrderLastPrice()
+                    stockOrder.getPricePerStock()
             );
 
             out.flush();
@@ -136,6 +97,38 @@ public class DataManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<StockOrder> loadStockOrders(String accountID) {
+        ArrayList<StockOrder> orders = new ArrayList<>();
+        String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains(" | " + accountID)) {
+                    String[] position = line.split(" \\| ");
+                    LocalDateTime orderDate = LocalDateTime.parse(position[0]);
+                    Stock stock = loadStock(position[1]);
+                    int quantity = Integer.parseInt(position[2]);
+                    double price = Double.parseDouble(position[3]);
+                    StockOrderType orderType;
+                    if (position[4].equals("BUY")) {
+                        orderType = StockOrderType.BUY;
+                    } else {
+                        orderType = StockOrderType.SELL;
+                    }
+
+                    orders.add(new StockOrder(orderDate, stock, quantity, price, orderType));
+                }
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        return orders;
     }
 
     public static ArrayList<Position> loadPositions(String accountID) {
@@ -185,7 +178,6 @@ public class DataManager {
 
         return null;
     }
-
 
     public static Account loadAccount(String accountID) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
@@ -296,7 +288,6 @@ public class DataManager {
 
         person.setAccounts(accounts);
     }
-
 
     public static ArrayList<Transaction> loadTodaysTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();

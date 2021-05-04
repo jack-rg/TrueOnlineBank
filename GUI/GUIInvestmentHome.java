@@ -19,8 +19,8 @@ public class GUIInvestmentHome extends JPanel {
         GUIStockPositions accountsOverview = new GUIStockPositions(person);
         tabbedPane.addTab("Trade", accountsOverview.getPanel());
 
-        GUIStockPositions deposit = new GUIStockPositions(person);
-        tabbedPane.addTab("Bill History", deposit.getPanel());
+        GUIStockOrderHistory orderHistory = new GUIStockOrderHistory(person);
+        tabbedPane.addTab("Order History", orderHistory.getPanel());
         add(tabbedPane);
     }
 

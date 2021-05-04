@@ -10,16 +10,16 @@ package Objects;
 public class Stock {
     private String symbol; // abbreviate stock code
     private String name;    // name
-    private double lastPrice; // the most recent price of stock
+    private double price; // the most recent price of stock
 
-    public Stock(String symbol, String name, double lastPrice) {
+    public Stock(String symbol, String name, double price) {
         this.symbol = symbol;
         this.name = name;
-        this.lastPrice = lastPrice;
+        this.price = price;
     }
 
-    public double getLastPrice() {
-        return lastPrice;
+    public double getPrice() {
+        return price;
     }
 
     public String getName() {
@@ -33,13 +33,9 @@ public class Stock {
     /**
      * refresh the lastPrice
      *
-     * @param lastPrice
+     * @param price
      */
-    public void setLastPrice(double lastPrice) {
-        this.lastPrice = lastPrice;
-    }
-
-    public void stockInfoDisplay() {
-        System.out.println("Stock Symbol " + this.symbol + "Name: " + this.name + "LastPrice: " + this.lastPrice);
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
