@@ -11,6 +11,8 @@ import Util.CurrencyConverter;
 import Util.DataManager;
 
 public abstract class Account implements TransactionInterface {
+    protected static final double OPENING_FEE = 25.00;
+    protected static final double CLOSING_FEE = 15.00;
     protected static final double TRANSACTION_FEE = 5.00;
 
     private String accountID;
@@ -29,6 +31,8 @@ public abstract class Account implements TransactionInterface {
         balance = 0;
         status = AccountState.ACTIVE;
         currencyType = CurrencyType.USD;
+
+        withdraw(OPENING_FEE, "OPENING FEE");
     }
 
     public Account(AccountType userName, String accountID, String userID, double balance) {
@@ -118,8 +122,10 @@ public abstract class Account implements TransactionInterface {
             Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
             DataManager.writeTransaction(transaction, userID, accountID);
 
-            Transaction withdrawalFee = new Transaction("WITHDRAWAL FEE", TRANSACTION_FEE, TransactionType.WITHDRAWAL);
-            DataManager.writeTransaction(withdrawalFee, userID, accountID);
+            if (!name.equals("INTEREST") && !name.equals("OPENING FEE") && !name.equals("CLOSING FEE")) {
+                Transaction withdrawalFee = new Transaction("WITHDRAWAL FEE", TRANSACTION_FEE, TransactionType.WITHDRAWAL);
+                DataManager.writeTransaction(withdrawalFee, userID, accountID);
+            }
 
             balance -= funds - TRANSACTION_FEE;
             DataManager.updateAccount(this);
@@ -147,6 +153,8 @@ public abstract class Account implements TransactionInterface {
     public void deactivate() {
         status = AccountState.INACTIVE;
         DataManager.deactivateAccount(this);
+
+        withdraw(CLOSING_FEE, "CLOSING FEE");
     }
 
     public String toString() {
