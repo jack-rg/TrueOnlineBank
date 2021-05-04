@@ -63,4 +63,9 @@ public class GUIAccount {
     public JButton getDeleteAccountButton() {
         return deleteAccountButton;
     }
+
+    public void hideButtons() {
+        goBackButton.setVisible(false);
+        deleteAccountButton.setVisible(false);
+    }
 }

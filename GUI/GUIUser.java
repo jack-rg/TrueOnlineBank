@@ -30,7 +30,7 @@ public class GUIUser {
         topPanel.add(goBackButton);
 
         JLabel userNameLabel = new JLabel("Username: " + user.getUserName() + " - UserID: "+user.getUserID());
-        userNameLabel.setBounds(30, 80, 150, 25);
+        userNameLabel.setBounds(30, 80, 400, 25);
         topPanel.add(userNameLabel);
 
         panel.add(topPanel);
@@ -43,7 +43,7 @@ public class GUIUser {
             accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
 
             for (Account acc : accounts) {
-            	accountsPanel.add((new GUIAccountManager(acc)).getPanel());
+                accountsPanel.add((new GUIAccountManager(acc)).getPanel());
             }
 
             panel.add(new JScrollPane(accountsPanel));
