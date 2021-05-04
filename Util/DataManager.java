@@ -8,9 +8,12 @@ import Types.TransactionType;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 public class DataManager {
@@ -295,7 +298,14 @@ public class DataManager {
                     if (!register) {
                         String[] user = line.split(" \\| ");
                         String userID = user[4];
-                        return new User(username, password, userID);
+
+                        Loan loan = loadLoan(userID);
+                        if (loan != null) {
+                            return new User(username, password, userID, loan);
+                        } else {
+                            return new User(username, password, userID);
+                        }
+
                     } else {
                         return null;
                     }
@@ -317,8 +327,27 @@ public class DataManager {
         return null;
     }
 
-    private static Loan loadLoan() {
+    private static Loan loadLoan(String userID) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/loanLog.txt";
 
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains(userID + " | ")) {
+                    String[] loan = line.split(" \\| ");
+                    double loanAmount = Double.parseDouble(loan[1]);
+                    double paidAmount = Double.parseDouble(loan[2]);
+                    Date dueDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(loan[3]);
+                    return new Loan(loanAmount, paidAmount, dueDate);
+                }
+            }
+        } catch (IOException | ParseException e1) {
+            e1.printStackTrace();
+        }
+
+        return null;
     }
 
     public static boolean updatePerson(Person person, String newName, String newPassword) {
