@@ -45,7 +45,7 @@ public class GUIUsersOverview {
             aBtn.addActionListener(e -> cards.show(panel, u.getUserID()));
         }
 
-        panel.add(usersPanel, "UserPanel");
+        panel.add(new JScrollPane(usersPanel), "UserPanel");
         cards.show(panel, "UserPanel");
     }
 

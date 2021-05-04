@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.border.Border;
 
 import Objects.Account;
 import Objects.User;
@@ -38,31 +39,28 @@ public class GUIUser {
         topPanel.add(goBackButton);
 
         JLabel userNameLabel = new JLabel("Username: " + user.getUserName() + " - UserID: "+user.getUserID());
-        userNameLabel.setBounds(30, 80, 400, 25);
+        userNameLabel.setBounds(125, 25, 400, 25);
         topPanel.add(userNameLabel);
         
         
         sp.add(topPanel);
 
-        
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(cards);
 
-        
+        JPanel bottomPanel = new JPanel();
+
         DataManager.loadAccounts(user);
         ArrayList<Account> accounts = user.getRawAccounts();
 
         if (accounts.size() > 0) {
             JPanel accountsPanel = new JPanel();
-            accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
 
             	GUIAccountManager accManage = new GUIAccountManager(user);
                 accountsPanel.add(accManage.getPanel());
-            
-            
-            
+
+
+
             bottomPanel.add(new JScrollPane(accountsPanel));
-            
+
             sp.add(bottomPanel);
         }
         panel.add(sp, BorderLayout.CENTER);

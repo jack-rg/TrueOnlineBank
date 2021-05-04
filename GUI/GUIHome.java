@@ -32,12 +32,16 @@ public class GUIHome extends JPanel {
 
         if (person instanceof Manager) {
             GUIUsersOverview usersOverview = new GUIUsersOverview(this);
-            tabbedPane.addTab("Manage", usersOverview.getPanel());
+            tabbedPane.addTab("View Users", usersOverview.getPanel());
             tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+
+            GUIDailyTransactions dailyTransactions = new GUIDailyTransactions();
+            tabbedPane.addTab("Daily Transactions", dailyTransactions.getPanel(accountsHome));
+            tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
 
             JComponent panel5 = makeTextPanel("Panel #6");
             tabbedPane.addTab("Update Stocks", panel5);
-            tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
+            tabbedPane.setMnemonicAt( 5, KeyEvent.VK_6);
         }
 
         add(tabbedPane);
