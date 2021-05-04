@@ -14,14 +14,12 @@ public class GUIHome extends JPanel {
     GUILoan loans;
 
     public GUIHome(Person person) {
-        super(new GridLayout(1, 1));
-
         tabbedPane = new JTabbedPane();
 
-        accountsHome = new GUIAccountsHome(person);
+        accountsHome = new GUIAccountsHome(person, this);
         tabbedPane.addTab("Accounts", accountsHome.getTabbedPane());
 
-        loans = new GUILoan(person);
+        loans = new GUILoan(person, this);
         tabbedPane.addTab("Loans", loans.getPanel());
 
         if (person.isRich()) {
@@ -65,5 +63,13 @@ public class GUIHome extends JPanel {
 
     public JButton getLogOutBtn() {
         return logOutBtn;
+    }
+
+    public void updateAccountsHome() {
+        accountsHome.update();
+    }
+
+    public void updateLoans() {
+        loans.update();
     }
 }

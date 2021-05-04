@@ -17,12 +17,14 @@ public class GUILoan extends JPanel {
     JCheckBox termsCB;
     JComboBox<String> accountCB;
 
+    Person person;
+    GUIHome home;
+
     HashMap<String, Account> accMap;
 
-    Person person;
-
-    public GUILoan(Person person) {
+    public GUILoan(Person person, GUIHome home) {
         this.person = person;
+        this.home = home;
 
         panel = new JPanel();
         panel.setLayout(null);
@@ -91,6 +93,7 @@ public class GUILoan extends JPanel {
                     if (account.withdraw(paymentAmount, "Loan Payment")) {
                         person.getLoan().makePayment(paymentAmount);
                         update();
+                        updateOthers();
                     } else {
                         errorLabel.setText("Insufficient funds");
                         errorLabel.setVisible(true);
@@ -173,5 +176,9 @@ public class GUILoan extends JPanel {
             submitBtn.setVisible(true);
             errorLabel.setVisible(false);
         }
+    }
+
+    private void updateOthers() {
+        home.updateAccountsHome();
     }
 }

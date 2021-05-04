@@ -241,6 +241,8 @@ public class GUINewAccount extends JPanel {
     }
 
     private void showDepositOption(boolean show) {
+        depositBG.clearSelection();
+
         depositL.setVisible(show);
         yesRB.setVisible(show);
         noRB.setVisible(show);

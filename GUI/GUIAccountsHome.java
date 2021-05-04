@@ -3,7 +3,6 @@ package GUI;
 import Objects.Person;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class GUIAccountsHome extends JPanel {
@@ -14,9 +13,10 @@ public class GUIAccountsHome extends JPanel {
     GUIDeposit deposit;
     GUIWithdraw withdraw;
     GUITransfer transfer;
+    GUIHome home;
 
-    public GUIAccountsHome(Person person) {
-        super(new GridLayout(1, 1));
+    public GUIAccountsHome(Person person, GUIHome home) {
+        this.home = home;
 
         tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
@@ -54,5 +54,10 @@ public class GUIAccountsHome extends JPanel {
         withdraw.update();
         transfer.update();
         tabbedPane.setSelectedIndex(0);
+        updateOthers();
+    }
+
+    private void updateOthers() {
+        home.updateLoans();
     }
 }

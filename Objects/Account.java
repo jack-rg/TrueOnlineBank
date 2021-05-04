@@ -122,12 +122,13 @@ public abstract class Account implements TransactionInterface {
             Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
             DataManager.writeTransaction(transaction, userID, accountID);
 
-            if (!name.equals("INTEREST") && !name.equals("OPENING FEE") && !name.equals("CLOSING FEE")) {
+            if (!name.equals("INTEREST") && !name.equals("OPENING FEE") && !name.equals("CLOSING FEE") && !name.equals("Loan Payment")) {
                 Transaction withdrawalFee = new Transaction("WITHDRAWAL FEE", TRANSACTION_FEE, TransactionType.WITHDRAWAL);
                 DataManager.writeTransaction(withdrawalFee, userID, accountID);
+                balance -= TRANSACTION_FEE;
             }
 
-            balance -= funds - TRANSACTION_FEE;
+            balance -= funds;
             DataManager.updateAccount(this);
             return true;
         } else {
