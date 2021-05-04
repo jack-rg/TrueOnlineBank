@@ -1,13 +1,21 @@
 package GUI;
 
 import Objects.Person;
-import Objects.Position;
 import Objects.StockOrder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUIStockOrderHistory creates the GUI that allows users to see their entire
+ * stock order history.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIStockOrderHistory extends JPanel {
     JPanel panel;
     JSplitPane sp;

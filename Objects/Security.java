@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Security extends Account to represent a Security Account.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class Security extends Account {
     protected static String INADEQUATE_BALANCE_WARN = "Sorry, you dont have enough balance ";
     protected static String CURRENT_BALANCE_INFO = "The current balance is: ";
@@ -48,18 +56,6 @@ public class Security extends Account {
     public ArrayList<StockOrder> getOrders() {
         orders = DataManager.loadStockOrders(accountID);
         return orders;
-    }
-
-    public void accountPositionsDisplay() {
-        if (stockName2position == null || stockName2position.size() == 0) {
-            System.out.println(EMPTY_POSITION_INFO);
-            return;
-        }
-        for (String stockName : stockName2position.keySet()) {
-            Position position = stockName2position.get(stockName);
-            position.positionInfoDisplay();
-        }
-        System.out.println("Current Balance: " + this.getBalance());
     }
 
     public Map<String, Position> getStockName2position() {
@@ -105,7 +101,7 @@ public class Security extends Account {
             System.out.println(FAILED_REQUEST_INFO);
             return false;
         }
-        this.accountPositionsDisplay();
+//        this.accountPositionsDisplay();
 
         StockOrder stockOrder = new StockOrder(LocalDateTime.now(), targetStock, requestQuantity, targetStock.getPrice(), billType);
         DataManager.writeStockOrder(stockOrder, this.getUserID());

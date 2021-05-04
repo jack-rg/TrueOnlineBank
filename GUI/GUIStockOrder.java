@@ -6,6 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * GUIStockOrder creates the GUI that allows users to view a single stock order.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIStockOrder extends JPanel {
     JPanel panel;
 

@@ -1,5 +1,13 @@
 package Types;
 
+/**
+ * CurrencyType enum enumerates the types of currencies and their values.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public enum CurrencyType {
     USD(1F), // US Dollar
     EUR(0.82780F), // Euro

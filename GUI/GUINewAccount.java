@@ -10,6 +10,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * GUINewAccount creates the GUI that allows users to create new accounts.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUINewAccount extends JPanel {
     JPanel panel;
     ButtonGroup accountTypeBG, depositBG;
@@ -155,11 +163,16 @@ public class GUINewAccount extends JPanel {
                         double amount = Double.parseDouble(depositTF.getText());
                         Account account = accMap.get(accountCB.getSelectedItem());
 
-                        if ((amount <= account.getBalance()) && account.withdraw(amount, "Transfer to Account " + accountID, true)) {
+                        if ((amount <= account.getBalance()) && account.withdraw(amount,
+                                "Transfer to Account " + accountID, true)) {
                             if (savingRB.isSelected()) {
-                                createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), Status.ACTIVE, amount));
+                                createNewUser(person, new Saving(AccountType.SAVING, accountID,
+                                        userID, (CurrencyType) currencyTypeCB.getSelectedItem(),
+                                        Status.ACTIVE, amount));
                             } else if (checkingRB.isSelected()) {
-                                createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), Status.ACTIVE, amount));
+                                createNewUser(person, new Checking(AccountType.CHECKING, accountID,
+                                        userID, (CurrencyType) currencyTypeCB.getSelectedItem(),
+                                        Status.ACTIVE, amount));
                             } else {
                                 if (depositTF.getText().equals("") || (Double.parseDouble(depositTF.getText()) < 1000)) {
                                     errorL.setText("Please enter a deposit amount of $1000 or more.");
@@ -167,7 +180,9 @@ public class GUINewAccount extends JPanel {
                                     return;
                                 }
 
-                                createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), Status.ACTIVE, amount));
+                                createNewUser(person, new Security(AccountType.SECURITY, accountID,
+                                        userID, (CurrencyType) currencyTypeCB.getSelectedItem(),
+                                        Status.ACTIVE, amount));
                             }
                         } else {
                             errorL.setText("Insufficient funds");
@@ -179,11 +194,14 @@ public class GUINewAccount extends JPanel {
                     }
                 } else {
                     if (savingRB.isSelected()) {
-                        createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                        createNewUser(person, new Saving(AccountType.SAVING, accountID,
+                                userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     } else if (checkingRB.isSelected()) {
-                        createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                        createNewUser(person, new Checking(AccountType.CHECKING, accountID,
+                                userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     } else {
-                        createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                        createNewUser(person, new Security(AccountType.SECURITY, accountID,
+                                userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     }
                 }
             });
@@ -196,11 +214,14 @@ public class GUINewAccount extends JPanel {
                 }
 
                 if (savingRB.isSelected()) {
-                    createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                    createNewUser(person, new Saving(AccountType.SAVING, accountID,
+                            userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 } else if (checkingRB.isSelected()) {
-                    createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                    createNewUser(person, new Checking(AccountType.CHECKING, accountID,
+                            userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 } else {
-                    createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
+                    createNewUser(person, new Security(AccountType.SECURITY, accountID,
+                            userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 }
             });
         }

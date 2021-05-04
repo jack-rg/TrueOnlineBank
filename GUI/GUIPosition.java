@@ -1,11 +1,18 @@
 package GUI;
 
 import Objects.Position;
-import Types.TransactionType;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUIPosition creates the GUI that allows users to see their investment positions.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIPosition extends JPanel {
     JPanel panel;
 

@@ -7,6 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUIAccountsOverview creates the GUI that shows all the user's accounts.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIAccountsOverview {
     JPanel panel, accountsPanel;
     CardLayout cards;

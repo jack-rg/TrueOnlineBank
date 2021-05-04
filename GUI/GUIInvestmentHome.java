@@ -5,6 +5,14 @@ import Objects.Person;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUIInvestmentHome creates the GUI that allows users to play in the stock market.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIInvestmentHome extends JPanel {
     JTabbedPane tabbedPane;
 
@@ -24,7 +32,7 @@ public class GUIInvestmentHome extends JPanel {
         add(tabbedPane);
     }
 
-    public JTabbedPane getTabbedPane(){
+    public JTabbedPane getTabbedPane() {
         return tabbedPane;
     }
 }

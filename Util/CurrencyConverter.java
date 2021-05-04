@@ -2,7 +2,23 @@ package Util;
 
 import Types.CurrencyType;
 
+/**
+ * CurrencyConverter is a helper class to convert money.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class CurrencyConverter {
+    /**
+     * Converts the amount from one currencyType to another.
+     *
+     * @param convertFrom type to convert from
+     * @param convertTo type to convert to
+     * @param amount amount to convert
+     * @return correctly converted amount
+     */
     public static double execute(CurrencyType convertFrom, CurrencyType convertTo, double amount) {
         switch (convertFrom) {
             case EUR:

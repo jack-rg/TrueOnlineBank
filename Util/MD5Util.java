@@ -1,18 +1,24 @@
 package Util;
 
-
 import java.security.MessageDigest;
 
+/**
+ * MD5Util is a helper class to encrypt our passwords
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class MD5Util {
 
     /**
      * Several Security rules are:
      * 1. Only Manager has the authority to look throught the User Database / Logs
      * 2. Manager can only see a encrypted password
-     * <p>
+     *
      * Note: MD5 + salt encrypted
      */
-    // HEX_DIGITS
     private final static String[] hexDigits = {"0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
@@ -23,7 +29,6 @@ public class MD5Util {
         this.salt = salt;
         this.algorithm = algorithm;
     }
-
 
     private static String byteArrayToHexString(byte[] b) {
         StringBuffer resultSb = new StringBuffer();
@@ -71,16 +76,4 @@ public class MD5Util {
             return password + "{" + salt.toString() + "}";
         }
     }
-
-//    public static void main(String[] args) {
-//        // Salt
-//        String salt = "helloworld";
-//        MD5Util encoderMD5Util = new MD5Util(salt, "MD5");
-//        String encode = encoderMD5Util.encode("test");
-//        // MD5 with salt
-//        System.out.println("MD5 with salt " + encode);
-//        // MD5 without salt
-//        System.out.println("MD5 without salt " + new MD5Util(null, "MD5").encode("test"));
-//
-//    }
 }

@@ -2,14 +2,19 @@ package GUI;
 
 import Objects.Person;
 import Objects.Position;
-import Types.TransactionType;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUIStockPositions creates the GUI that allows users to see all their investment positions.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIStockPositions extends JPanel{
     JPanel panel;
     JSplitPane sp;

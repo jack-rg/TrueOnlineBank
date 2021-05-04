@@ -6,6 +6,15 @@ import Objects.Person;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUIHome creates the GUI that allows users to view accounts,
+ * take out loans, invest, and manage accounts (if user is a manager).
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIHome extends JPanel {
     JTabbedPane tabbedPane;
     JButton logOutBtn;

@@ -7,6 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUIDailyTransactions creates the GUI that shows daily transactions to the manager.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIDailyTransactions {
 
     JPanel panel;
@@ -23,7 +31,7 @@ public class GUIDailyTransactions {
         return panel;
     }
 
-    public void update(){
+    public void update() {
         panel.removeAll();
 
         ArrayList<Transaction> transactions = DataManager.loadTodaysTransactions();

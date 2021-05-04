@@ -5,6 +5,14 @@ import Objects.Person;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
+/**
+ * GUIAccountsHome creates the GUI that shows the account tab.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIAccountsHome extends JPanel {
     JTabbedPane tabbedPane;
 

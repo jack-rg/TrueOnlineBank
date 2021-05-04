@@ -8,6 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUIAccountManager creates the GUI that shows account details to the manager
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIAccountManager {
     JPanel panel, accountsPanel;
     CardLayout cards;

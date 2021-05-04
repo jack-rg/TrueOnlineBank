@@ -9,6 +9,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * DataManager is a helper class to read and write to text files
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class DataManager {
     public static void writeUser(User user) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";

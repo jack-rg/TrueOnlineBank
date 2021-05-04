@@ -1,16 +1,17 @@
 package Objects;
 
 /**
- * stock:
- * 1. symbol
- * 2. name
- * 3. lastPrice
+ * Stock represents a stock
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
  */
-
 public class Stock {
-    private String symbol; // abbreviate stock code
-    private String name;    // name
-    private double price; // the most recent price of stock
+    private final String symbol;
+    private final String name;
+    private double price;
 
     public Stock(String symbol, String name, double price) {
         this.symbol = symbol;
@@ -30,11 +31,6 @@ public class Stock {
         return symbol;
     }
 
-    /**
-     * refresh the lastPrice
-     *
-     * @param price
-     */
     public void setPrice(double price) {
         this.price = price;
     }

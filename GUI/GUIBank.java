@@ -7,6 +7,14 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.JFrame;
 
+/**
+ * GUIBank creates GUI for the online Bank
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIBank extends JFrame {
     Container c;
     CardLayout cards;

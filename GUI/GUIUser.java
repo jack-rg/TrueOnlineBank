@@ -3,21 +3,26 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.border.Border;
 
 import Objects.Account;
 import Objects.User;
 import Util.DataManager;
 
+/**
+ * GUIUser creates the GUI that allows managers to see a single user's information.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIUser {
     JPanel panel;
     JButton goBackButton;
@@ -42,7 +47,8 @@ public class GUIUser {
         goBackButton.setBounds(25, 25, 80, 40);
         topPanel.add(goBackButton);
 
-        JLabel userNameLabel = new JLabel("Username: " + user.getUserName() + " - UserID: " + user.getUserID());
+        JLabel userNameLabel = new JLabel("Username: " + user.getUserName() +
+                " - UserID: " + user.getUserID());
         userNameLabel.setBounds(125, 25, 400, 25);
         topPanel.add(userNameLabel);
 

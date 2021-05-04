@@ -2,13 +2,20 @@ package GUI;
 
 import javax.swing.*;
 
-import Objects.Person;
 import Objects.User;
 import Util.DataManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUIUsersOverview creates the GUI that allows managers to see all users' information.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIUsersOverview {
     JPanel panel, usersPanel;
     CardLayout cards;

@@ -8,6 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * GUITransfer creates the GUI that allows users to transfer money across accounts or to different users.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUITransfer extends JPanel {
     JPanel panel;
     JComboBox<String> toAccountCB, fromAccountCB;

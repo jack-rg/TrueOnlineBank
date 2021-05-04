@@ -6,6 +6,14 @@ import Types.TransactionType;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUITransaction creates the GUI that allows users to see a single transaction.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUITransaction {
     JPanel panel;
 

@@ -4,8 +4,15 @@ import Objects.Person;
 import Objects.Position;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
+/**
+ * GUIStockTrade creates the GUI that allows users to trade stocks.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIStockTrade extends JPanel {
     JPanel panel;
     JSplitPane sp;
@@ -15,12 +22,7 @@ public class GUIStockTrade extends JPanel {
     JTextField stockSymbolText;
     JTextField requestAmountText;
 
-
-
-    JComboBox<String> accountCB;
-
     public GUIStockTrade(Person person) {
-        ArrayList<Position> positions = person.getSecurityAccount().getPositions();
 
         panel = new JPanel();
         JLabel userLabel = new JLabel("Enter The stock name: ");

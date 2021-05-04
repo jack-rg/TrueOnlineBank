@@ -7,6 +7,14 @@ import Util.DataManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUILogin creates the GUI that allows users to login.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUILogin extends JFrame {
     JPanel panel;
     JTextField userText;

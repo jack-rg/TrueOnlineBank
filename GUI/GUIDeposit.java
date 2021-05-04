@@ -9,6 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * GUIDeposit creates the GUI that allows users to deposit money.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIDeposit extends JPanel {
     JPanel panel;
     JComboBox<String> accountCB;
@@ -66,7 +74,8 @@ public class GUIDeposit extends JPanel {
                 Account account = accMap.get(accountCB.getSelectedItem());
                 CurrencyType cType = (CurrencyType) currencyTypeCB.getSelectedItem();
 
-                account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit", cType, true);
+                account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit",
+                        cType, true);
 
                 home.update();
             } catch (Exception exception) {

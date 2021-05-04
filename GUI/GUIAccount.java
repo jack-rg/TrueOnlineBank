@@ -9,6 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUIAccount creates the GUI that shows account details.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIAccount {
     JPanel panel;
     JButton goBackButton, deleteAccountButton, payInterestBtn;

@@ -6,6 +6,14 @@ import Util.DataManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUIRegister creates the GUI that allows new users to register.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIRegister extends JFrame {
     JPanel panel;
     JTextField userText;

@@ -10,10 +10,20 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+/**
+ * GUILoan creates the GUI that allows users to manage their loans.
+ * Our implementation only allows users to take out one loan at a time.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUILoan extends JPanel {
     JPanel panel;
     JTextField loanAmountTF, paymentAmountTF;
-    JLabel originalLoanAmountLabel, loanBalanceLabel, errorLabel, loanPaidLabel, accountChoiceLabel, paymentAmountLabel;
+    JLabel originalLoanAmountLabel, loanBalanceLabel, errorLabel, loanPaidLabel,
+            accountChoiceLabel, paymentAmountLabel;
     JButton submitBtn;
     JCheckBox termsCB, interestTermsCB;
     JComboBox<String> accountCB;
@@ -131,7 +141,8 @@ public class GUILoan extends JPanel {
                 try {
                     double paymentAmount = Double.parseDouble(paymentAmountTF.getText());
                     if (paymentAmount > person.getLoan().getLoanBalance() || paymentAmount < 1) {
-                        errorLabel.setText("Please enter a payment amount between $1 and $" + person.getLoan().getLoanBalance());
+                        errorLabel.setText("Please enter a payment amount between $1 and $" +
+                                person.getLoan().getLoanBalance());
                         errorLabel.setVisible(true);
                         return;
                     }
@@ -205,8 +216,8 @@ public class GUILoan extends JPanel {
 
     private void removeSubmitBtnListeners() {
         ActionListener[] listeners = submitBtn.getActionListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            submitBtn.removeActionListener(listeners[i]);
+        for (ActionListener listener : listeners) {
+            submitBtn.removeActionListener(listener);
         }
     }
 }

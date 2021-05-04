@@ -5,6 +5,14 @@ import Objects.Person;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUISettings creates the GUI that allows users to manage their username and password.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUISettings {
     JPanel panel;
     JButton logOutBtn;

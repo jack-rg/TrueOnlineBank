@@ -2,6 +2,14 @@ package Objects;
 
 import Types.TransactionType;
 
+/**
+ * Transaction represents a transaction that the user could have within an account
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class Transaction {
     private TransactionType type;
     private String name;

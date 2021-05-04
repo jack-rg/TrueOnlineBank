@@ -8,6 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * GUIWithdraw creates the GUI that allows users to withdraw money.
+ *
+ * @author rachelpeng
+ * @author jackgiunta
+ * @author yuanwei
+ * @since May 4, 2021
+ */
 public class GUIWithdraw extends JPanel {
     JPanel panel;
     JComboBox<String> accountCB;
@@ -54,7 +62,8 @@ public class GUIWithdraw extends JPanel {
             try {
                 Account account = accMap.get(accountCB.getSelectedItem());
 
-                if (account.withdraw(Double.parseDouble(withdrawTF.getText()), "ATM Withdrawal", true)) {
+                if (account.withdraw(Double.parseDouble(withdrawTF.getText()),
+                        "ATM Withdrawal", true)) {
                     home.update();
                 } else {
                     errorLabel.setText("Insufficient funds");
