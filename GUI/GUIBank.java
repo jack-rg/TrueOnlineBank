@@ -6,6 +6,7 @@ import Util.DataManager;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.JFrame;
 
 public class GUIBank extends JFrame {
@@ -39,7 +40,11 @@ public class GUIBank extends JFrame {
                 Person person = login.execute();
                 if (person != null) {
                     DataManager.loadAccounts(person);
-                    addHome(person);
+                    try {
+                        addHome(person);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     cards.show(c, "Home");
                 } else {
                     login.getErrorLabel().setVisible(true);
@@ -63,7 +68,11 @@ public class GUIBank extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Person person = register.execute();
                 if (person != null) {
-                    addHome(person);
+                    try {
+                        addHome(person);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     cards.show(c, "Home");
                 } else {
                     register.getErrorLabel().setVisible(true);
@@ -80,7 +89,7 @@ public class GUIBank extends JFrame {
         c.add(register.getPanel(), "Register");
     }
 
-    private void addHome(Person user) {
+    private void addHome(Person user) throws IOException {
         GUIHome home = new GUIHome(user);
         c.add(home.getTabbedPane(), "Home");
     }

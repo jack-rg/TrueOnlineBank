@@ -8,6 +8,7 @@ import Objects.User;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GUIHome extends JPanel {
@@ -15,7 +16,7 @@ public class GUIHome extends JPanel {
 
     ArrayList<Account> accounts;
 
-    public GUIHome(Person person) {
+    public GUIHome(Person person) throws IOException {
         super(new GridLayout(1, 1));
 
         tabbedPane = new JTabbedPane();
@@ -25,8 +26,9 @@ public class GUIHome extends JPanel {
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         //JComponent panel3 = makeTextPanel("Panel #3");
+        GUISettings settings1 = new GUISettings(person);
         GUIInvestmentHome investmentHome = new GUIInvestmentHome(person);
-        tabbedPane.addTab("Invest", investmentHome.getPanel());
+        tabbedPane.addTab("Invest", investmentHome.getTabbedPane());
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         GUISettings settings = new GUISettings(person);

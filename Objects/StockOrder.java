@@ -68,6 +68,7 @@ public class StockOrder {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
         StockOrder stockOrder = new StockOrder(new Stock("TWTR", "Twitter", 20), 100, "BUY", dtf.format(LocalDateTime.now()));
         stockOrder.displayOrder();
-        DataManager.writeStockOrder(stockOrder);
+        String UserName = "yuan wei";
+        DataManager.writeUserStockOrder(stockOrder, UserName);
     }
 }

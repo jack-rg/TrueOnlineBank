@@ -9,6 +9,7 @@ public class Checking extends Account {
 		super(accountType, accountID, userID);
 	}
 
+
 	public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType) {
 		super(accountType, accountID, userID, currencyType);
 	}

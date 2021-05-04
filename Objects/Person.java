@@ -18,8 +18,6 @@ public abstract class Person {
         this.password = password;
         this.userID = userID;
         accounts = new ArrayList<Account>();
-        String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
-        securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, userID);
     }
 
     public String getUserName() {
@@ -90,7 +88,15 @@ public abstract class Person {
         return sum;
     }
 
-    public SecurityAccount getSecurityAccount() {
-        return securityAccount;
+
+    /**
+     * User pressed register button, create a Secrurity account
+     * @return true. if create success
+     */
+    public boolean createSecurityAccountHandler() {
+        String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
+        this.securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, this.getUserID());
+        return true;
     }
+
 }
