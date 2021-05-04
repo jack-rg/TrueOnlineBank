@@ -12,6 +12,7 @@ public abstract class Person {
     private String userID;
     private ArrayList<Account> accounts;
     private SecurityAccount securityAccount;
+    private Loan loan;
 
     public Person(String userName, String password, String userID) {
         this.userName = userName;
@@ -20,6 +21,12 @@ public abstract class Person {
         accounts = new ArrayList<>();
         String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
         securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, userID);
+        loan = null;
+    }
+
+    public Person(String userName, String password, String userID, Loan loan) {
+        this(userName, password, userID);
+        this.loan = loan;
     }
 
     public String getUserName() {
@@ -55,6 +62,10 @@ public abstract class Person {
     public void setUserID(String newID) {
         userID = newID;
     }
+
+    public Loan getLoan() { return loan; }
+
+    public void setLoan(Loan loan) { this.loan = loan; }
 
     public ArrayList<Account> getRawAccounts() {
         return accounts;
