@@ -43,6 +43,7 @@ public class GUIAccountsOverview {
             acc.getGoBackButton().addActionListener(e -> cards.show(panel, "AccountPanel"));
 
             acc.getDeleteAccountButton().addActionListener(e -> {
+                a.deactivate();
                 accountsPanel.remove(aBtn);
                 cards.show(panel, "AccountPanel");
 

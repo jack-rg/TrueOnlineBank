@@ -159,7 +159,7 @@ public class DataManager {
                     String[] account = line.split(" \\| ");
                     String userID = account[2];
                     String accountType = account[3];
-                    double value = Double.valueOf(account[5]);
+                    double value = Double.parseDouble(account[5]);
                     String status = account[6];
                     String currencyType = account[7];
 
@@ -202,7 +202,7 @@ public class DataManager {
 
     public static void loadAccounts(Person person) {
         String userID = person.getUserID();
-        ArrayList<Account> accounts = new ArrayList<Account>();
+        ArrayList<Account> accounts = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
 
         try {
@@ -214,7 +214,7 @@ public class DataManager {
                     String[] account = line.split(" \\| ");
                     String accountType = account[3];
                     String accountID = account[4];
-                    double value = Double.valueOf(account[5]);
+                    double value = Double.parseDouble(account[5]);
                     String status = account[6];
                     String currencyType = account[7];
 
@@ -257,7 +257,7 @@ public class DataManager {
 
 
     public static ArrayList<Transaction> loadTodaysTransactions(){
-        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        ArrayList<Transaction> transactions = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
 
         try {
@@ -269,7 +269,7 @@ public class DataManager {
                 String date = transaction[0];
                 String name = transaction[4];
                 String type = transaction[6];
-                float amount = Float.valueOf(transaction[5]);
+                double amount = Double.parseDouble(transaction[5]);
             if(java.time.LocalDate.now().toString().equals(date)){
                     if (type.equals("WITHDRAWAL")) {
                         transactions.add(new Transaction(name, date, amount, TransactionType.WITHDRAWAL));
@@ -286,7 +286,7 @@ public class DataManager {
 
 
     public static void loadTransactions(Account account) {
-        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        ArrayList<Transaction> transactions = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
 
         try {
@@ -299,7 +299,7 @@ public class DataManager {
                     String name = transaction[4];
                     String type = transaction[6];
                     String date = transaction[0];
-                    float amount = Float.valueOf(transaction[5]);
+                    double amount = Double.parseDouble(transaction[5]);
 
                     if (type.equals("WITHDRAWAL")) {
                         transactions.add(new Transaction(name, date, amount, TransactionType.WITHDRAWAL));
@@ -317,7 +317,7 @@ public class DataManager {
     
     
     public static ArrayList<User> loadUsers() {
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
 
         try {
@@ -345,7 +345,7 @@ public class DataManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
+            ArrayList<String> traceFile = new ArrayList<>();
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -410,7 +410,7 @@ public class DataManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
+            ArrayList<String> traceFile = new ArrayList<>();
             String line;
 
             String userID = loan.getUserID();
@@ -427,7 +427,7 @@ public class DataManager {
             FileOutputStream fileOut = new FileOutputStream(file);
 
             for (String output : traceFile) {
-                fileOut.write((output + "\n").toString().getBytes());
+                fileOut.write((output + "\n").getBytes());
             }
 
             fileOut.flush();
@@ -448,7 +448,7 @@ public class DataManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
+            ArrayList<String> traceFile = new ArrayList<>();
             String line;
 
             String userID = person.getUserID();
@@ -471,7 +471,7 @@ public class DataManager {
             FileOutputStream fileOut = new FileOutputStream(file);
 
             for (String output : traceFile) {
-                fileOut.write((output + "\n").toString().getBytes());
+                fileOut.write((output + "\n").getBytes());
             }
 
             fileOut.flush();
@@ -489,7 +489,6 @@ public class DataManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -497,8 +496,6 @@ public class DataManager {
                     String[] user = line.split(" \\| ");
                     String userID = user[4];
                     return new Manager(username, password, userID);
-                } else {
-                    traceFile.add(line);
                 }
             }
 
@@ -514,7 +511,7 @@ public class DataManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
+            ArrayList<String> traceFile = new ArrayList<>();
             String line;
 
             String accountID = account.getAccountID();
@@ -533,7 +530,7 @@ public class DataManager {
             FileOutputStream fileOut = new FileOutputStream(file);
 
             for (String output : traceFile) {
-                fileOut.write((output + "\n").toString().getBytes());
+                fileOut.write((output + "\n").getBytes());
             }
 
             fileOut.flush();
@@ -548,7 +545,7 @@ public class DataManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            ArrayList<String> traceFile = new ArrayList<String>();
+            ArrayList<String> traceFile = new ArrayList<>();
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -566,7 +563,7 @@ public class DataManager {
             FileOutputStream fileOut = new FileOutputStream(file);
 
             for (String output : traceFile) {
-                fileOut.write((output + "\n").toString().getBytes());
+                fileOut.write((output + "\n").getBytes());
             }
 
             fileOut.flush();

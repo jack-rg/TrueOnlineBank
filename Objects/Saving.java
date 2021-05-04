@@ -25,15 +25,15 @@ public class Saving extends Account {
         super(accountType, accountID, userID, currencyType, status, value);
     }
 
-    public boolean withdraw(double funds, String name) {
+    public boolean withdraw(double funds, String name, boolean chargeFee) {
         if (balance - funds >= 2500) {
-            return super.withdraw(funds, name);
+            return super.withdraw(funds, name, chargeFee);
         } else {
             return false;
         }
     }
 
     public void chargeInterest() {
-        withdraw(balance * INTEREST_RATE, "INTEREST");
+        transferToBank(balance * INTEREST_RATE, "INTEREST");
     }
 }

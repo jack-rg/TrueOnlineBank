@@ -1,6 +1,5 @@
 package GUI;
 
-
 import javax.swing.*;
 
 import Objects.Person;
@@ -37,7 +36,7 @@ public class GUIUsersOverview {
             JButton aBtn = new JButton(u.toString());
             usersPanel.add(aBtn);
 
-            GUIUser user = new GUIUser(u);
+            GUIUser user = new GUIUser(u, home);
             panel.add(user.getPanel(), u.getUserID());
 
             user.getGoBackButton().addActionListener(e -> cards.show(panel, "UserPanel"));

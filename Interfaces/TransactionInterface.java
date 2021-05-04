@@ -3,7 +3,7 @@ package Interfaces;
 import Types.CurrencyType;
 
 public interface TransactionInterface {
-    public boolean withdraw(double funds, String name);
+    boolean withdraw(double funds, String name, boolean chargeFee);
 
-    public void deposit(double funds, String name, CurrencyType cType);
+    void deposit(double funds, String name, CurrencyType cType, boolean chargeFee);
 }

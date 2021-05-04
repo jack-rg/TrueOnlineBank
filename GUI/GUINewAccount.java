@@ -155,7 +155,7 @@ public class GUINewAccount extends JPanel {
                         double amount = Double.parseDouble(depositTF.getText());
                         Account account = accMap.get(accountCB.getSelectedItem());
 
-                        if ((amount <= account.getBalance()) && account.withdraw(amount, "Transfer to Account " + accountID)) {
+                        if ((amount <= account.getBalance()) && account.withdraw(amount, "Transfer to Account " + accountID, true)) {
                             if (savingRB.isSelected()) {
                                 createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             } else if (checkingRB.isSelected()) {
@@ -229,6 +229,7 @@ public class GUINewAccount extends JPanel {
 
     private void createNewUser(Person person, Account account) {
         person.addNewAccount(account);
+        account.chargeOpeningFee();
         home.update();
     }
 

@@ -3,9 +3,6 @@ package GUI;
 import Objects.Account;
 import Objects.Person;
 import Objects.Saving;
-import Objects.Transaction;
-import Types.AccountType;
-import Util.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +13,10 @@ public class GUIAccountManager {
     CardLayout cards;
     Person user;
 
-    public GUIAccountManager(Person person) {
+    GUIHome home;
+
+    public GUIAccountManager(Person person, GUIHome home) {
+        this.home = home;
 
         panel = new JPanel();
         cards = new CardLayout();
@@ -38,7 +38,7 @@ public class GUIAccountManager {
             JButton aBtn = new JButton(a.toString());
             accountsPanel.add(aBtn);
 
-            GUIAccount acc = new GUIAccount(a);
+            GUIAccount acc = new GUIAccount(a, home);
             acc.hideButton();
             if ((a instanceof Saving) && a.getBalance() >= 10000) {
                 acc.showInterest();
@@ -57,27 +57,4 @@ public class GUIAccountManager {
     public JPanel getPanel() {
         return panel;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

@@ -90,7 +90,7 @@ public class GUILoan extends JPanel {
                     double paymentAmount = Double.parseDouble(paymentAmountTF.getText());
                     Account account = accMap.get(accountCB.getSelectedItem());
 
-                    if (account.withdraw(paymentAmount, "Loan Payment")) {
+                    if (account.transferToBank(paymentAmount, "Loan Payment")) {
                         person.getLoan().makePayment(paymentAmount);
                         update();
                         updateOthers();

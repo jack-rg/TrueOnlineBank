@@ -12,12 +12,21 @@ import java.util.ArrayList;
 public class GUIAccount {
     JPanel panel;
     JButton goBackButton, deleteAccountButton, payInterestBtn;
+    JSplitPane sp;
+    JScrollPane transactionsSP;
+    JLabel accountNameLabel;
+
+    Account account;
+
+    GUIHome home;
 
     public GUIAccount(Account account) {
+        this.account = account;
+
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         sp.setResizeWeight(0.1);
 
         JPanel topPanel = new JPanel();
@@ -31,24 +40,43 @@ public class GUIAccount {
         deleteAccountButton.setBounds(120, 25, 150, 40);
         topPanel.add(deleteAccountButton);
 
-        deleteAccountButton.addActionListener(e -> account.deactivate());
-
         payInterestBtn = new JButton("Charge Interest");
         payInterestBtn.setBounds(120, 25, 150, 40);
         topPanel.add(payInterestBtn);
 
-        payInterestBtn.addActionListener(e -> {
-            if (account instanceof Saving) {
-                ((Saving) account).chargeInterest();
-            }
-        });
         payInterestBtn.setVisible(false);
 
-        JLabel accountNameLabel = new JLabel(account.getAccountType() + ": $" + account.getBalance());
+        accountNameLabel = new JLabel();
         accountNameLabel.setBounds(125, 25, 400, 25);
         topPanel.add(accountNameLabel);
 
         sp.add(topPanel);
+
+        updateTransactions();
+
+        panel.add(sp, BorderLayout.CENTER);
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    }
+
+    public GUIAccount(Account account, GUIHome home) {
+        this(account);
+
+        this.home = home;
+        payInterestBtn.addActionListener(e -> {
+            if (account instanceof Saving) {
+                ((Saving) account).chargeInterest();
+                updateTransactions();
+                home.updateDailyTransactions();
+            }
+        });
+    }
+
+    public void updateTransactions() {
+        accountNameLabel.setText(account.getAccountType() + ": $" + account.getBalance());
+
+        if (transactionsSP != null) {
+            sp.remove(transactionsSP);
+        }
 
         DataManager.loadTransactions(account);
         ArrayList<Transaction> transactions = account.getTransactions();
@@ -61,10 +89,9 @@ public class GUIAccount {
                 transactionsPanel.add((new GUITransaction(t)).getPanel());
             }
 
-            sp.add(new JScrollPane(transactionsPanel));
+            transactionsSP = new JScrollPane(transactionsPanel);
+            sp.add(transactionsSP);
         }
-        panel.add(sp, BorderLayout.CENTER);
-        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
     public JPanel getPanel() {

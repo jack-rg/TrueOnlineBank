@@ -23,7 +23,11 @@ public class GUIUser {
     JButton goBackButton;
     CardLayout cards;
 
-    public GUIUser(User user) {
+    GUIHome home;
+
+    public GUIUser(User user, GUIHome home) {
+        this.home = home;
+
         panel = new JPanel();
         cards = new CardLayout();
         panel.setLayout(new BorderLayout());
@@ -52,15 +56,15 @@ public class GUIUser {
         if (accounts.size() > 0) {
             JPanel accountsPanel = new JPanel();
 
-            GUIAccountManager accManage = new GUIAccountManager(user);
+            GUIAccountManager accManage = new GUIAccountManager(user, home);
             accountsPanel.add(accManage.getPanel());
 
             bottomPanel.add(new JScrollPane(accountsPanel));
 
             sp.add(bottomPanel);
         }
-        panel.add(sp, BorderLayout.CENTER);
 
+        panel.add(sp, BorderLayout.CENTER);
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 

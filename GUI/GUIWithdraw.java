@@ -54,7 +54,7 @@ public class GUIWithdraw extends JPanel {
             try {
                 Account account = accMap.get(accountCB.getSelectedItem());
 
-                if (account.withdraw(Double.parseDouble(withdrawTF.getText()), "ATM Withdrawal")) {
+                if (account.withdraw(Double.parseDouble(withdrawTF.getText()), "ATM Withdrawal", true)) {
                     home.update();
                 } else {
                     errorLabel.setText("Insufficient funds");

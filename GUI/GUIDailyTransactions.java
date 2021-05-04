@@ -1,7 +1,5 @@
 package GUI;
 
-import Objects.Account;
-import Objects.Person;
 import Objects.Transaction;
 import Util.DataManager;
 
@@ -14,18 +12,20 @@ public class GUIDailyTransactions {
     JPanel panel;
     GUIHome home;
 
-    public GUIDailyTransactions() {
-        panel = new JPanel();
-        reload();
+    public GUIDailyTransactions(GUIHome home) {
+        this.home = home;
 
+        panel = new JPanel();
+        update();
     }
 
-    public JPanel getPanel(GUIAccountsHome accountsHome) {
+    public JPanel getPanel() {
         return panel;
     }
 
-    public void reload(){
+    public void update(){
         panel.removeAll();
+
         ArrayList<Transaction> transactions = DataManager.loadTodaysTransactions();
         panel.setLayout(new GridLayout(transactions.size(), 1));
         for (Transaction t : transactions) {
@@ -33,12 +33,4 @@ public class GUIDailyTransactions {
             panel.add(trans.getPanel());
         }
     }
-
-
-
-
-
-
-
-
 }

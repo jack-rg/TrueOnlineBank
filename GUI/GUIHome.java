@@ -12,6 +12,8 @@ public class GUIHome extends JPanel {
 
     GUIAccountsHome accountsHome;
     GUILoan loans;
+    GUIUsersOverview usersOverview;
+    GUIDailyTransactions dailyTransactions;
 
     public GUIHome(Person person) {
         tabbedPane = new JTabbedPane();
@@ -33,11 +35,11 @@ public class GUIHome extends JPanel {
         logOutBtn = settings.getLogOutBtn();
 
         if (person instanceof Manager) {
-            GUIUsersOverview usersOverview = new GUIUsersOverview(this);
+            usersOverview = new GUIUsersOverview(this);
             tabbedPane.addTab("View Users", usersOverview.getPanel());
 
-            GUIDailyTransactions dailyTransactions = new GUIDailyTransactions();
-            tabbedPane.addTab("Daily Transactions", dailyTransactions.getPanel(accountsHome));
+            dailyTransactions = new GUIDailyTransactions(this);
+            tabbedPane.addTab("Daily Transactions", dailyTransactions.getPanel());
 
             JComponent panel5 = makeTextPanel("Panel #6");
             tabbedPane.addTab("Update Stocks", panel5);
@@ -71,5 +73,9 @@ public class GUIHome extends JPanel {
 
     public void updateLoans() {
         loans.update();
+    }
+
+    public void updateDailyTransactions() {
+        dailyTransactions.update();
     }
 }

@@ -31,8 +31,6 @@ public abstract class Account implements TransactionInterface {
         balance = 0;
         status = AccountState.ACTIVE;
         currencyType = CurrencyType.USD;
-
-        withdraw(OPENING_FEE, "OPENING FEE");
     }
 
     public Account(AccountType userName, String accountID, String userID, double balance) {
@@ -107,55 +105,72 @@ public abstract class Account implements TransactionInterface {
         return status;
     }
 
-    public void deposit(double funds, String name, CurrencyType cType) {
+    public void deposit(double funds, String name, CurrencyType cType, boolean chargeFee) {
         double convertedFunds = CurrencyConverter.execute(cType, currencyType, funds);
+
+        if (chargeFee) {
+            Transaction withdrawalFee = new Transaction("DEPOSIT FEE", TRANSACTION_FEE, TransactionType.WITHDRAWAL);
+            DataManager.writeTransaction(withdrawalFee, userID, accountID);
+            balance -= TRANSACTION_FEE;
+        }
 
         Transaction transaction = new Transaction(name, convertedFunds, TransactionType.DEPOSIT);
         DataManager.writeTransaction(transaction, userID, accountID);
-
         balance += funds;
+
         DataManager.updateAccount(this);
     }
 
-    public boolean withdraw(double funds, String name) {
-        if (balance - funds >= 0) {
-            Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
-            DataManager.writeTransaction(transaction, userID, accountID);
-
-            if (!name.equals("INTEREST") && !name.equals("OPENING FEE") && !name.equals("CLOSING FEE") && !name.equals("Loan Payment")) {
-                Transaction withdrawalFee = new Transaction("WITHDRAWAL FEE", TRANSACTION_FEE, TransactionType.WITHDRAWAL);
-                DataManager.writeTransaction(withdrawalFee, userID, accountID);
-                balance -= TRANSACTION_FEE;
-            }
-
-            balance -= funds;
-            DataManager.updateAccount(this);
-            return true;
-        } else {
-            return false;
+    public boolean withdraw(double funds, String name, boolean chargeFee) {
+        if (chargeFee) {
+            Transaction withdrawalFee = new Transaction("WITHDRAWAL FEE", TRANSACTION_FEE, TransactionType.WITHDRAWAL);
+            DataManager.writeTransaction(withdrawalFee, userID, accountID);
+            balance -= TRANSACTION_FEE;
         }
+
+        Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
+        DataManager.writeTransaction(transaction, userID, accountID);
+        balance -= funds;
+
+        DataManager.updateAccount(this);
+        return true;
     }
 
     public boolean transferTo(Account account, double amount) {
-        withdraw(amount, "Transfer to " + account.getAccountID());
-        account.deposit(amount, "Transfer from " + accountID, currencyType);
+        withdraw(amount, "Transfer to " + account.getAccountID(), true);
+        account.deposit(amount, "Transfer from " + accountID, currencyType, true);
         return true;
     }
 
     public boolean transferTo(String accountID, double amount) {
         Account account = DataManager.loadAccount(accountID);
         if (account != null) {
-            return transferTo(account, amount);
+            return !transferTo(account, amount);
+        }
+
+        return true;
+    }
+
+    public boolean transferToBank(double amount, String name) {
+        Account account = DataManager.loadAccount("A01");
+        if (account != null) {
+            withdraw(amount, name, false);
+            account.deposit(amount, name + " from " + accountID, currencyType, false);
+            return true;
         }
 
         return false;
+    }
+
+    public void chargeOpeningFee() {
+        transferToBank(OPENING_FEE, "OPENING FEE");
     }
 
     public void deactivate() {
         status = AccountState.INACTIVE;
         DataManager.deactivateAccount(this);
 
-        withdraw(CLOSING_FEE, "CLOSING FEE");
+        transferToBank(CLOSING_FEE, "CLOSING FEE");
     }
 
     public String toString() {

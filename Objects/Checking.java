@@ -22,7 +22,7 @@ public class Checking extends Account {
     }
 
     public boolean transferTo(String accountID, double amount) {
-        withdraw(TRANSACTION_FEE, "TRANSACTION FEE");
+        withdraw(TRANSACTION_FEE, "TRANSACTION FEE", false);
 
         return super.transferTo(accountID, amount);
     }
