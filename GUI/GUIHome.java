@@ -26,7 +26,7 @@ public class GUIHome extends JPanel {
 
         if (person.isRich()) {
             GUIInvestmentHome investmentHome = new GUIInvestmentHome(person);
-            tabbedPane.addTab("Invest", investmentHome.getPanel());
+            tabbedPane.addTab("Invest", investmentHome.getTabbedPane());
         }
 
         GUISettings settings = new GUISettings(person);

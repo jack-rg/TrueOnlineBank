@@ -34,8 +34,8 @@ public class SecurityAccount extends Account {
         this.stockName2position = new HashMap<>();
     }
 
-    public SecurityAccount(AccountType userName, String accountID, String userID, double value) {
-        super(userName, accountID, userID, value);
+    public SecurityAccount(AccountType accountType, String accountID, String userID, double value) {
+        super(accountType, accountID, userID, value);
         this.stockName2position = new HashMap<>();
     }
 
@@ -55,6 +55,7 @@ public class SecurityAccount extends Account {
     public Map<String, StockPosition> getStockName2position() {
         return this.stockName2position;
     }
+
 
     /**
      * buy or sell one specific stocks
@@ -97,15 +98,15 @@ public class SecurityAccount extends Account {
         }
         this.accountPositionsDisplay();
 
-        StockOrder stockOrder = new StockOrder(targetStock, requestQuantity, billType, dtf.format(LocalDateTime.now()));
-        DataManager.writeStockOrder(stockOrder);
+        StockOrder stockOrder = new StockOrder(targetStock,requestQuantity,billType,dtf.format(LocalDateTime.now()));
+        DataManager.writeUserStockOrder(stockOrder, this.getUserID());
 
         return true;
     }
 
 
 //    public static void main(String[] args){
-//        SecurityAccount securityAccount = new SecurityAccount(AccountType.SECURITY, "SecurityAccount0", "UserSEC", 20000);
+//        SecurityAccount securityAccount = new SecurityAccount(AccountType.SECURITY, "SecurityAccount0", "Yuan", 20000);
 //        Stock targetStock0 = new Stock("TWTR", "Twitter", 20);
 //       Stock targetStock1 = new Stock("AAPL", "Apple", 131);
 //
@@ -114,6 +115,6 @@ public class SecurityAccount extends Account {
 //       securityAccount.updatePosition(targetStock0, false, 10);
 //
 //        // check position is manually requested by manager or user.
-//        DataManager.writePositions(securityAccount);
+//        DataManager.writeUserPositions(securityAccount, "Yuan");
 //    }
 }

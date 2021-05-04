@@ -81,12 +81,13 @@ public class DataManager {
         }
     }
 
-    public static void writePositions(SecurityAccount securityAccount) {
+    public static void writeUserPositions(SecurityAccount securityAccount, String UserID){
         Map<String, StockPosition> positionMap = securityAccount.getStockName2position();
         if (positionMap == null || positionMap.size() == 0) {
             return;
         }
-        String file = Paths.get("").toAbsolutePath() + "/Logs/positionLog.txt";
+
+        String file = Paths.get("").toAbsolutePath() + "/Logs/positionLog_" + UserID + ".txt";
         // if already exists, simply delete one and create one.
         File deleteFile = new File(file);
         if (deleteFile.exists()) {
@@ -114,21 +115,14 @@ public class DataManager {
         }
     }
 
-    public static void writeStockOrder(StockOrder stockOrder) {
-        String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderRecord.txt";
+    public static void writeUserStockOrder(StockOrder stockOrder, String UserID){
+        String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderRecord" + "_" + UserID+".txt";
         // if already exists, simply delete one and create one.
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             String transactionFormatter = "%s | %s | %s | %s | %f \n";
 
-//            public void displayOrder(){
-//                System.out.println( "Symbol: " + stock.getSymbol() +
-//                        " Name: " + stock.getName() +
-//                        " Filled quantity: " + quantity +
-//                        " orderPlacedtime: " + this.orderPlacedTime
-//                );
-//            }
             out.printf(transactionFormatter,
                     stockOrder.getOrderPlacedTime(),
                     stockOrder.getOrderStockName(),

@@ -142,4 +142,15 @@ public abstract class Person {
     	return userName + " - "+userID;
     	
     }
+
+    /**
+     * User pressed register button, create a Secrurity account
+     * @return true. if create success
+     */
+    public boolean createSecurityAccountHandler() {
+        String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
+        this.securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, this.getUserID());
+        return true;
+    }
+
 }

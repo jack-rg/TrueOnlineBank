@@ -16,6 +16,9 @@ import Util.DataManager;
  */
 
 public class StockPosition {
+
+    public static int MAX_POSITION_LIMIT = 100;
+
     private Stock stock;
     private int quantity;
     private double mktValue; // currentPrice * quantity
