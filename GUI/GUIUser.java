@@ -27,7 +27,7 @@ public class GUIUser {
         panel = new JPanel();
         cards = new CardLayout();
         panel.setLayout(new BorderLayout());
-        
+
         JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         sp.setResizeWeight(0.2);
 
@@ -38,13 +38,11 @@ public class GUIUser {
         goBackButton.setBounds(25, 25, 80, 40);
         topPanel.add(goBackButton);
 
-        JLabel userNameLabel = new JLabel("Username: " + user.getUserName() + " - UserID: "+user.getUserID());
+        JLabel userNameLabel = new JLabel("Username: " + user.getUserName() + " - UserID: " + user.getUserID());
         userNameLabel.setBounds(125, 25, 400, 25);
         topPanel.add(userNameLabel);
-        
-        
-        sp.add(topPanel);
 
+        sp.add(topPanel);
 
         JPanel bottomPanel = new JPanel();
 
@@ -54,10 +52,8 @@ public class GUIUser {
         if (accounts.size() > 0) {
             JPanel accountsPanel = new JPanel();
 
-            	GUIAccountManager accManage = new GUIAccountManager(user);
-                accountsPanel.add(accManage.getPanel());
-
-
+            GUIAccountManager accManage = new GUIAccountManager(user);
+            accountsPanel.add(accManage.getPanel());
 
             bottomPanel.add(new JScrollPane(accountsPanel));
 
@@ -75,5 +71,4 @@ public class GUIUser {
     public JButton getGoBackButton() {
         return goBackButton;
     }
-
 }

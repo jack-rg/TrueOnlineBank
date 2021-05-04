@@ -1,6 +1,7 @@
 package GUI;
 
 import Objects.Account;
+import Objects.Saving;
 import Objects.Transaction;
 import Util.DataManager;
 
@@ -19,7 +20,6 @@ public class GUIAccount {
         JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         sp.setResizeWeight(0.1);
 
-
         JPanel topPanel = new JPanel();
         topPanel.setBounds(25, 25, 400, 500);
 
@@ -33,13 +33,16 @@ public class GUIAccount {
 
         deleteAccountButton.addActionListener(e -> account.deactivate());
 
-        payInterestBtn = new JButton("Pay Interest");
+        payInterestBtn = new JButton("Charge Interest");
         payInterestBtn.setBounds(120, 25, 150, 40);
         topPanel.add(payInterestBtn);
 
-        payInterestBtn.addActionListener(e -> account.payInterest()); //oooooop
+        payInterestBtn.addActionListener(e -> {
+            if (account instanceof Saving) {
+                ((Saving) account).chargeInterest();
+            }
+        });
         payInterestBtn.setVisible(false);
-
 
         JLabel accountNameLabel = new JLabel(account.getAccountType() + ": $" + account.getBalance());
         accountNameLabel.setBounds(125, 25, 400, 25);
@@ -79,7 +82,8 @@ public class GUIAccount {
     public void hideButton() {
         deleteAccountButton.setVisible(false);
     }
-    public void showInterest() {payInterestBtn.setVisible(true);
-    }
 
+    public void showInterest() {
+        payInterestBtn.setVisible(true);
+    }
 }

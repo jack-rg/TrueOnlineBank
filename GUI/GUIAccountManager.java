@@ -40,7 +40,7 @@ public class GUIAccountManager {
 
             GUIAccount acc = new GUIAccount(a);
             acc.hideButton();
-            if(a.getAccountType().equals(AccountType.SAVING) && a.getBalance() > 10000) {
+            if ((a instanceof Saving) && a.getBalance() >= 10000) {
                 acc.showInterest();
             }
             panel.add(acc.getPanel(), a.getAccountID());
