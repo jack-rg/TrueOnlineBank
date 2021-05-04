@@ -109,6 +109,16 @@ public abstract class Person {
         return sum;
     }
 
+    public boolean isRich() {
+        for (Account a : accounts) {
+            if ((a instanceof Saving) && (a.getBalance() >= 5000)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void takeOutLoan(double loanAmount) {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 30);

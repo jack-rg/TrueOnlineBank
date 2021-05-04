@@ -13,7 +13,7 @@ import Util.DataManager;
 public abstract class Account implements TransactionInterface {
     private String accountID;
     private String userID;
-    private double balance;
+    protected double balance;
     private AccountType accountType;
     private AccountState status;
     private CurrencyType currencyType;

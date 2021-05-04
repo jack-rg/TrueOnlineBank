@@ -14,7 +14,7 @@ public class GUINewAccount extends JPanel {
     JPanel panel;
     ButtonGroup accountTypeBG, depositBG;
     JLabel errorL, depositL, accountChoiceL, depositAmountL;
-    JRadioButton yesRB, noRB;
+    JRadioButton yesRB, noRB, securityRB;
     JComboBox<String> accountCB;
     JTextField depositTF;
 
@@ -42,11 +42,12 @@ public class GUINewAccount extends JPanel {
         panel.add(checkingRB);
 
         JRadioButton savingRB = new JRadioButton("Savings");
-        savingRB.setBounds(140, 90, 120, 25);
+        savingRB.setBounds(140, 90, 100, 25);
         panel.add(savingRB);
 
-        JRadioButton securityRB = new JRadioButton("Security");
+        securityRB = new JRadioButton("Security");
         securityRB.setBounds(230, 90, 120, 25);
+        securityRB.setVisible(person.isRich());
         panel.add(securityRB);
 
         accountTypeBG = new ButtonGroup();
@@ -109,32 +110,32 @@ public class GUINewAccount extends JPanel {
         depositAmountL.setVisible(false);
         panel.add(depositAmountL);
 
-        // TODO: validation on input
         depositTF = new JTextField(20);
         depositTF.setBounds(250, 310, 165, 25);
         depositTF.setVisible(false);
         panel.add(depositTF);
 
-        yesRB.addChangeListener(e -> {
-            accountChoiceL.setVisible(true);
-            accountCB.setVisible(true);
-
-            depositAmountL.setVisible(true);
-            depositTF.setVisible(true);
+        checkingRB.addChangeListener(e -> {
+            showDepositOption(true);
+            showDepositSelection(false);
         });
 
-        noRB.addChangeListener(e -> {
-            accountChoiceL.setVisible(false);
-            accountCB.setVisible(false);
-
-            depositAmountL.setVisible(false);
-            depositTF.setVisible(false);
+        savingRB.addChangeListener(e -> {
+            showDepositOption(true);
+            showDepositSelection(false);
         });
+
+        securityRB.addChangeListener(e -> {
+            showDepositOption(false);
+            showDepositSelection(true);
+        });
+
+        yesRB.addChangeListener(e -> showDepositSelection(true));
+
+        noRB.addChangeListener(e -> showDepositSelection(false));
 
         if (person.getActiveAccounts().size() > 0) {
-            depositL.setVisible(true);
-            yesRB.setVisible(true);
-            noRB.setVisible(true);
+            showDepositOption(true);
 
             submitBtn.addActionListener(e -> {
                 if (accountTypeBG.getSelection() == null) {
@@ -143,25 +144,29 @@ public class GUINewAccount extends JPanel {
                     return;
                 }
 
-                if (depositBG.getSelection() == null) {
+                if ((depositBG.getSelection() == null) && (!securityRB.isSelected())) {
                     errorL.setText("Please select whether you'd like to deposit.");
                     errorL.setVisible(true);
                     return;
                 }
 
-                if (yesRB.isSelected()) {
+                if (yesRB.isSelected() || securityRB.isSelected()) {
                     try {
                         double amount = Double.parseDouble(depositTF.getText());
                         Account account = accMap.get(accountCB.getSelectedItem());
 
-                        if (amount <= account.getBalance()) {
-                            account.withdraw(amount, "Transfer to Account " + accountID);
-
+                        if ((amount <= account.getBalance()) && account.withdraw(amount, "Transfer to Account " + accountID)) {
                             if (savingRB.isSelected()) {
                                 createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             } else if (checkingRB.isSelected()) {
                                 createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             } else {
+                                if (depositTF.getText().equals("") || (Double.parseDouble(depositTF.getText()) < 1000)) {
+                                    errorL.setText("Please enter a deposit amount of $1000 or more.");
+                                    errorL.setVisible(true);
+                                    return;
+                                }
+
                                 createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
                             }
                         } else {
@@ -204,6 +209,8 @@ public class GUINewAccount extends JPanel {
     public JPanel getPanel() { return panel; }
 
     public void update() {
+        securityRB.setVisible(person.isRich());
+
         accountTypeBG.clearSelection();
         errorL.setVisible(false);
 
@@ -216,24 +223,26 @@ public class GUINewAccount extends JPanel {
             accountCB.addItem(a);
         }
 
-        if (person.getActiveAccounts().size() > 0) {
-            depositL.setVisible(true);
-            yesRB.setVisible(true);
-            noRB.setVisible(true);
-        } else {
-            depositL.setVisible(false);
-            yesRB.setVisible(false);
-            noRB.setVisible(false);
-        }
-
-        accountChoiceL.setVisible(false);
-        depositAmountL.setVisible(false);
-        depositTF.setVisible(false);
-        accountCB.setVisible(false);
+        showDepositOption(person.getActiveAccounts().size() > 0);
+        showDepositSelection(false);
     }
 
     private void createNewUser(Person person, Account account) {
         person.addNewAccount(account);
         home.update();
+    }
+
+    private void showDepositSelection(boolean show) {
+        accountChoiceL.setVisible(show);
+        accountCB.setVisible(show);
+
+        depositAmountL.setVisible(show);
+        depositTF.setVisible(show);
+    }
+
+    private void showDepositOption(boolean show) {
+        depositL.setVisible(show);
+        yesRB.setVisible(show);
+        noRB.setVisible(show);
     }
 }

@@ -21,30 +21,26 @@ public class GUIHome extends JPanel {
 
         accountsHome = new GUIAccountsHome(person);
         tabbedPane.addTab("Accounts", accountsHome.getTabbedPane());
-        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         loans = new GUILoan(person);
         tabbedPane.addTab("Loans", loans.getPanel());
-        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
-        GUIInvestmentHome investmentHome = new GUIInvestmentHome(person);
-        tabbedPane.addTab("Invest", investmentHome.getPanel());
-        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+        if (person.isRich()) {
+            GUIInvestmentHome investmentHome = new GUIInvestmentHome(person);
+            tabbedPane.addTab("Invest", investmentHome.getPanel());
+        }
 
         GUISettings settings = new GUISettings(person);
         tabbedPane.addTab("Settings", settings.getPanel());
-        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
         logOutBtn = settings.getLogOutBtn();
 
         if (person instanceof Manager) {
             JComponent panel4 = makeTextPanel("Panel #5");
             tabbedPane.addTab("Manage", panel4);
-            tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
 
             JComponent panel5 = makeTextPanel("Panel #6");
             tabbedPane.addTab("Update Stocks", panel5);
-            tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
         }
 
         add(tabbedPane);
