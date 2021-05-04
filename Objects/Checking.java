@@ -20,4 +20,10 @@ public class Checking extends Account {
     public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState status, double value) {
         super(accountType, accountID, userID, currencyType, status, value);
     }
+
+    public boolean transferTo(String accountID, double amount) {
+        withdraw(TRANSACTION_FEE, "TRANSACTION FEE");
+
+        return super.transferTo(accountID, amount);
+    }
 }

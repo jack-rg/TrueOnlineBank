@@ -11,6 +11,8 @@ import Util.CurrencyConverter;
 import Util.DataManager;
 
 public abstract class Account implements TransactionInterface {
+    protected static final double TRANSACTION_FEE = 5.00;
+
     private String accountID;
     private String userID;
     protected double balance;
@@ -116,7 +118,10 @@ public abstract class Account implements TransactionInterface {
             Transaction transaction = new Transaction(name, funds, TransactionType.WITHDRAWAL);
             DataManager.writeTransaction(transaction, userID, accountID);
 
-            balance -= funds;
+            Transaction withdrawalFee = new Transaction("WITHDRAWAL FEE", TRANSACTION_FEE, TransactionType.WITHDRAWAL);
+            DataManager.writeTransaction(withdrawalFee, userID, accountID);
+
+            balance -= funds - TRANSACTION_FEE;
             DataManager.updateAccount(this);
             return true;
         } else {

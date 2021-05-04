@@ -7,6 +7,8 @@ import Types.TransactionType;
 import Util.DataManager;
 
 public class Saving extends Account {
+    private static final double INTEREST_RATE = 0.03;
+
     public Saving(AccountType accountType, String accountID, String userID) {
         super(accountType, accountID, userID);
     }
@@ -29,5 +31,9 @@ public class Saving extends Account {
         } else {
             return false;
         }
+    }
+
+    public void chargeInterest() {
+        withdraw(balance * INTEREST_RATE, "INTEREST");
     }
 }

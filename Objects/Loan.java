@@ -5,6 +5,8 @@ import Util.DataManager;
 import java.util.Date;
 
 public class Loan {
+    public static final double INTEREST_RATE = 0.03;
+
     double loanAmount;
     double paidAmount;
     Date dueDate;
@@ -28,5 +30,9 @@ public class Loan {
     public void makePayment(double paymentAmount) {
         paidAmount += paymentAmount;
         DataManager.updateLoan(this);
+    }
+
+    public void chargeInterest() {
+        loanAmount += loanAmount * INTEREST_RATE;
     }
 }
