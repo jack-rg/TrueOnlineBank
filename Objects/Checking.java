@@ -5,7 +5,7 @@ import Types.AccountType;
 import Types.CurrencyType;
 
 /**
- * CHecking extends Account to represent a Checking account.
+ * Checking extends Account to represent a Checking account.
  *
  * @author rachelpeng
  * @author jackgiunta
