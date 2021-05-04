@@ -1,7 +1,6 @@
 package Objects;
 
 import Types.Status;
-import Types.AccountType;
 import Util.DataManager;
 
 import java.time.LocalDateTime;
@@ -12,7 +11,6 @@ public abstract class Person {
     private String password;
     private String userID;
     private ArrayList<Account> accounts;
-    private SecurityAccount securityAccount;
     private Loan loan;
 
     public Person(String userName, String password, String userID) {
@@ -20,14 +18,7 @@ public abstract class Person {
         this.password = password;
         this.userID = userID;
         accounts = new ArrayList<>();
-        String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
-        securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, userID);
         loan = null;
-    }
-
-    public Person(String userName, String password, String userID, Loan loan) {
-        this(userName, password, userID);
-        this.loan = loan;
     }
 
     public String getUserName() {
@@ -85,7 +76,7 @@ public abstract class Person {
         ArrayList<Account> active = new ArrayList<>();
 
         for (Account a : accounts) {
-            if (a.getStatus() == Status.ACTIVE) {
+            if (a.getStatus() == Status.ACTIVE && !(a instanceof Security)) {
                 active.add(a);
             }
         }
@@ -133,24 +124,16 @@ public abstract class Person {
         this.loan = loan;
     }
 
-    public SecurityAccount getSecurityAccount() {
-        return securityAccount;
+    public Security getSecurityAccount() {
+        for (Account a : accounts) {
+            if (a instanceof Security) {
+                return (Security) a;
+            }
+        }
+        return null;
     }
-
 
     public String toString() {
-    	return userName + " - "+userID;
-    	
+    	return userName + " - " + userID;
     }
-
-    /**
-     * User pressed register button, create a Secrurity account
-     * @return true. if create success
-     */
-    public boolean createSecurityAccountHandler() {
-        String accountID = "A" + userID.substring(1) + (this.accounts.size() + 1);
-        this.securityAccount = new SecurityAccount(AccountType.SECURITY, accountID, this.getUserID());
-        return true;
-    }
-
 }

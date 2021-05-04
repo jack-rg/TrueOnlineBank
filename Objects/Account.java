@@ -15,7 +15,7 @@ public abstract class Account implements TransactionInterface {
     protected static final double CLOSING_FEE = 15.00;
     protected static final double TRANSACTION_FEE = 5.00;
 
-    private String accountID;
+    protected String accountID;
     private String userID;
     protected double balance;
     private AccountType accountType;

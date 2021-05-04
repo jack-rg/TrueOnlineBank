@@ -3,5 +3,4 @@
 2021/05/04 | 13:59:14 | U1 | Checking | A12 | 998505.0 | ACTIVE | USD
 2021/05/03 | 17:16:37 | U2 | Savings | A21 | 2631.0 | ACTIVE | USD
 2021/05/03 | 16:28:55 | U2 | Checking | A22 | 250.0 | INACTIVE | USD
-2021/05/04 | 12:22:02 | U1 | Checking | A13 | -55.0 | INACTIVE | USD
 2021/05/04 | 13:59:32 | U1 | Security | A14 | 975.0 | ACTIVE | USD

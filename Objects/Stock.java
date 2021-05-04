@@ -8,14 +8,11 @@ package Objects;
  */
 
 public class Stock {
-
-    //    protected static String STOCK_INFO = "Stock Name: "
     private String symbol; // abbreviate stock code
     private String name;    // name
     private double lastPrice; // the most recent price of stock
 
-
-    Stock(String symbol, String name, double lastPrice) {
+    public Stock(String symbol, String name, double lastPrice) {
         this.symbol = symbol;
         this.name = name;
         this.lastPrice = lastPrice;

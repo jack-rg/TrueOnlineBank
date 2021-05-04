@@ -1,7 +1,5 @@
 package Objects;
 
-import Util.DataManager;
-
 /**
  * Stock position represent the details of a stock that the buyer have
  * 1. stock
@@ -15,8 +13,7 @@ import Util.DataManager;
  * 9. Type: stock ? option ? or... (in this project we only consider limit stocks )
  */
 
-public class StockPosition {
-
+public class Position {
     public static int MAX_POSITION_LIMIT = 100;
 
     private Stock stock;
@@ -30,15 +27,15 @@ public class StockPosition {
 
 
     // create position
-    public StockPosition(Stock stock, int quantity){
+    public Position(Stock stock, int quantity, double totalCost){
         this.quantity = quantity;
         this.stock = stock;
         this.mktValue = stock.getLastPrice() * quantity;
-        this.totalCost = stock.getLastPrice() * quantity;
+        this.totalCost = totalCost;
+//        this.totalCost = stock.getLastPrice() * quantity;
         this.avgPrice = totalCost / (double) quantity;
         this.unrealizedPL = (mktValue - totalCost);
         this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
-
     }
 
     public Stock getStock() {
@@ -78,14 +75,16 @@ public class StockPosition {
         this.avgPrice = totalCost / quantity;
         this.unrealizedPL = mktValue - totalCost;
         this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
+
         return true;
     }
 
     public boolean deductStock(Stock addStock, int deductQuantity){
-        if(this.quantity < deductQuantity){
+        if (this.quantity < deductQuantity) {
             // cannot proceed quantity exceeding current quantity
             return false;
         }
+
         double currPrice = addStock.getLastPrice();
         this.totalCost -= currPrice * deductQuantity;
         this.quantity -= deductQuantity;
@@ -93,13 +92,10 @@ public class StockPosition {
         this.avgPrice = totalCost / quantity;
         this.unrealizedPL = mktValue - totalCost;
         this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
+
         return true;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getPositionStockName(){
         return this.stock.getName();
     }
@@ -117,14 +113,4 @@ public class StockPosition {
                             " Unrealized PL % " + unrealizedPLRate
         );
     }
-
-
-//    public static void main(String[] args){
-//        StockPosition stockPosition = new StockPosition(new Stock("TWTR", "Twitter", 55.28), 100);
-//        stockPosition.positionInfoDisplay();
-//        stockPosition.addStock(new Stock("TWTR", "Twitter", 20), 100);
-//        stockPosition.deductStock(new Stock("TWTR", "Twitter", 20), 100);
-//        stockPosition.positionInfoDisplay();
-//
-//    }
 }
