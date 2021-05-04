@@ -5,7 +5,6 @@ import Objects.Person;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class GUIHome extends JPanel {
     JTabbedPane tabbedPane;
@@ -36,8 +35,11 @@ public class GUIHome extends JPanel {
         logOutBtn = settings.getLogOutBtn();
 
         if (person instanceof Manager) {
-            JComponent panel4 = makeTextPanel("Panel #5");
-            tabbedPane.addTab("Manage", panel4);
+            GUIUsersOverview usersOverview = new GUIUsersOverview(this);
+            tabbedPane.addTab("View Users", usersOverview.getPanel());
+
+            GUIDailyTransactions dailyTransactions = new GUIDailyTransactions();
+            tabbedPane.addTab("Daily Transactions", dailyTransactions.getPanel(accountsHome));
 
             JComponent panel5 = makeTextPanel("Panel #6");
             tabbedPane.addTab("Update Stocks", panel5);

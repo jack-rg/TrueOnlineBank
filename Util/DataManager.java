@@ -23,7 +23,7 @@ public class DataManager {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
             String accountFormatter = "%s | %s | %s | %s \n";
             out.printf(accountFormatter, dtf.format(LocalDateTime.now()), user.getUserName(), user.getPassword(),
                     user.getUserID());
@@ -40,7 +40,7 @@ public class DataManager {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
 
             String accountFormatter = "%s | %s | %s | %s | %f | %s | %s \n";
             out.printf(accountFormatter, dtf.format(LocalDateTime.now()), account.getUserID(), account.getAccountType(),
@@ -57,7 +57,7 @@ public class DataManager {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
             String transactionFormatter = "%s | %s | %s | %s | %f | %s\n";
             out.printf(transactionFormatter, dtf.format(LocalDateTime.now()), userID, accountID,
                     transaction.getName(), transaction.getAmount(), transaction.getType());
@@ -255,6 +255,36 @@ public class DataManager {
         person.setAccounts(accounts);
     }
 
+
+    public static ArrayList<Transaction> loadTodaysTransactions(){
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] transaction = line.split(" \\| ");
+                String date = transaction[0];
+                String name = transaction[4];
+                String type = transaction[6];
+                float amount = Float.valueOf(transaction[5]);
+            if(java.time.LocalDate.now().toString().equals(date)){
+                    if (type.equals("WITHDRAWAL")) {
+                        transactions.add(new Transaction(name, date, amount, TransactionType.WITHDRAWAL));
+                    } else {
+                        transactions.add(new Transaction(name, date, amount, TransactionType.DEPOSIT));
+                    }
+                }
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return transactions;
+    }
+
+
     public static void loadTransactions(Account account) {
         ArrayList<Transaction> transactions = new ArrayList<Transaction>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
@@ -284,6 +314,31 @@ public class DataManager {
 
         account.setTransactions(transactions);
     }
+    
+    
+    public static ArrayList<User> loadUsers() {
+        ArrayList<User> users = new ArrayList<User>();
+        String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                    String[] userInfo = line.split(" \\| ");
+                    String userName = userInfo[2];
+                    String password = userInfo[3];
+                    String userID = userInfo[4];
+
+                    users.add(new User(userName, password, userID));
+               
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return users;
+    }
+    
 
     public static User userExists(String username, String password, boolean register) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";

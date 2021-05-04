@@ -14,10 +14,14 @@ public class GUIAccount {
 
     public GUIAccount(Account account) {
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BorderLayout());
+
+        JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        sp.setResizeWeight(0.1);
+
 
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(null);
+        topPanel.setBounds(25, 25, 400, 500);
 
         goBackButton = new JButton("Go back");
         goBackButton.setBounds(25, 25, 80, 40);
@@ -30,10 +34,10 @@ public class GUIAccount {
         deleteAccountButton.addActionListener(e -> account.deactivate());
 
         JLabel accountNameLabel = new JLabel(account.getAccountType() + ": $" + account.getBalance());
-        accountNameLabel.setBounds(30, 80, 150, 25);
+        accountNameLabel.setBounds(125, 25, 400, 25);
         topPanel.add(accountNameLabel);
 
-        panel.add(topPanel);
+        sp.add(topPanel);
 
         DataManager.loadTransactions(account);
         ArrayList<Transaction> transactions = account.getTransactions();
@@ -46,9 +50,9 @@ public class GUIAccount {
                 transactionsPanel.add((new GUITransaction(t)).getPanel());
             }
 
-            panel.add(new JScrollPane(transactionsPanel));
+            sp.add(new JScrollPane(transactionsPanel));
         }
-
+        panel.add(sp, BorderLayout.CENTER);
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
@@ -62,5 +66,9 @@ public class GUIAccount {
 
     public JButton getDeleteAccountButton() {
         return deleteAccountButton;
+    }
+
+    public void hideButton() {
+        deleteAccountButton.setVisible(false);
     }
 }
