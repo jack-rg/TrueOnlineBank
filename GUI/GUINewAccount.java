@@ -69,7 +69,7 @@ public class GUINewAccount extends JPanel {
         panel.add(submitBtn);
 
         errorL = new JLabel();
-        errorL.setBounds(30, 410, 280, 40);
+        errorL.setBounds(30, 410, 400, 40);
         errorL.setForeground(Color.RED);
         errorL.setVisible(false);
         panel.add(errorL);
