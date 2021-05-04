@@ -109,6 +109,15 @@ public abstract class Person {
         return sum;
     }
 
+    public void takeOutLoan(double loanAmount) {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 30);
+        Date d = c.getTime();
+
+        Loan loan = new Loan(loanAmount, 0.00, d);
+        setLoan(loan);
+    }
+
     public SecurityAccount getSecurityAccount() {
         return securityAccount;
     }
