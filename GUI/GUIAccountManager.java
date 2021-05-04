@@ -10,21 +10,25 @@ import java.util.ArrayList;
 
 public class GUIAccountManager {
     JPanel panel;
+    JButton accountNameBtn;
+
 
     public GUIAccountManager(Account account) {
         panel = new JPanel();
         panel.setLayout(new GridLayout(1, 1));
 
-        JButton accountNameBtn = new JButton(account.toString());
+        accountNameBtn = new JButton(account.toString());
         panel.add(accountNameBtn);
 
-        accountNameBtn.addActionListener(e -> {
-            GUIAccount a = new GUIAccount(account);
-            a.hideButtons();
-        });
+
     }
 
     public JPanel getPanel() {
         return panel;
     }
+    
+    public JButton getAccountNameBtn() {
+    	return accountNameBtn;
+    }
+    
 }

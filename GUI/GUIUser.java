@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -17,9 +18,11 @@ import Util.DataManager;
 public class GUIUser {
     JPanel panel;
     JButton goBackButton;
+    CardLayout cards;
 
     public GUIUser(User user) {
         panel = new JPanel();
+        cards = new CardLayout();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JPanel topPanel = new JPanel();
@@ -35,6 +38,11 @@ public class GUIUser {
 
         panel.add(topPanel);
 
+        
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(cards);
+
+        
         DataManager.loadAccounts(user);
         ArrayList<Account> accounts = user.getRawAccounts();
 
@@ -43,10 +51,18 @@ public class GUIUser {
             accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
 
             for (Account acc : accounts) {
-                accountsPanel.add((new GUIAccountManager(acc)).getPanel());
+            	GUIAccountManager accManage = new GUIAccountManager(acc);
+                accountsPanel.add(accManage.getPanel());
+                accManage.getAccountNameBtn().addActionListener(e -> {
+                    GUIAccount a = new GUIAccount(acc);
+                    a.hideButtons();
+                });
             }
-
-            panel.add(new JScrollPane(accountsPanel));
+            
+            
+            bottomPanel.add(new JScrollPane(accountsPanel));
+            
+            panel.add(bottomPanel);
         }
 
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
