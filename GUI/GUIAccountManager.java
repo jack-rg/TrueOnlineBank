@@ -37,7 +37,7 @@ public class GUIAccountManager {
             accountsPanel.add(aBtn);
 
             GUIAccount acc = new GUIAccount(a);
-            acc.hideButtons();
+            acc.hideButton();
             panel.add(acc.getPanel(), a.getAccountID());
 
             acc.getGoBackButton().addActionListener(e -> cards.show(panel, "AccountPanel"));

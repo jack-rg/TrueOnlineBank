@@ -23,7 +23,7 @@ public class GUIUser {
     public GUIUser(User user) {
         panel = new JPanel();
         cards = new CardLayout();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridLayout(2, 1));
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(null);
