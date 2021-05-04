@@ -2,7 +2,9 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
+import Objects.Saving;
 import Objects.Transaction;
+import Types.AccountType;
 import Util.DataManager;
 
 import javax.swing.*;
@@ -38,6 +40,9 @@ public class GUIAccountManager {
 
             GUIAccount acc = new GUIAccount(a);
             acc.hideButton();
+            if(a.getAccountType().equals(AccountType.SAVING) && a.getBalance() > 10000) {
+                acc.showInterest();
+            }
             panel.add(acc.getPanel(), a.getAccountID());
 
             acc.getGoBackButton().addActionListener(e -> cards.show(panel, "AccountPanel"));
