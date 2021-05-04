@@ -1,19 +1,16 @@
 package Util;
 
 import Objects.*;
-import Types.AccountState;
+import Types.Status;
 import Types.AccountType;
 import Types.CurrencyType;
 import Types.TransactionType;
 
 import java.io.*;
 import java.nio.file.Paths;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 public class DataManager {
@@ -74,9 +71,9 @@ public class DataManager {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            String transactionFormatter = "%s | %f | %f | %s\n";
+            String transactionFormatter = "%s | %f | %f | %s | %s\n";
             out.printf(transactionFormatter, person.getUserID(), loan.getLoanAmount(),
-                    loan.getPaidAmount(), loan.getDueDate().toString());
+                    loan.getPaidAmount(), loan.getLoanDate().toString(), loan.getStatus());
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -163,11 +160,11 @@ public class DataManager {
                     String status = account[6];
                     String currencyType = account[7];
 
-                    AccountState accountState;
+                    Status accountStatus;
                     if (status.equals("ACTIVE")) {
-                        accountState = AccountState.ACTIVE;
+                        accountStatus = Status.ACTIVE;
                     } else {
-                        accountState = AccountState.INACTIVE;
+                        accountStatus = Status.INACTIVE;
                     }
 
                     CurrencyType cType;
@@ -187,9 +184,9 @@ public class DataManager {
                     }
 
                     if (accountType.equals("Checking")) {
-                        return new Checking(AccountType.CHECKING, accountID, userID, cType, accountState, value);
+                        return new Checking(AccountType.CHECKING, accountID, userID, cType, accountStatus, value);
                     } else {
-                        return new Saving(AccountType.SAVING, accountID, userID, cType, accountState, value);
+                        return new Saving(AccountType.SAVING, accountID, userID, cType, accountStatus, value);
                     }
                 }
             }
@@ -218,11 +215,11 @@ public class DataManager {
                     String status = account[6];
                     String currencyType = account[7];
 
-                    AccountState accountState;
+                    Status accountStatus;
                     if (status.equals("ACTIVE")) {
-                        accountState = AccountState.ACTIVE;
+                        accountStatus = Status.ACTIVE;
                     } else {
-                        accountState = AccountState.INACTIVE;
+                        accountStatus = Status.INACTIVE;
                     }
 
                     CurrencyType cType;
@@ -242,9 +239,9 @@ public class DataManager {
                     }
 
                     if (accountType.equals("Checking")) {
-                        accounts.add(new Checking(AccountType.CHECKING, accountID, userID, cType, accountState, value));
+                        accounts.add(new Checking(AccountType.CHECKING, accountID, userID, cType, accountStatus, value));
                     } else {
-                        accounts.add(new Saving(AccountType.SAVING, accountID, userID, cType, accountState, value));
+                        accounts.add(new Saving(AccountType.SAVING, accountID, userID, cType, accountStatus, value));
                     }
                 }
             }
@@ -256,7 +253,7 @@ public class DataManager {
     }
 
 
-    public static ArrayList<Transaction> loadTodaysTransactions(){
+    public static ArrayList<Transaction> loadTodaysTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/transactionLog.txt";
 
@@ -270,7 +267,7 @@ public class DataManager {
                 String name = transaction[4];
                 String type = transaction[6];
                 double amount = Double.parseDouble(transaction[5]);
-            if(java.time.LocalDate.now().toString().equals(date)){
+                if (java.time.LocalDate.now().toString().equals(date)) {
                     if (type.equals("WITHDRAWAL")) {
                         transactions.add(new Transaction(name, date, amount, TransactionType.WITHDRAWAL));
                     } else {
@@ -314,8 +311,8 @@ public class DataManager {
 
         account.setTransactions(transactions);
     }
-    
-    
+
+
     public static ArrayList<User> loadUsers() {
         ArrayList<User> users = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
@@ -325,20 +322,20 @@ public class DataManager {
             String line;
 
             while ((line = br.readLine()) != null) {
-                    String[] userInfo = line.split(" \\| ");
-                    String userName = userInfo[2];
-                    String password = userInfo[3];
-                    String userID = userInfo[4];
+                String[] userInfo = line.split(" \\| ");
+                String userName = userInfo[2];
+                String password = userInfo[3];
+                String userID = userInfo[4];
 
-                    users.add(new User(userName, password, userID));
-               
+                users.add(new User(userName, password, userID));
+
             }
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         return users;
     }
-    
+
 
     public static User userExists(String username, String password, boolean register) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/userLog.txt";
@@ -354,13 +351,7 @@ public class DataManager {
                         String[] user = line.split(" \\| ");
                         String userID = user[4];
 
-                        Loan loan = loadLoan(userID);
-                        if (loan != null) {
-                            return new User(username, password, userID, loan);
-                        } else {
-                            return new User(username, password, userID);
-                        }
-
+                        return new User(username, password, userID);
                     } else {
                         return null;
                     }
@@ -382,7 +373,7 @@ public class DataManager {
         return null;
     }
 
-    private static Loan loadLoan(String userID) {
+    public static Loan loadLoan(String userID) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/loanLog.txt";
 
         try {
@@ -390,16 +381,24 @@ public class DataManager {
             String line;
 
             while ((line = br.readLine()) != null) {
-                if (line.contains(userID + " | ")) {
+                if (line.contains(userID + " | ") && line.contains(" | ACTIVE")) {
                     String[] loan = line.split(" \\| ");
                     double loanAmount = Double.parseDouble(loan[1]);
                     double paidAmount = Double.parseDouble(loan[2]);
-                    Date dueDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(loan[3]);
-                    return new Loan(loanAmount, paidAmount, dueDate, userID);
+                    LocalDateTime dueDate = LocalDateTime.parse(loan[3]);
+
+                    Status loanStatus;
+                    if (loan[4].equals("ACTIVE")) {
+                        loanStatus = Status.ACTIVE;
+                    } else {
+                        loanStatus = Status.INACTIVE;
+                    }
+
+                    return new Loan(loanAmount, paidAmount, dueDate, userID, loanStatus);
                 }
             }
-        } catch (IOException | ParseException e1) {
-            e1.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;
@@ -418,7 +417,7 @@ public class DataManager {
             while ((line = br.readLine()) != null) {
                 if (line.contains(userID + " | ")) {
                     traceFile.add(userID + " | " + loan.getLoanAmount() + " | " + loan.getPaidAmount()
-                            + " | " + loan.getDueDate());
+                            + " | " + loan.getLoanDate() + " | " + loan.getStatus());
                 } else {
                     traceFile.add(line);
                 }

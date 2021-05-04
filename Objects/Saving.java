@@ -1,10 +1,8 @@
 package Objects;
 
-import Types.AccountState;
+import Types.Status;
 import Types.AccountType;
 import Types.CurrencyType;
-import Types.TransactionType;
-import Util.DataManager;
 
 public class Saving extends Account {
     private static final double INTEREST_RATE = 0.03;
@@ -17,11 +15,11 @@ public class Saving extends Account {
         super(accountType, accountID, userID, currencyType);
     }
 
-    public Saving(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState accountState) {
-        super(accountType, accountID, userID, currencyType, accountState);
+    public Saving(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status accountStatus) {
+        super(accountType, accountID, userID, currencyType, accountStatus);
     }
 
-    public Saving(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState status, double value) {
+    public Saving(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status status, double value) {
         super(accountType, accountID, userID, currencyType, status, value);
     }
 

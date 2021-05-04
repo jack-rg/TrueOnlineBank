@@ -1,7 +1,7 @@
 package GUI;
 
 import Objects.*;
-import Types.AccountState;
+import Types.Status;
 import Types.AccountType;
 import Types.CurrencyType;
 import Util.AccountManager;
@@ -157,9 +157,9 @@ public class GUINewAccount extends JPanel {
 
                         if ((amount <= account.getBalance()) && account.withdraw(amount, "Transfer to Account " + accountID, true)) {
                             if (savingRB.isSelected()) {
-                                createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                createNewUser(person, new Saving(AccountType.SAVING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), Status.ACTIVE, amount));
                             } else if (checkingRB.isSelected()) {
-                                createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                createNewUser(person, new Checking(AccountType.CHECKING, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), Status.ACTIVE, amount));
                             } else {
                                 if (depositTF.getText().equals("") || (Double.parseDouble(depositTF.getText()) < 1000)) {
                                     errorL.setText("Please enter a deposit amount of $1000 or more.");
@@ -167,7 +167,7 @@ public class GUINewAccount extends JPanel {
                                     return;
                                 }
 
-                                createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), AccountState.ACTIVE, amount));
+                                createNewUser(person, new Security(AccountType.SECURITY, accountID, userID, (CurrencyType) currencyTypeCB.getSelectedItem(), Status.ACTIVE, amount));
                             }
                         } else {
                             errorL.setText("Insufficient funds");

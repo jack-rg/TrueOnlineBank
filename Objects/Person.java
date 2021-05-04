@@ -1,9 +1,10 @@
 package Objects;
 
-import Types.AccountState;
+import Types.Status;
 import Types.AccountType;
 import Util.DataManager;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public abstract class Person {
@@ -63,7 +64,12 @@ public abstract class Person {
         userID = newID;
     }
 
-    public Loan getLoan() { return loan; }
+    public Loan getLoan() {
+        if (loan == null || loan.getStatus() == Status.INACTIVE) {
+            loan = DataManager.loadLoan(userID);
+        }
+        return loan;
+    }
 
     public void setLoan(Loan loan) { this.loan = loan; }
 
@@ -79,7 +85,7 @@ public abstract class Person {
         ArrayList<Account> active = new ArrayList<>();
 
         for (Account a : accounts) {
-            if (a.getStatus() == AccountState.ACTIVE) {
+            if (a.getStatus() == Status.ACTIVE) {
                 active.add(a);
             }
         }
@@ -120,11 +126,8 @@ public abstract class Person {
     }
 
     public void takeOutLoan(double loanAmount) {
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, 30);
-        Date d = c.getTime();
-
-        Loan loan = new Loan(loanAmount, 0.00, d, userID);
+        LocalDateTime date = LocalDateTime.now();
+        Loan loan = new Loan(loanAmount, 0.00, date, userID, Status.ACTIVE);
         DataManager.writeLoan(loan, this);
 
         this.loan = loan;
@@ -133,13 +136,10 @@ public abstract class Person {
     public SecurityAccount getSecurityAccount() {
         return securityAccount;
     }
-    
-    
+
+
     public String toString() {
     	return userName + " - "+userID;
     	
     }
-    
-    
-    
 }

@@ -3,7 +3,7 @@ package Objects;
 import java.util.ArrayList;
 
 import Interfaces.TransactionInterface;
-import Types.AccountState;
+import Types.Status;
 import Types.AccountType;
 import Types.CurrencyType;
 import Types.TransactionType;
@@ -19,7 +19,7 @@ public abstract class Account implements TransactionInterface {
     private String userID;
     protected double balance;
     private AccountType accountType;
-    private AccountState status;
+    private Status status;
     private CurrencyType currencyType;
 
     private ArrayList<Transaction> transactions;
@@ -29,7 +29,7 @@ public abstract class Account implements TransactionInterface {
         this.accountID = accountID;
         this.userID = userID;
         balance = 0;
-        status = AccountState.ACTIVE;
+        status = Status.ACTIVE;
         currencyType = CurrencyType.USD;
     }
 
@@ -43,12 +43,12 @@ public abstract class Account implements TransactionInterface {
         this.currencyType = currencyType;
     }
 
-    public Account(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState status) {
+    public Account(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status status) {
         this(accountType, accountID, userID, currencyType);
         this.status = status;
     }
 
-    public Account(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState status, double balance) {
+    public Account(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status status, double balance) {
         this(accountType, accountID, userID, currencyType, status);
         this.balance = balance;
     }
@@ -101,7 +101,7 @@ public abstract class Account implements TransactionInterface {
         this.transactions = transactions;
     }
 
-    public AccountState getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -153,10 +153,12 @@ public abstract class Account implements TransactionInterface {
 
     public boolean transferToBank(double amount, String name) {
         Account account = DataManager.loadAccount("A01");
+
         if (account != null) {
-            withdraw(amount, name, false);
-            account.deposit(amount, name + " from " + accountID, currencyType, false);
-            return true;
+            if (withdraw(amount, name, false)) {
+                account.deposit(amount, name + " from " + accountID, currencyType, false);
+                return true;
+            }
         }
 
         return false;
@@ -167,7 +169,7 @@ public abstract class Account implements TransactionInterface {
     }
 
     public void deactivate() {
-        status = AccountState.INACTIVE;
+        status = Status.INACTIVE;
         DataManager.deactivateAccount(this);
 
         transferToBank(CLOSING_FEE, "CLOSING FEE");

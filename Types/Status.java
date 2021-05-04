@@ -1,5 +1,5 @@
 package Types;
 
-public enum AccountState {
+public enum Status {
     ACTIVE, INACTIVE
 }

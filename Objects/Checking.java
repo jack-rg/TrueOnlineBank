@@ -1,6 +1,6 @@
 package Objects;
 
-import Types.AccountState;
+import Types.Status;
 import Types.AccountType;
 import Types.CurrencyType;
 
@@ -13,11 +13,11 @@ public class Checking extends Account {
         super(accountType, accountID, userID, currencyType);
     }
 
-    public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState accountState) {
-        super(accountType, accountID, userID, currencyType, accountState);
+    public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status accountStatus) {
+        super(accountType, accountID, userID, currencyType, accountStatus);
     }
 
-    public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType, AccountState status, double value) {
+    public Checking(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status status, double value) {
         super(accountType, accountID, userID, currencyType, status, value);
     }
 
