@@ -62,13 +62,14 @@ public class StockOrder {
     public int getQuantity(){
         return this.quantity;
     }
-    // Order Test
-    public static void main(String[] args){
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-        StockOrder stockOrder = new StockOrder(new Stock("TWTR", "Twitter", 20), 100, "BUY", dtf.format(LocalDateTime.now()));
-        stockOrder.displayOrder();
-        String UserName = "yuan wei";
-        DataManager.writeUserStockOrder(stockOrder, UserName);
-    }
+    // Order Test
+//    public static void main(String[] args){
+//
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
+//        StockOrder stockOrder = new StockOrder(new Stock("TWTR", "Twitter", 20), 100, "BUY", dtf.format(LocalDateTime.now()));
+//        stockOrder.displayOrder();
+//        String UserName = "yuan wei";
+//        DataManager.writeUserStockOrder(stockOrder, UserName);
+//    }
 }
