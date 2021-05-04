@@ -75,7 +75,7 @@ public class GUILoan extends JPanel {
         panel.add(submitBtn);
 
         errorLabel = new JLabel();
-        errorLabel.setBounds(30, 300, 280, 40);
+        errorLabel.setBounds(30, 500, 280, 40);
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
         panel.add(errorLabel);
