@@ -50,14 +50,9 @@ public class GUIUser {
             JPanel accountsPanel = new JPanel();
             accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
 
-            for (Account acc : accounts) {
-            	GUIAccountManager accManage = new GUIAccountManager(acc);
+            	GUIAccountManager accManage = new GUIAccountManager(user);
                 accountsPanel.add(accManage.getPanel());
-                accManage.getAccountNameBtn().addActionListener(e -> {
-                    GUIAccount a = new GUIAccount(acc);
-                    a.hideButtons();
-                });
-            }
+            
             
             
             bottomPanel.add(new JScrollPane(accountsPanel));
