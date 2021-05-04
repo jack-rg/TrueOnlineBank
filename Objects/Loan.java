@@ -17,5 +17,5 @@ public class Loan {
 
     public double getPaidAmount() { return paidAmount; }
 
-    public Date dueDate() { return dueDate; }
+    public Date getDueDate() { return dueDate; }
 }

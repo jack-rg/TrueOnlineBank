@@ -65,7 +65,9 @@ public class GUILoan extends JPanel {
                 }
 
                 try {
-                    person.takeOutLoan(Double.parseDouble(loanAmountTF.getText()));
+                    double loanAmount = Double.parseDouble(loanAmountTF.getText());
+                    System.out.println(loanAmount);
+                    person.takeOutLoan(loanAmount);
                 } catch (Exception exception) {
                     errorLabel.setText("Please enter a valid loan amount.");
                     errorLabel.setVisible(true);

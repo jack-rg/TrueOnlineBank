@@ -71,10 +71,9 @@ public class DataManager {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
-            String transactionFormatter = "%s | %s | %f | %f | %s\n";
-            out.printf(transactionFormatter, dtf.format(LocalDateTime.now()), loan.getLoanAmount(),
-                    loan.getLoanAmount(), person.getUserID());
+            String transactionFormatter = "%s | %f | %f | %s\n";
+            out.printf(transactionFormatter, person.getUserID(), loan.getLoanAmount(),
+                    loan.getPaidAmount(), loan.getDueDate().toString());
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -316,6 +315,10 @@ public class DataManager {
         }
 
         return null;
+    }
+
+    private static Loan loadLoan() {
+
     }
 
     public static boolean updatePerson(Person person, String newName, String newPassword) {
