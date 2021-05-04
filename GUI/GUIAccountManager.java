@@ -28,7 +28,7 @@ public class GUIAccountManager {
     public void update() {
         panel.removeAll();
 
-        ArrayList<Account> accounts = user.getActiveAccounts();
+        ArrayList<Account> accounts = user.getRawAccounts();
 
         accountsPanel = new JPanel();
         accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
