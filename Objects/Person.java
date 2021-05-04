@@ -101,4 +101,13 @@ public abstract class Person {
     public SecurityAccount getSecurityAccount() {
         return securityAccount;
     }
+    
+    
+    public String toString() {
+    	return userName + " - "+userID;
+    	
+    }
+    
+    
+    
 }

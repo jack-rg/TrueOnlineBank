@@ -43,7 +43,7 @@ public class GUIUser {
             accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
 
             for (Account acc : accounts) {
-            	accountsPanel.add((new GUIAccount(acc)).getPanel());
+            	accountsPanel.add((new GUIAccountManager(acc)).getPanel());
             }
 
             panel.add(new JScrollPane(accountsPanel));
