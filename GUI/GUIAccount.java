@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class GUIAccount {
     JPanel panel;
-    JButton goBackButton, deleteAccountButton;
+    JButton goBackButton, deleteAccountButton, payInterestBtn;
 
     public GUIAccount(Account account) {
         panel = new JPanel();
@@ -32,6 +32,14 @@ public class GUIAccount {
         topPanel.add(deleteAccountButton);
 
         deleteAccountButton.addActionListener(e -> account.deactivate());
+
+        payInterestBtn = new JButton("Pay Interest");
+        payInterestBtn.setBounds(120, 25, 150, 40);
+        topPanel.add(payInterestBtn);
+
+        payInterestBtn.addActionListener(e -> account.payInterest()); //oooooop
+        payInterestBtn.setVisible(false);
+
 
         JLabel accountNameLabel = new JLabel(account.getAccountType() + ": $" + account.getBalance());
         accountNameLabel.setBounds(125, 25, 400, 25);
@@ -71,4 +79,7 @@ public class GUIAccount {
     public void hideButton() {
         deleteAccountButton.setVisible(false);
     }
+    public void showInterest() {payInterestBtn.setVisible(true);
+    }
+
 }
