@@ -14,9 +14,9 @@ public class GUIUsersOverview {
     JPanel panel, usersPanel;
     CardLayout cards;
 
-    GUIAccountsHome home;
+    GUIHome home;
 
-    public GUIUsersOverview(GUIAccountsHome home) {
+    public GUIUsersOverview(GUIHome home) {
         this.home = home;
 
         panel = new JPanel();

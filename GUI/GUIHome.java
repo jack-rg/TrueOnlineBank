@@ -31,8 +31,8 @@ public class GUIHome extends JPanel {
         logOutBtn = settings.getLogOutBtn();
 
         if (person instanceof Manager) {
-            JComponent panel4 = makeTextPanel("Panel #5");
-            tabbedPane.addTab("Manage", panel4);
+            GUIUsersOverview usersOverview = new GUIUsersOverview(this);
+            tabbedPane.addTab("Manage", usersOverview.getPanel());
             tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
             JComponent panel5 = makeTextPanel("Panel #6");
