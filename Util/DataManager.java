@@ -340,7 +340,7 @@ public class DataManager {
                     double loanAmount = Double.parseDouble(loan[1]);
                     double paidAmount = Double.parseDouble(loan[2]);
                     Date dueDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(loan[3]);
-                    return new Loan(loanAmount, paidAmount, dueDate);
+                    return new Loan(loanAmount, paidAmount, dueDate, userID);
                 }
             }
         } catch (IOException | ParseException e1) {
@@ -348,6 +348,38 @@ public class DataManager {
         }
 
         return null;
+    }
+
+    public static void updateLoan(Loan loan) {
+        String file = Paths.get("").toAbsolutePath() + "/Logs/loanLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            ArrayList<String> traceFile = new ArrayList<String>();
+            String line;
+
+            String userID = loan.getUserID();
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains(userID + " | ")) {
+                    traceFile.add(userID + " | " + loan.getLoanAmount() + " | " + loan.getPaidAmount()
+                            + " | " + loan.getDueDate());
+                } else {
+                    traceFile.add(line);
+                }
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(file);
+
+            for (String output : traceFile) {
+                fileOut.write((output + "\n").toString().getBytes());
+            }
+
+            fileOut.flush();
+            fileOut.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
     public static boolean updatePerson(Person person, String newName, String newPassword) {
@@ -431,7 +463,6 @@ public class DataManager {
             String line;
 
             String accountID = account.getAccountID();
-            System.out.println(account.getBalance());
 
             while ((line = br.readLine()) != null) {
                 if (line.contains(" | " + accountID + " | ")) {

@@ -46,7 +46,7 @@ public class GUIAccountsOverview {
                 accountsPanel.remove(aBtn);
                 cards.show(panel, "AccountPanel");
 
-                home.updateAll();
+                home.update();
             });
 
             aBtn.addActionListener(e -> cards.show(panel, a.getAccountID()));

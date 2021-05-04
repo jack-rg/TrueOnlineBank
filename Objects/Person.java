@@ -114,7 +114,7 @@ public abstract class Person {
         c.add(Calendar.DATE, 30);
         Date d = c.getTime();
 
-        Loan loan = new Loan(loanAmount, 0.00, d);
+        Loan loan = new Loan(loanAmount, 0.00, d, userID);
         DataManager.writeLoan(loan, this);
 
         this.loan = loan;

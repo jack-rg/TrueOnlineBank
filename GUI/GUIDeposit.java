@@ -68,7 +68,7 @@ public class GUIDeposit extends JPanel {
 
                 account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit", cType);
 
-                home.updateAll();
+                home.update();
             } catch (Exception exception) {
                 errorLabel.setText("Please enter a valid deposit amount.");
                 errorLabel.setVisible(true);

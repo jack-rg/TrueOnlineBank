@@ -11,16 +11,19 @@ public class GUIHome extends JPanel {
     JTabbedPane tabbedPane;
     JButton logOutBtn;
 
+    GUIAccountsHome accountsHome;
+    GUILoan loans;
+
     public GUIHome(Person person) {
         super(new GridLayout(1, 1));
 
         tabbedPane = new JTabbedPane();
 
-        GUIAccountsHome accountsHome = new GUIAccountsHome(person);
+        accountsHome = new GUIAccountsHome(person);
         tabbedPane.addTab("Accounts", accountsHome.getTabbedPane());
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        GUILoan loans = new GUILoan(person);
+        loans = new GUILoan(person);
         tabbedPane.addTab("Loans", loans.getPanel());
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 

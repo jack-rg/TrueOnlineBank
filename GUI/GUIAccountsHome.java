@@ -47,7 +47,7 @@ public class GUIAccountsHome extends JPanel {
         return tabbedPane;
     }
 
-    public void updateAll() {
+    public void update() {
         accountsOverview.update();
         newAccount.update();
         deposit.update();

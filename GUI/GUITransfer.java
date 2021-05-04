@@ -162,7 +162,7 @@ public class GUITransfer extends JPanel {
                         }
                     }
 
-                    home.updateAll();
+                    home.update();
                 }
             }
         });

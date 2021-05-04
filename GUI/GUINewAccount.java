@@ -234,6 +234,6 @@ public class GUINewAccount extends JPanel {
 
     private void createNewUser(Person person, Account account) {
         person.addNewAccount(account);
-        home.updateAll();
+        home.update();
     }
 }

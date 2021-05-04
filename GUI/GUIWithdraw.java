@@ -29,7 +29,6 @@ public class GUIWithdraw extends JPanel {
         panel.add(accountChoiceLabel);
 
         accMap = AccountManager.getAccMap(person);
-
         accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         accountCB.setBounds(30, 80, 300, 25);
         panel.add(accountCB);
@@ -55,8 +54,8 @@ public class GUIWithdraw extends JPanel {
             try {
                 Account account = accMap.get(accountCB.getSelectedItem());
 
-                if (account.withdraw(Float.parseFloat(withdrawTF.getText()), "ATM Withdrawal")) {
-                    home.updateAll();
+                if (account.withdraw(Double.parseDouble(withdrawTF.getText()), "ATM Withdrawal")) {
+                    home.update();
                 } else {
                     errorLabel.setText("Insufficient funds");
                     errorLabel.setVisible(true);
