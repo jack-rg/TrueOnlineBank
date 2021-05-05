@@ -73,3 +73,4 @@ Instructions to Compile and Run:
 Other Notes:
 - Users are not charged transaction fees on loan payments, interest payments, opening fees, or closing fees.
 - Users cannot take out another loan if they already have one active.
+- We have a partial implementation completed for encrypting passwords. This can be found in the MD5Util.

@@ -4,7 +4,6 @@ import Objects.Manager;
 import Objects.Person;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * GUIHome creates the GUI that allows users to view accounts,
@@ -83,7 +82,11 @@ public class GUIHome extends JPanel {
 
     public void updateInvestments() {
         if (person.isRich()) {
-//            investmentHome.update();
+            /*
+             the following *should* update the investments tab
+             but for some reason it only updates parts of it
+                investmentHome.update();
+            */
         }
     }
 

@@ -229,7 +229,9 @@ public class GUINewAccount extends JPanel {
         }
     }
 
-    public JPanel getPanel() { return panel; }
+    public JPanel getPanel() {
+        return panel;
+    }
 
     public void update() {
         securityRB.setVisible(person.isRich());

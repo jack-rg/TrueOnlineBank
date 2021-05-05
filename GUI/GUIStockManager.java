@@ -2,14 +2,9 @@ package GUI;
 
 import java.awt.*;
 import java.util.ArrayList;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 
-import Objects.Account;
-import Objects.Saving;
 import Objects.Stock;
-import Objects.User;
 import Util.DataManager;
 
 /**
@@ -23,7 +18,7 @@ import Util.DataManager;
 public class GUIStockManager {
     JPanel panel, topPanel;
     JButton addNewStockBtn, submitNewStockBtn;
-    JScrollPane bottomPanel = new JScrollPane();
+    JScrollPane bottomPanel;
     JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     GUIHome home;
 

@@ -31,15 +31,25 @@ public class Loan {
         this.status = status;
     }
 
-    public double getLoanAmount() { return loanAmount; }
+    public double getLoanAmount() {
+        return loanAmount;
+    }
 
-    public double getPaidAmount() { return paidAmount; }
+    public double getPaidAmount() {
+        return paidAmount;
+    }
 
-    public LocalDateTime getLoanDate() { return loanDate; }
+    public LocalDateTime getLoanDate() {
+        return loanDate;
+    }
 
-    public String getUserID() { return userID; }
+    public String getUserID() {
+        return userID;
+    }
 
-    public Status getStatus() { return status; }
+    public Status getStatus() {
+        return status;
+    }
 
     /**
      * Allows the user to make a payment on the loan.

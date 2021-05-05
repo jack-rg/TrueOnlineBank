@@ -15,8 +15,8 @@ public class CurrencyConverter {
      * Converts the amount from one currencyType to another.
      *
      * @param convertFrom type to convert from
-     * @param convertTo type to convert to
-     * @param amount amount to convert
+     * @param convertTo   type to convert to
+     * @param amount      amount to convert
      * @return correctly converted amount
      */
     public static double execute(CurrencyType convertFrom, CurrencyType convertTo, double amount) {

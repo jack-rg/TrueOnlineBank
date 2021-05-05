@@ -11,10 +11,10 @@ import Types.TransactionType;
  * @since May 4, 2021
  */
 public class Transaction {
-    private TransactionType type;
-    private String name;
+    private final TransactionType type;
+    private final String name;
+    private final double amount;
     private String date;
-    private double amount;
 
     public Transaction(String name, double amount, TransactionType type) {
         this.name = name;

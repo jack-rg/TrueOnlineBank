@@ -33,7 +33,7 @@ public class Checking extends Account {
      * Overrides the inherited transferTo method to ensure that each transfer charges a transaction fee.
      *
      * @param accountID the accountID to transfer to
-     * @param amount the amount to transfer
+     * @param amount    the amount to transfer
      * @return true if the transfer was successful, false otherwise
      */
     public boolean transferTo(String accountID, double amount) {

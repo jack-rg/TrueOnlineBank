@@ -37,21 +37,24 @@ public class GUIInvestmentHome extends JPanel {
         return tabbedPane;
     }
 
-//    public void update() {
-//        updatePositions();
-//        updateHistory();
-//        updateTrade();
-//    }
+    /*
+    the following *should* allow for updating the investment tabs but only updates parts of them
+        public void update() {
+            updatePositions();
+            updateHistory();
+            updateTrade();
+        }
 
-    public void updatePositions() {
-        stockPositions.updateAccounts();
-    }
+        public void updatePositions() {
+            stockPositions.updateAccounts();
+        }
 
-    public void updateHistory() {
-        orderHistory.updateAccounts();
-    }
+        public void updateHistory() {
+            orderHistory.updateAccounts();
+        }
 
-    public void updateTrade() {
-        stockTrade.updateAccounts();
-    }
+        public void updateTrade() {
+            stockTrade.updateAccounts();
+        }
+    */
 }

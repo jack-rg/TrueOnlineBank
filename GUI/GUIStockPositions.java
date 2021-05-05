@@ -19,7 +19,7 @@ import java.util.HashMap;
  * @author yuanwei
  * @since May 4, 2021
  */
-public class GUIStockPositions extends JPanel{
+public class GUIStockPositions extends JPanel {
     JPanel panel, topPanel, positionsPanel;
     JSplitPane sp, bottomSP;
 
@@ -55,15 +55,13 @@ public class GUIStockPositions extends JPanel{
 
         updateAccounts();
 
-        bCB.addActionListener(e -> {
-            update();
-        });
+        bCB.addActionListener(e -> update());
 
         panel.add(sp, BorderLayout.CENTER);
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         return panel;
     }
 
@@ -106,6 +104,7 @@ public class GUIStockPositions extends JPanel{
 
     public void updateAccounts() {
         bCB.removeAllItems();
+
         accMap = ComboBoxGenerator.getAccMap(person, true);
         for (String s : ComboBoxGenerator.getAccKeys(accMap)) {
             bCB.addItem(s);

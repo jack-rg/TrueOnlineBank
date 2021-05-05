@@ -5,6 +5,7 @@ import Types.AccountType;
 import Types.CurrencyType;
 import Types.StockOrderType;
 import Util.DataManager;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -16,7 +17,6 @@ import java.util.ArrayList;
  * @author yuanwei
  * @since May 4, 2021
  */
-
 public class Security extends Account {
     ArrayList<Position> positions;
     ArrayList<StockOrder> orders;

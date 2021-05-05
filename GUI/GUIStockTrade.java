@@ -145,7 +145,11 @@ public class GUIStockTrade extends JPanel {
             aCB.addItem(g);
         }
 
-//        home.updateHistory();
-//        home.updatePositions();
+        /*
+         the following *should* update the investment tabs when a stock is traded
+         it is currently buggy
+                home.updateHistory();
+                home.updatePositions();
+        */
     }
 }

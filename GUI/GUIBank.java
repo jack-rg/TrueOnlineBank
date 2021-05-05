@@ -1,7 +1,6 @@
 package GUI;
 
 import Objects.Person;
-import Util.DataManager;
 
 import java.awt.*;
 import javax.swing.*;

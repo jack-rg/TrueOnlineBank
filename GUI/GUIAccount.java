@@ -3,7 +3,6 @@ package GUI;
 import Objects.Account;
 import Objects.Saving;
 import Objects.Transaction;
-import Util.DataManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +85,6 @@ public class GUIAccount {
             sp.remove(transactionsSP);
         }
 
-        DataManager.loadTransactions(account);
         ArrayList<Transaction> transactions = account.getTransactions();
 
         if (transactions.size() > 0) {

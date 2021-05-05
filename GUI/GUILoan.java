@@ -117,14 +117,19 @@ public class GUILoan extends JPanel {
 
             originalLoanAmountLabel.setText("Original Loan Amount: $" + loan.getLoanAmount());
             originalLoanAmountLabel.setVisible(true);
+
             loanBalanceLabel.setText("Loan Balance (including interest): $" + loan.getLoanBalance());
             loanBalanceLabel.setVisible(true);
+
             loanPaidLabel.setText("Amount paid: $" + loan.getPaidAmount());
             loanPaidLabel.setVisible(true);
+
             accountChoiceLabel.setVisible(true);
+
             paymentAmountTF.setText("");
             paymentAmountTF.setVisible(true);
             paymentAmountLabel.setVisible(true);
+
             accountCB.removeAllItems();
             accMap = ComboBoxGenerator.getAccMap(person, false);
             for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
@@ -166,15 +171,19 @@ public class GUILoan extends JPanel {
         } else {
             originalLoanAmountLabel.setText("Enter loan amount:");
             originalLoanAmountLabel.setVisible(true);
+
             loanBalanceLabel.setVisible(false);
             loanAmountTF.setText("");
             loanAmountTF.setVisible(true);
+
             termsCB.setSelected(false);
             termsCB.setVisible(true);
+
             interestTermsCB.setSelected(false);
             interestTermsCB.setVisible(true);
 
             loanPaidLabel.setVisible(false);
+
             paymentAmountTF.setVisible(false);
             paymentAmountLabel.setVisible(false);
             accountChoiceLabel.setVisible(false);

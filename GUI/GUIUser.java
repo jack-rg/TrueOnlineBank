@@ -13,7 +13,6 @@ import javax.swing.JSplitPane;
 
 import Objects.Account;
 import Objects.User;
-import Util.DataManager;
 
 /**
  * GUIUser creates the GUI that allows managers to see a single user's information.

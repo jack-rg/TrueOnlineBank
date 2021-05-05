@@ -11,8 +11,9 @@ import Util.DataManager;
  * @since May 4, 2021
  */
 public class Position {
-    String accountID;
-    private Stock stock;
+    private final Stock stock;
+    private final String accountID;
+
     private int quantity;
     private double mktValue; // currentPrice * quantity
     private double totalCost;
@@ -46,17 +47,17 @@ public class Position {
         return unrealizedPL;
     }
 
-    public String getAccountID() { return accountID; }
+    public String getAccountID() {
+        return accountID;
+    }
 
     public double getUnrealizedPLRate() {
         return unrealizedPLRate;
     }
 
-
     /**
-     *
-     * @param stock
-     * @param addQuantity
+     * @param stock       the stock to add
+     * @param addQuantity the amount of the stock to add
      * @return true, if add complete
      */
     public boolean addStock(Stock stock, int addQuantity) {
@@ -73,9 +74,8 @@ public class Position {
     }
 
     /**
-     *
-     * @param stock
-     * @param deductQuantity
+     * @param stock          the stock to deduct
+     * @param deductQuantity the amount of stock to deduct
      * @return true, if deduct has complete
      */
     public boolean deductStock(Stock stock, int deductQuantity) {

@@ -682,7 +682,7 @@ public class DataManager {
     }
 
     public static ArrayList<Stock> loadStocks() {
-        ArrayList<Stock> stocks = new ArrayList<Stock>();
+        ArrayList<Stock> stocks = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockLog.txt";
 
         try {
@@ -734,5 +734,4 @@ public class DataManager {
             e1.printStackTrace();
         }
     }
-
 }

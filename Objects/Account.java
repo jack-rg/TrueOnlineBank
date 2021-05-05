@@ -78,15 +78,12 @@ public abstract class Account implements TransactionInterface {
         return balance;
     }
 
-    public void setBalance(double newValue) {
-        balance = newValue;
-    }
-
     public CurrencyType getCurrencyType() {
         return currencyType;
     }
 
     public ArrayList<Transaction> getTransactions() {
+        DataManager.loadTransactions(this);
         return transactions;
     }
 
@@ -102,9 +99,9 @@ public abstract class Account implements TransactionInterface {
      * Converts the funds from the given currency type to the account's currency type,
      * and then deposits those funds into the account.
      *
-     * @param funds the amount to deposit
-     * @param name the name of the deposit
-     * @param cType the currency type of the deposit
+     * @param funds     the amount to deposit
+     * @param name      the name of the deposit
+     * @param cType     the currency type of the deposit
      * @param chargeFee whether or not we should charge a fee
      */
     public void deposit(double funds, String name, CurrencyType cType, boolean chargeFee) {
@@ -127,8 +124,8 @@ public abstract class Account implements TransactionInterface {
     /**
      * Withdraws the funds from this account.
      *
-     * @param funds the amount to withdraw
-     * @param name the name of the withdrawal
+     * @param funds     the amount to withdraw
+     * @param name      the name of the withdrawal
      * @param chargeFee whether or not we should charge a fee
      * @return true if able to withdraw, false otherwise
      */
@@ -152,7 +149,7 @@ public abstract class Account implements TransactionInterface {
      * Transfers the amount to the given account
      *
      * @param account the account to transfer to
-     * @param amount the amount to transfer to
+     * @param amount  the amount to transfer to
      * @return true if the transfer was successful, false otherwise
      */
     public boolean transferTo(Account account, double amount) {
@@ -166,7 +163,7 @@ public abstract class Account implements TransactionInterface {
      * then transfers the amount to the retrieved account.
      *
      * @param accountID the accountID to transfer to
-     * @param amount the amount to transfer
+     * @param amount    the amount to transfer
      * @return true if the transfer was successful, false otherwise
      */
     public boolean transferTo(String accountID, double amount) {
@@ -182,7 +179,7 @@ public abstract class Account implements TransactionInterface {
      * Loads the manager's account, transfers the amount to the manager.
      *
      * @param amount the amount to transfer
-     * @param name the name of the transfer
+     * @param name   the name of the transfer
      * @return true if the transfer was successful, false otherwise
      */
     public boolean transferToBank(double amount, String name) {
