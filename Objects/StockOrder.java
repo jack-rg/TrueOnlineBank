@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
  *
  */
 public class StockOrder {
+    String accountId;
     Stock stock;
     int quantity;
     StockOrderType side;
@@ -25,7 +26,8 @@ public class StockOrder {
     double pricePerStock;
     // in our project, we take the Order was filled Instantly for a simple case;
 
-    public StockOrder(LocalDateTime orderDate, Stock stock, int quantity, double pricePerStock, StockOrderType side) {
+    public StockOrder(LocalDateTime orderDate, Stock stock, int quantity, double pricePerStock, StockOrderType side, String accountId) {
+        this.accountId = accountId;
         this.stock = stock;
         this.quantity = quantity;
         this.pricePerStock = pricePerStock;
@@ -50,4 +52,8 @@ public class StockOrder {
     }
 
     public StockOrderType getOrderType() { return side; }
+
+    public String getAccountId() {
+        return this.accountId;
+    }
 }
