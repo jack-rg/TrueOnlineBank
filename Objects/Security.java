@@ -7,8 +7,6 @@ import Types.StockOrderType;
 import Util.DataManager;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Security extends Account to represent a Security Account.
@@ -21,26 +19,21 @@ import java.util.Map;
 public class Security extends Account {
     ArrayList<Position> positions;
     ArrayList<StockOrder> orders;
-    private Map<String, Position> stockName2position;
 
     public Security(AccountType accountType, String accountID, String userID) {
         super(accountType, accountID, userID);
-        this.stockName2position = new HashMap<>();
     }
 
     public Security(AccountType accountType, String accountID, String userID, CurrencyType currencyType) {
         super(accountType, accountID, userID, currencyType);
-        this.stockName2position = new HashMap<>();
     }
 
     public Security(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status accountStatus) {
         super(accountType, accountID, userID, currencyType, accountStatus);
-        this.stockName2position = new HashMap<>();
     }
 
     public Security(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status status, double value) {
         super(accountType, accountID, userID, currencyType, status, value);
-        this.stockName2position = new HashMap<>();
     }
 
     public ArrayList<Position> getPositions() {
@@ -66,11 +59,12 @@ public class Security extends Account {
             return "Insufficient funds.";
         }
 
-        if (!stockName2position.containsKey(targetStockName)) {
-            stockName2position.put(targetStockName, new Position(targetStock, 0));
+        Position targetPosition = new Position(targetStock, 0, 0, accountID);
+        for (Position p : getPositions()) {
+            if (p.getStock().getSymbol().equals(targetStockName)) {
+                targetPosition = p;
+            }
         }
-
-        Position targetPosition = stockName2position.get(targetStockName);
 
         if (isBuyBill) {
             billType = StockOrderType.BUY;

@@ -63,6 +63,7 @@ public abstract class Person {
     }
 
     public ArrayList<Account> getRawAccounts() {
+        accounts = DataManager.loadAccounts(userID);
         return accounts;
     }
 
@@ -78,7 +79,7 @@ public abstract class Person {
     public ArrayList<Account> getActiveAccounts() {
         ArrayList<Account> active = new ArrayList<>();
 
-        for (Account a : accounts) {
+        for (Account a : getRawAccounts()) {
             if (a.getStatus() == Status.ACTIVE) {
                 active.add(a);
             }
@@ -146,7 +147,7 @@ public abstract class Person {
     public ArrayList<Account> getSecurityAccounts() {
         ArrayList<Account> secAccounts = new ArrayList<>();
 
-        for (Account a : accounts) {
+        for (Account a : getRawAccounts()) {
             if (a instanceof Security) {
                 secAccounts.add(a);
             }

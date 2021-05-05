@@ -20,7 +20,7 @@ public class GUIStockTrade extends JPanel {
     JButton buyBtn, sellBtn;
     JTextField requestAmountText;
     JLabel errorLabel, confirmationLabel;
-    JComboBox<String> stockCB, accountCB;
+    JComboBox<String> stockCB, aCB;
     HashMap<String, Stock> stockMap;
     HashMap<String, Account> accMap;
 
@@ -35,13 +35,13 @@ public class GUIStockTrade extends JPanel {
         panel.setLayout(null);
 
         errorLabel = new JLabel();
-        errorLabel.setBounds(200, 400, 500, 25);
+        errorLabel.setBounds(100, 400, 500, 25);
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
         panel.add(errorLabel);
 
         confirmationLabel = new JLabel();
-        confirmationLabel.setBounds(200, 400, 500, 25);
+        confirmationLabel.setBounds(100, 400, 500, 25);
         confirmationLabel.setForeground(Color.GREEN);
         confirmationLabel.setVisible(false);
         panel.add(confirmationLabel);
@@ -51,9 +51,9 @@ public class GUIStockTrade extends JPanel {
         panel.add(accountLabel);
 
         accMap = ComboBoxGenerator.getAccMap(person, true);
-        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
-        accountCB.setBounds(280, 150, 200, 25);
-        panel.add(accountCB);
+        aCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
+        aCB.setBounds(280, 150, 200, 25);
+        panel.add(aCB);
 
         JLabel stockLabel = new JLabel("Please pick a stock: ");
         stockLabel.setBounds(50, 200, 150, 25);
@@ -80,7 +80,7 @@ public class GUIStockTrade extends JPanel {
 
         buyBtn.addActionListener(e -> {
             try {
-                Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
+                Security securityAccount = (Security) accMap.get(aCB.getSelectedItem());
                 int requestAmount = Integer.parseInt(requestAmountText.getText());
                 Stock targetStock = stockMap.get(stockCB.getSelectedItem());
 
@@ -90,7 +90,7 @@ public class GUIStockTrade extends JPanel {
                     confirmationLabel.setVisible(true);
                     errorLabel.setVisible(false);
 
-                    update();
+                    updateAccounts();
                 } else {
                     errorLabel.setText(updatePositionError);
                     errorLabel.setVisible(true);
@@ -105,7 +105,7 @@ public class GUIStockTrade extends JPanel {
 
         sellBtn.addActionListener(e -> {
             try {
-                Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
+                Security securityAccount = (Security) accMap.get(aCB.getSelectedItem());
                 int requestAmount = Integer.parseInt(requestAmountText.getText());
                 Stock targetStock = stockMap.get(stockCB.getSelectedItem());
 
@@ -115,7 +115,7 @@ public class GUIStockTrade extends JPanel {
                     confirmationLabel.setVisible(true);
                     errorLabel.setVisible(false);
 
-                    update();
+                    updateAccounts();
                 } else {
                     errorLabel.setText(updatePositionError);
                     errorLabel.setVisible(true);
@@ -136,11 +136,11 @@ public class GUIStockTrade extends JPanel {
         return panel;
     }
 
-    public void update() {
-        accountCB.removeAllItems();
+    public void updateAccounts() {
+        aCB.removeAllItems();
         accMap = ComboBoxGenerator.getAccMap(person, true);
         for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
-            accountCB.addItem(a);
+            aCB.addItem(a);
         }
     }
 }

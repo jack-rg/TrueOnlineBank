@@ -119,18 +119,18 @@ public class DataManager {
 
             while ((line = br.readLine()) != null) {
                 if (line.contains(" | " + accountID)) {
-                    String[] position = line.split(" \\| ");
-                    LocalDateTime orderDate = LocalDateTime.parse(position[0]);
-                    Stock stock = loadStock(position[1]);
-                    int quantity = Integer.parseInt(position[2]);
-                    double price = Double.parseDouble(position[3]);
+                    String[] order = line.split(" \\| ");
+                    LocalDateTime orderDate = LocalDateTime.parse(order[0]);
+                    Stock stock = loadStock(order[1]);
+                    int quantity = Integer.parseInt(order[2]);
+                    double price = Double.parseDouble(order[3]);
                     StockOrderType orderType;
-                    if (position[4].equals("BUY")) {
+                    if (order[4].equals("BUY")) {
                         orderType = StockOrderType.BUY;
                     } else {
                         orderType = StockOrderType.SELL;
                     }
-                    accountID = position[5];
+                    accountID = order[5];
                     orders.add(new StockOrder(orderDate, stock, quantity, price, orderType, accountID));
                 }
             }
@@ -156,7 +156,7 @@ public class DataManager {
                     double totalCost = Double.parseDouble(position[1]);
                     int quantity = Integer.parseInt(position[2]);
 
-                    positions.add(new Position(stock, quantity));
+                    positions.add(new Position(stock, quantity, totalCost, accountID));
                 }
             }
         } catch (IOException e1) {
@@ -165,6 +165,45 @@ public class DataManager {
 
         return positions;
     }
+
+    public static void writePosition(Position position) {
+        boolean updated = false;
+
+        String file = Paths.get("").toAbsolutePath() + "/Logs/positionLog.txt";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            ArrayList<String> traceFile = new ArrayList<>();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains(" | " + position.getAccountID()) && line.contains(position.getStock().getSymbol() + " | ")) {
+                    traceFile.add(position.getStock().getSymbol() + " | " + position.getTotalCost() + " | "
+                            + position.getQuantity() + " | " + position.getAccountID());
+                    updated = true;
+                } else {
+                    traceFile.add(line);
+                }
+            }
+
+            if (!updated) {
+                traceFile.add(position.getStock().getSymbol() + " | " + position.getTotalCost() + " | "
+                        + position.getQuantity() + " | " + position.getAccountID());
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(file);
+
+            for (String output : traceFile) {
+                fileOut.write((output + "\n").getBytes());
+            }
+
+            fileOut.flush();
+            fileOut.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
 
     private static Stock loadStock(String symbol) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockLog.txt";
@@ -242,8 +281,8 @@ public class DataManager {
         return null;
     }
 
-    public static void loadAccounts(Person person) {
-        String userID = person.getUserID();
+    public static ArrayList<Account> loadAccounts(String userID) {
+//        String userID = person.getUserID();
         ArrayList<Account> accounts = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
 
@@ -296,7 +335,8 @@ public class DataManager {
             e1.printStackTrace();
         }
 
-        person.setAccounts(accounts);
+//        person.setAccounts(accounts);
+        return accounts;
     }
 
     public static ArrayList<Transaction> loadTodaysTransactions() {

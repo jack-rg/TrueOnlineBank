@@ -3,7 +3,6 @@ package GUI;
 import Objects.Person;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * GUIInvestmentHome creates the GUI that allows users to play in the stock market.
@@ -21,8 +20,6 @@ public class GUIInvestmentHome extends JPanel {
     GUIStockOrderHistory orderHistory;
 
     public GUIInvestmentHome(Person person) {
-        super(new GridLayout(1, 1));
-
         tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
         stockPositions = new GUIStockPositions(person, this);
@@ -41,7 +38,21 @@ public class GUIInvestmentHome extends JPanel {
     }
 
     public void update() {
-        stockPositions.updateAccounts();
-//        orderHistory.update();
+        updatePositions();
+        updateHistory();
+        updateTrade();
     }
+
+    public void updatePositions() {
+        stockPositions.updateAccounts();
+    }
+
+    public void updateHistory() {
+        orderHistory.updateAccounts();
+    }
+
+    public void updateTrade() {
+        stockTrade.updateAccounts();
+    }
+
 }

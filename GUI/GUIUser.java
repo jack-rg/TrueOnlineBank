@@ -56,7 +56,6 @@ public class GUIUser {
 
         JPanel bottomPanel = new JPanel();
 
-        DataManager.loadAccounts(user);
         ArrayList<Account> accounts = user.getRawAccounts();
 
         if (accounts.size() > 0) {

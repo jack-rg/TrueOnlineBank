@@ -23,7 +23,7 @@ public class GUIStockPositions extends JPanel{
     JPanel panel, topPanel, positionsPanel;
     JSplitPane sp, bottomSP;
 
-    JComboBox<String> accountCB;
+    JComboBox<String> bCB;
 
     HashMap<String, Account> accMap;
     ArrayList<Position> positions;
@@ -48,17 +48,15 @@ public class GUIStockPositions extends JPanel{
         accountLabel.setBounds(30, 50, 200, 25);
         aPanel.add(accountLabel);
 
-        accMap = ComboBoxGenerator.getAccMap(person, true);
-        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
-        accountCB.setBounds(200, 50, 300, 25);
-        accountCB.setSelectedIndex(0);
-        aPanel.add(accountCB);
-
+        bCB = new JComboBox<>();
+        bCB.setBounds(200, 50, 300, 25);
+        aPanel.add(bCB);
         sp.add(aPanel);
 
-        update();
+        updateAccounts();
+        bCB.setSelectedIndex(0);
 
-        accountCB.addActionListener(e -> {
+        bCB.addActionListener(e -> {
             update();
         });
 
@@ -71,7 +69,7 @@ public class GUIStockPositions extends JPanel{
     }
 
     public void update() {
-        positions = ((Security) accMap.get(accountCB.getSelectedItem())).getPositions();
+        positions = ((Security) accMap.get(bCB.getSelectedItem())).getPositions();
 
         if (bottomSP != null) {
             sp.remove(bottomSP);
@@ -91,7 +89,9 @@ public class GUIStockPositions extends JPanel{
 
         positionsPanel = new JPanel(new GridLayout(positions.size(), 1));
         for (Position p : positions) {
-            positionsPanel.add((new GUIPosition(p)).getPanel());
+            if (p.getQuantity() > 0) {
+                positionsPanel.add((new GUIPosition(p)).getPanel());
+            }
         }
         bottomSP.add(positionsPanel);
 
@@ -99,10 +99,12 @@ public class GUIStockPositions extends JPanel{
     }
 
     public void updateAccounts() {
-        accountCB.removeAllItems();
+        bCB.removeAllItems();
         accMap = ComboBoxGenerator.getAccMap(person, true);
         for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
-            accountCB.addItem(a);
+            bCB.addItem(a);
         }
+
+        update();
     }
 }

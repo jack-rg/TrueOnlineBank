@@ -74,7 +74,7 @@ public class GUIDeposit extends JPanel {
                 Account account = accMap.get(accountCB.getSelectedItem());
                 CurrencyType cType = (CurrencyType) currencyTypeCB.getSelectedItem();
 
-                account.deposit(Float.parseFloat(depositTF.getText()), "ATM Deposit",
+                account.deposit(Double.parseDouble(depositTF.getText()), "ATM Deposit",
                         cType, true);
 
                 home.update();

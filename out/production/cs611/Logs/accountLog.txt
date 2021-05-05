@@ -1,7 +1,11 @@
-2021/05/04 | 21:17:34 | U0 | Checking | A01 | 23630.0 | ACTIVE | USD
-2021/05/04 | 21:17:34 | U1 | Savings | A11 | 84995.0 | ACTIVE | USD
-2021/05/04 | 22:14:19 | U1 | Checking | A12 | 990495.0 | ACTIVE | USD
+2021/05/05 | 01:00:47 | U0 | Checking | A01 | 23755.0 | ACTIVE | USD
+2021/05/05 | 00:53:09 | U1 | Savings | A11 | 81770.0 | ACTIVE | USD
+2021/05/05 | 01:00:47 | U1 | Checking | A12 | 987480.0 | ACTIVE | USD
 2021/05/03 | 17:16:37 | U2 | Savings | A21 | 2631.0 | ACTIVE | USD
 2021/05/03 | 16:28:55 | U2 | Checking | A22 | 250.0 | INACTIVE | USD
-2021/05/04 | 23:33:28 | U1 | Security | A14 | 9988.02 | ACTIVE | USD
-2021/05/04 | 23:30:57 | U1 | Security | A15 | 9929.0 | ACTIVE | USD
+2021/05/05 | 00:50:30 | U1 | Security | A13 | 8369.03 | ACTIVE | USD
+2021/05/05 | 00:50:37 | U1 | Security | A14 | 1058.0 | ACTIVE | USD
+2021/05/05 | 00:59:58 | U1 | Security | A15 | 862.0 | ACTIVE | USD
+2021/05/05 | 01:00:42 | U1 | Security | A16 | 874.0 | ACTIVE | USD
+2021/05/05 | 00:56:49 | U1 | Security | A17 | 975.0 | ACTIVE | USD
+2021/05/05 | 01:00:47 | U1 | Security | A18 | 975.0 | ACTIVE | USD

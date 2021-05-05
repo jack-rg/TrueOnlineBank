@@ -21,18 +21,20 @@ import java.util.HashMap;
  * @since May 4, 2021
  */
 public class GUIStockOrderHistory extends JPanel {
-    JPanel panel, topPanel, ordersPanel;
+    JPanel panel, ordersPanel;
     JSplitPane sp, bottomSP;
 
-    JComboBox<String> accountCB;
+    JComboBox<String> cCB;
 
     HashMap<String, Account> accMap;
     ArrayList<StockOrder> orders;
 
     GUIInvestmentHome home;
+    Person person;
 
     public GUIStockOrderHistory(Person person, GUIInvestmentHome home) {
         this.home = home;
+        this.person = person;
 
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -47,17 +49,15 @@ public class GUIStockOrderHistory extends JPanel {
         accountLabel.setBounds(30, 50, 200, 25);
         aPanel.add(accountLabel);
 
-        accMap = ComboBoxGenerator.getAccMap(person, true);
-        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
-        accountCB.setBounds(200, 50, 300, 25);
-        accountCB.setSelectedIndex(0);
-        aPanel.add(accountCB);
-
+        cCB = new JComboBox<>();
+        cCB.setBounds(200, 50, 300, 25);
+        aPanel.add(cCB);
         sp.add(aPanel);
 
-        update();
+        updateAccounts();
+        cCB.setSelectedIndex(0);
 
-        accountCB.addActionListener(e -> {
+        cCB.addActionListener(e -> {
             update();
         });
 
@@ -68,7 +68,7 @@ public class GUIStockOrderHistory extends JPanel {
     public JPanel getPanel() { return panel; }
 
     public void update() {
-        orders = ((Security) accMap.get(accountCB.getSelectedItem())).getOrders();
+        orders = ((Security) accMap.get(cCB.getSelectedItem())).getOrders();
 
         if (bottomSP != null) {
             sp.remove(bottomSP);
@@ -94,5 +94,15 @@ public class GUIStockOrderHistory extends JPanel {
         bottomSP.add(ordersPanel);
 
         sp.add(bottomSP);
+    }
+
+    public void updateAccounts() {
+        cCB.removeAllItems();
+        accMap = ComboBoxGenerator.getAccMap(person, true);
+        for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
+            cCB.addItem(a);
+        }
+
+        update();
     }
 }

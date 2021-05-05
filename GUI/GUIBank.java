@@ -45,7 +45,6 @@ public class GUIBank extends JFrame {
         login.getLoginButton().addActionListener(e -> {
             Person person = login.execute();
             if (person != null) {
-                DataManager.loadAccounts(person);
                 addHome(person);
                 cards.show(c, "Home");
             } else {

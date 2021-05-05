@@ -1,5 +1,7 @@
 package Objects;
 
+import Util.DataManager;
+
 /**
  * Stock position represent the details of a stock that the buyer have
  *
@@ -9,28 +11,21 @@ package Objects;
  * @since May 4, 2021
  */
 public class Position {
-    public static int MAX_POSITION_LIMIT = 100;
-
+    String accountID;
     private Stock stock;
     private int quantity;
     private double mktValue; // currentPrice * quantity
     private double totalCost;
-    private double avgPrice; // totalCost / quantity;
-
     private double unrealizedPL;
-    private double unrealizedPLRate;
 
-
-    // create position
-    public Position(Stock stock, int quantity){
+    public Position(Stock stock, int quantity, double totalCost, String accountID) {
         this.quantity = quantity;
         this.stock = stock;
+        this.totalCost = totalCost;
+        this.accountID = accountID;
+
         this.mktValue = stock.getPrice() * quantity;
-        this.totalCost = 0;
-        this.totalCost += stock.getPrice() * quantity;
-        this.avgPrice = totalCost / (double) quantity;
         this.unrealizedPL = (mktValue - totalCost);
-        this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
     }
 
     public Stock getStock() {
@@ -49,30 +44,32 @@ public class Position {
         return unrealizedPL;
     }
 
-    public boolean addStock(Stock addStock, int addQuantity){
-        double currPrice = addStock.getPrice();
+    public String getAccountID() { return accountID; }
+
+    public boolean addStock(Stock stock, int addQuantity){
+        double currPrice = stock.getPrice();
         this.totalCost += currPrice * addQuantity;
         this.quantity += addQuantity;
         this.mktValue = quantity * currPrice;
-        this.avgPrice = totalCost / quantity;
         this.unrealizedPL = mktValue - totalCost;
-        this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
+
+        DataManager.writePosition(this);
 
         return true;
     }
 
-    public boolean deductStock(Stock addStock, int deductQuantity) {
+    public boolean deductStock(Stock stock, int deductQuantity) {
         if (this.quantity < deductQuantity) {
             return false;
         }
 
-        double currPrice = addStock.getPrice();
+        double currPrice = stock.getPrice();
         this.totalCost -= currPrice * deductQuantity;
         this.quantity -= deductQuantity;
         this.mktValue = quantity * currPrice;
-        this.avgPrice = totalCost / quantity;
         this.unrealizedPL = mktValue - totalCost;
-        this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
+
+        DataManager.writePosition(this);
 
         return true;
     }

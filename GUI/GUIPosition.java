@@ -32,7 +32,7 @@ public class GUIPosition extends JPanel {
         double unrealizedPL = position.getUnrealizedPL();
         JLabel unrealizedPLLabel;
         if (unrealizedPL < 0) {
-            unrealizedPLLabel = new JLabel("-$" + unrealizedPL);
+            unrealizedPLLabel = new JLabel("-$" + Math.abs(unrealizedPL));
             unrealizedPLLabel.setForeground(Color.RED);
         } else {
             unrealizedPLLabel = new JLabel("$" + unrealizedPL);
