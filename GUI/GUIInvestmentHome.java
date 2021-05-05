@@ -54,5 +54,4 @@ public class GUIInvestmentHome extends JPanel {
     public void updateTrade() {
         stockTrade.updateAccounts();
     }
-
 }

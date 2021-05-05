@@ -89,14 +89,13 @@ public class GUIDeposit extends JPanel {
 
     public void update() {
         depositTF.setText("");
+        errorLabel.setVisible(false);
 
         accountCB.removeAllItems();
         accMap = ComboBoxGenerator.getAccMap(person, false);
         for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
             accountCB.addItem(a);
         }
-
-        errorLabel.setVisible(false);
     }
 
     public JPanel getPanel() {

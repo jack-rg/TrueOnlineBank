@@ -101,8 +101,8 @@ public class GUIStockPositions extends JPanel{
     public void updateAccounts() {
         bCB.removeAllItems();
         accMap = ComboBoxGenerator.getAccMap(person, true);
-        for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
-            bCB.addItem(a);
+        for (String s : ComboBoxGenerator.getAccKeys(accMap)) {
+            bCB.addItem(s);
         }
 
         update();

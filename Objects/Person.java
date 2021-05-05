@@ -67,10 +67,6 @@ public abstract class Person {
         return accounts;
     }
 
-    public void setAccounts(ArrayList<Account> accounts) {
-        this.accounts = accounts;
-    }
-
     /**
      * Gets all active accounts.
      *
@@ -79,7 +75,7 @@ public abstract class Person {
     public ArrayList<Account> getActiveAccounts() {
         ArrayList<Account> active = new ArrayList<>();
 
-        for (Account a : getRawAccounts()) {
+        for (Account a : accounts) {
             if (a.getStatus() == Status.ACTIVE) {
                 active.add(a);
             }
@@ -147,8 +143,8 @@ public abstract class Person {
     public ArrayList<Account> getSecurityAccounts() {
         ArrayList<Account> secAccounts = new ArrayList<>();
 
-        for (Account a : getRawAccounts()) {
-            if (a instanceof Security) {
+        for (Account a : accounts) {
+            if (a instanceof Security && a.getStatus() == Status.ACTIVE) {
                 secAccounts.add(a);
             }
         }

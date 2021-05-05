@@ -99,8 +99,8 @@ public class GUIStockOrderHistory extends JPanel {
     public void updateAccounts() {
         cCB.removeAllItems();
         accMap = ComboBoxGenerator.getAccMap(person, true);
-        for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
-            cCB.addItem(a);
+        for (String t : ComboBoxGenerator.getAccKeys(accMap)) {
+            cCB.addItem(t);
         }
 
         update();

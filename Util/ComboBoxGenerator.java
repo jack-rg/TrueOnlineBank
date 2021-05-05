@@ -29,6 +29,7 @@ public class ComboBoxGenerator {
         } else {
             accounts = person.getActiveAccounts();
         }
+
         HashMap<String, Account> accMap = new HashMap<>();
 
         for (Account a : accounts) {

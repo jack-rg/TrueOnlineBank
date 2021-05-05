@@ -282,7 +282,6 @@ public class DataManager {
     }
 
     public static ArrayList<Account> loadAccounts(String userID) {
-//        String userID = person.getUserID();
         ArrayList<Account> accounts = new ArrayList<>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/accountLog.txt";
 
@@ -335,7 +334,6 @@ public class DataManager {
             e1.printStackTrace();
         }
 
-//        person.setAccounts(accounts);
         return accounts;
     }
 
