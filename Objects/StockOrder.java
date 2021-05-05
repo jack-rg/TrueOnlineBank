@@ -5,13 +5,21 @@ import Types.StockOrderType;
 import java.time.LocalDateTime;
 
 /**
- * StockOrder represents a stock order.
- *
  * @author rachelpeng
  * @author jackgiunta
  * @author yuanwei
  * @since May 4, 2021
  */
+
+/**
+ * StockOrder represents a stock order.
+ *     accountId: the accountID from the user who set the order
+ *     stock: the stock bought / selled
+ *     quantity: stock nums
+ *     price: current stock price
+ *     orderDate: the date of the order be generated
+ */
+
 public class StockOrder {
     String accountId;
     Stock stock;
