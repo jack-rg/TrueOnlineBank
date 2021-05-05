@@ -61,7 +61,7 @@ public class Security extends Account {
 
         Position targetPosition = new Position(targetStock, 0, 0, accountID);
         for (Position p : getPositions()) {
-            if (p.getStock().getSymbol().equals(targetStockName)) {
+            if (p.getStock().getName().equals(targetStockName)) {
                 targetPosition = p;
             }
         }
@@ -69,6 +69,7 @@ public class Security extends Account {
         if (isBuyBill) {
             billType = StockOrderType.BUY;
             if (targetPosition.addStock(targetStock, requestQuantity)) {
+                positions.remove(targetPosition);
                 withdraw(targetStock.getPrice() * requestQuantity,
                         "Buy " + requestQuantity + " of " + targetStockName, true);
             } else {
@@ -78,6 +79,7 @@ public class Security extends Account {
             billType = StockOrderType.SELL;
 
             if (targetPosition.deductStock(targetStock, requestQuantity)) {
+                positions.add(targetPosition);
                 deposit(targetStock.getPrice() * requestQuantity,
                         "Sell " + requestQuantity + " of " + targetStockName,
                         getCurrencyType(), true);

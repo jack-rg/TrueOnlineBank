@@ -37,11 +37,11 @@ public class GUIInvestmentHome extends JPanel {
         return tabbedPane;
     }
 
-    public void update() {
-        updatePositions();
-        updateHistory();
-        updateTrade();
-    }
+//    public void update() {
+//        updatePositions();
+//        updateHistory();
+//        updateTrade();
+//    }
 
     public void updatePositions() {
         stockPositions.updateAccounts();

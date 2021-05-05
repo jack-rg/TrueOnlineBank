@@ -54,7 +54,6 @@ public class GUIStockPositions extends JPanel{
         sp.add(aPanel);
 
         updateAccounts();
-        bCB.setSelectedIndex(0);
 
         bCB.addActionListener(e -> {
             update();
@@ -104,6 +103,7 @@ public class GUIStockPositions extends JPanel{
         for (String s : ComboBoxGenerator.getAccKeys(accMap)) {
             bCB.addItem(s);
         }
+        bCB.setSelectedIndex(0);
 
         update();
     }

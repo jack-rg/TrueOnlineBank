@@ -68,6 +68,5 @@ public class GUIAccountsHome extends JPanel {
     private void updateOthers() {
         home.updateLoans();
         home.updateInvestments();
-        home.updateInvestments();
     }
 }

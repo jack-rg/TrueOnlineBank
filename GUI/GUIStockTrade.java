@@ -85,6 +85,7 @@ public class GUIStockTrade extends JPanel {
                 Stock targetStock = stockMap.get(stockCB.getSelectedItem());
 
                 String updatePositionError = securityAccount.updatePosition(targetStock, true, requestAmount);
+
                 if (updatePositionError == null) {
                     confirmationLabel.setText("Purchase complete.");
                     confirmationLabel.setVisible(true);
@@ -110,6 +111,7 @@ public class GUIStockTrade extends JPanel {
                 Stock targetStock = stockMap.get(stockCB.getSelectedItem());
 
                 String updatePositionError = securityAccount.updatePosition(targetStock, false, requestAmount);
+
                 if (updatePositionError == null) {
                     confirmationLabel.setText("Sale complete.");
                     confirmationLabel.setVisible(true);
@@ -140,10 +142,11 @@ public class GUIStockTrade extends JPanel {
         aCB.removeAllItems();
         accMap = ComboBoxGenerator.getAccMap(person, true);
         for (String g : ComboBoxGenerator.getAccKeys(accMap)) {
+            System.out.println(g);
             aCB.addItem(g);
         }
 
-        home.updatePositions();
-        home.updateHistory();
+//        home.updateHistory();
+//        home.updatePositions();
     }
 }

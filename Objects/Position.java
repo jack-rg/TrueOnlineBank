@@ -46,7 +46,7 @@ public class Position {
 
     public String getAccountID() { return accountID; }
 
-    public boolean addStock(Stock stock, int addQuantity){
+    public boolean addStock(Stock stock, int addQuantity) {
         double currPrice = stock.getPrice();
         this.totalCost += currPrice * addQuantity;
         this.quantity += addQuantity;

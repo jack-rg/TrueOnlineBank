@@ -218,7 +218,7 @@ public class DataManager {
                     String stockName = account[0];
                     double currentValue = Double.parseDouble(account[2]);
 
-                    return new Stock(symbol, stockName, currentValue);
+                    return new Stock(stockName, symbol, currentValue);
                 }
             }
         } catch (IOException e1) {

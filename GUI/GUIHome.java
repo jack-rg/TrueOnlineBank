@@ -83,7 +83,7 @@ public class GUIHome extends JPanel {
 
     public void updateInvestments() {
         if (person.isRich()) {
-            investmentHome.update();
+//            investmentHome.update();
         }
     }
 

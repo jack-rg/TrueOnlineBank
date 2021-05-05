@@ -55,7 +55,6 @@ public class GUIStockOrderHistory extends JPanel {
         sp.add(aPanel);
 
         updateAccounts();
-        cCB.setSelectedIndex(0);
 
         cCB.addActionListener(e -> {
             update();
@@ -102,6 +101,7 @@ public class GUIStockOrderHistory extends JPanel {
         for (String t : ComboBoxGenerator.getAccKeys(accMap)) {
             cCB.addItem(t);
         }
+        cCB.setSelectedIndex(0);
 
         update();
     }
