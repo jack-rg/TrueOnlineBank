@@ -21,8 +21,10 @@ import Util.DataManager;
  * @since May 4, 2021
  */
 public class GUIStockManager {
-    JPanel panel;
+    JPanel panel, topPanel;
     JButton addNewStockBtn, submitNewStockBtn;
+    JScrollPane bottomPanel = new JScrollPane();
+    JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     GUIHome home;
 
 public GUIStockManager(GUIHome home){
@@ -30,12 +32,11 @@ public GUIStockManager(GUIHome home){
 
     panel = new JPanel();
     panel.setLayout(new BorderLayout());
-    JScrollPane bottomPanel = new JScrollPane();
 
-    JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-    sp.setResizeWeight(0.7);
+    sp.setResizeWeight(0.3);
 
-    JPanel topPanel = new JPanel();
+    bottomPanel = new JScrollPane();
+    topPanel = new JPanel();
     topPanel.setLayout(null);
 
     addNewStockBtn = new JButton("Add New");
@@ -129,30 +130,30 @@ public GUIStockManager(GUIHome home){
         stockPriceTxt.setVisible(false);
         stockPriceTxt.setText("");
 
-        updateBottomPanel(sp, bottomPanel, errorLabel);
+     updateBottomPanel(errorLabel);
     });
 
     sp.add(topPanel);
-    updateBottomPanel(sp, bottomPanel, errorLabel);
+    updateBottomPanel(errorLabel);
 
 
     panel.add(sp, BorderLayout.CENTER);
 }
 
-public void updateBottomPanel(JSplitPane sp, JScrollPane bottomPanel, JLabel errorLabel){
+public void updateBottomPanel(JLabel errorLabel){
     sp.remove(bottomPanel);
-
     ArrayList<Stock> allStocks = DataManager.loadStocks();
     JPanel stockList = new JPanel();
 
     stockList.setLayout(new GridLayout(allStocks.size(), 1));
     for (Stock s : allStocks) {
         GUIStock stock = new GUIStock(s, errorLabel);
+        System.out.println(s.toString());
 
         stockList.add(stock.getPanel());
     }
     bottomPanel = new JScrollPane(stockList);
-    sp.add(bottomPanel);
+sp.add(bottomPanel);
 }
 
     public JPanel getPanel() {

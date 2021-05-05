@@ -1,4 +1,4 @@
-Twitter | TWTR | 500.00
+Twitter | TWTR | 7.0
 Apple | AAPL | 1900.00
 Doge | DOGE | 100.00
 Facebook | FB | 1000.00
@@ -9,3 +9,11 @@ TD | TD | 88.00
 Tesla | TSLA | 700.00
 Caterpillar | CAT | 900.00
 New | NEW | 18.00
+Amazon | AMZ | 421343.99
+NatGeo | GEO | 889.99
+Capital One | ONE | 700.00
+Disney | DIS | 99.99
+BP Gas | BP | 0.99
+Jeep | JEEP | 8.00
+Nasdaq | QQQ | 894.00
+SP500 | SPYD | 70.00
