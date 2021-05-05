@@ -127,12 +127,12 @@ public class Security extends Account {
         // TODO: 2021/5/4 debug
         System.out.println("UserID: " + this.getUserID());
 
-        System.out.println(stockOrder.getOrderDate() + " "+
-                stockOrder.getOrderStockSymbol() + " " +
-                stockOrder.getQuantity()+ " " +
-                stockOrder.getPricePerStock() + " " +
-                stockOrder.getAccountId() + " "
-        );
+//        System.out.println(stockOrder.getOrderDate() + " "+
+//                stockOrder.getOrderStockSymbol() + " " +
+//                stockOrder.getQuantity()+ " " +
+//                stockOrder.getPricePerStock() + " " +
+//                stockOrder.getAccountId() + " "
+//        );
         DataManager.writeStockOrder(stockOrder);
 
         System.out.println("end");

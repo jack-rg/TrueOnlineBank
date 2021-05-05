@@ -17,7 +17,7 @@ public class GUIStockOrder extends JPanel {
         JLabel date = new JLabel(order.getOrderDate().format(formatter));
         panel.add(date);
 
-        JLabel stock = new JLabel(order.getOrderStockSymbol());
+        JLabel stock = new JLabel(order.getStock().getSymbol());
         panel.add(stock);
 
         JLabel quantity = new JLabel(order.getQuantity() + "");

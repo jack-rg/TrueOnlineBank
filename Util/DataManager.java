@@ -87,7 +87,7 @@ public class DataManager {
 
             out.printf(transactionFormatter,
                     stockOrder.getOrderDate(),
-                    stockOrder.getOrderStockSymbol(),
+                    stockOrder.getStock().getSymbol(),
                     stockOrder.getQuantity(),
                     stockOrder.getPricePerStock(),
                     stockOrder.getOrderType(),

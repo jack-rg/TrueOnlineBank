@@ -35,8 +35,8 @@ public class StockOrder {
         this.orderDate = orderDate;
     }
 
-    public String getOrderStockSymbol(){
-        return stock.getSymbol();
+    public Stock getStock() {
+        return stock;
     }
 
     public double getPricePerStock(){
