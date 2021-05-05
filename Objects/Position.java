@@ -52,6 +52,13 @@ public class Position {
         return unrealizedPLRate;
     }
 
+
+    /**
+     *
+     * @param stock
+     * @param addQuantity
+     * @return true, if add complete
+     */
     public boolean addStock(Stock stock, int addQuantity) {
         double currPrice = stock.getPrice();
         this.totalCost += currPrice * addQuantity;
@@ -65,6 +72,12 @@ public class Position {
         return true;
     }
 
+    /**
+     *
+     * @param stock
+     * @param deductQuantity
+     * @return true, if deduct has complete
+     */
     public boolean deductStock(Stock stock, int deductQuantity) {
         if (quantity < deductQuantity) {
             return false;

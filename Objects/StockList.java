@@ -2,6 +2,9 @@ package Objects;
 
 import java.util.*;
 
+/**
+ * This class is for test. manually generate stock
+ */
 public class StockList {
     public static String[] DEFAULT_STOCKS_NAME_LIST = {"Twiter","Apple","paypal", "Berkshire Hathaway Inc"};
     public static String[] DEFAULT_STOCKS_SYMBOL_LIST = {"TWTR", "APPL", "PYPL","BRK"};

@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * @author yuanwei
  * @since May 4, 2021
  */
+
 public class Security extends Account {
     ArrayList<Position> positions;
     ArrayList<StockOrder> orders;
