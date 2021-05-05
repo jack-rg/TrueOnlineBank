@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * AccountManager is a helper class to manage accounts.
+ * ComboBoxGenerator is a helper class to generate mappings and keys for combo boxes.
  *
  * @author rachelpeng
  * @author jackgiunta
  * @author yuanwei
  * @since May 4, 2021
  */
-public class AccountManager {
+public class ComboBoxGenerator {
     /**
-     * Maps the string represenation of the account to the account itself.
+     * Maps the string representation of the account to the account itself.
      *
      * @param person the person to generate this mapping for
      * @return hashmap of the mapping
@@ -29,7 +29,7 @@ public class AccountManager {
         } else {
             accounts = person.getActiveAccounts();
         }
-        HashMap<String, Account> accMap = new HashMap<String, Account>();
+        HashMap<String, Account> accMap = new HashMap<>();
 
         for (Account a : accounts) {
             accMap.put(a.toString(), a);

@@ -61,7 +61,7 @@ public class Position {
         return true;
     }
 
-    public boolean deductStock(Stock addStock, int deductQuantity){
+    public boolean deductStock(Stock addStock, int deductQuantity) {
         if (this.quantity < deductQuantity) {
             return false;
         }

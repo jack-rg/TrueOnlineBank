@@ -4,7 +4,7 @@ import Objects.Account;
 import Objects.Person;
 import Objects.Position;
 import Objects.Security;
-import Util.AccountManager;
+import Util.ComboBoxGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,8 +48,8 @@ public class GUIStockPositions extends JPanel{
         accountLabel.setBounds(30, 50, 200, 25);
         aPanel.add(accountLabel);
 
-        accMap = AccountManager.getAccMap(person, true);
-        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accMap = ComboBoxGenerator.getAccMap(person, true);
+        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
         accountCB.setBounds(200, 50, 300, 25);
         accountCB.setSelectedIndex(0);
         aPanel.add(accountCB);
@@ -100,8 +100,8 @@ public class GUIStockPositions extends JPanel{
 
     public void updateAccounts() {
         accountCB.removeAllItems();
-        accMap = AccountManager.getAccMap(person, true);
-        for (String a : AccountManager.getAccKeys(accMap)) {
+        accMap = ComboBoxGenerator.getAccMap(person, true);
+        for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
             accountCB.addItem(a);
         }
     }

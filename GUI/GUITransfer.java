@@ -2,7 +2,7 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
-import Util.AccountManager;
+import Util.ComboBoxGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ public class GUITransfer extends JPanel {
         panel = new JPanel();
         panel.setLayout(null);
 
-        accMap = AccountManager.getAccMap(person, false);
+        accMap = ComboBoxGenerator.getAccMap(person, false);
 
         JLabel transferLabel = new JLabel("What type of transfer would you like to do?");
         transferLabel.setBounds(30, 50, 450, 25);
@@ -57,7 +57,7 @@ public class GUITransfer extends JPanel {
         fromAccountChoiceLabel.setVisible(false);
         panel.add(fromAccountChoiceLabel);
 
-        fromAccountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        fromAccountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
         fromAccountCB.setBounds(30, 150, 300, 25);
         fromAccountCB.setVisible(false);
         panel.add(fromAccountCB);
@@ -72,7 +72,7 @@ public class GUITransfer extends JPanel {
         accountIDTF.setVisible(false);
         panel.add(accountIDTF);
 
-        toAccountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        toAccountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
         toAccountCB.setBounds(30, 210, 300, 25);
         toAccountCB.setVisible(false);
         panel.add(toAccountCB);
@@ -195,12 +195,12 @@ public class GUITransfer extends JPanel {
 
         submitBtn.setVisible(false);
 
-        accMap = AccountManager.getAccMap(person, false);
+        accMap = ComboBoxGenerator.getAccMap(person, false);
 
         toAccountCB.removeAllItems();
         fromAccountCB.removeAllItems();
 
-        for (String a : AccountManager.getAccKeys(accMap)) {
+        for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
             toAccountCB.addItem(a);
             fromAccountCB.addItem(a);
         }

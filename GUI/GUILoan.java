@@ -3,7 +3,7 @@ package GUI;
 import Objects.Account;
 import Objects.Loan;
 import Objects.Person;
-import Util.AccountManager;
+import Util.ComboBoxGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,8 +77,8 @@ public class GUILoan extends JPanel {
         accountChoiceLabel.setVisible(false);
         panel.add(accountChoiceLabel);
 
-        accMap = AccountManager.getAccMap(person, false);
-        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accMap = ComboBoxGenerator.getAccMap(person, false);
+        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
         accountCB.setBounds(30, 200, 300, 25);
         accountCB.setVisible(false);
         panel.add(accountCB);
@@ -126,8 +126,8 @@ public class GUILoan extends JPanel {
             paymentAmountTF.setVisible(true);
             paymentAmountLabel.setVisible(true);
             accountCB.removeAllItems();
-            accMap = AccountManager.getAccMap(person, false);
-            for (String a : AccountManager.getAccKeys(accMap)) {
+            accMap = ComboBoxGenerator.getAccMap(person, false);
+            for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
                 accountCB.addItem(a);
             }
             accountCB.setVisible(true);

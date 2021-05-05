@@ -4,7 +4,7 @@ import Objects.*;
 import Types.Status;
 import Types.AccountType;
 import Types.CurrencyType;
-import Util.AccountManager;
+import Util.ComboBoxGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -106,9 +106,9 @@ public class GUINewAccount extends JPanel {
         accountChoiceL.setVisible(false);
         panel.add(accountChoiceL);
 
-        accMap = AccountManager.getAccMap(person, false);
+        accMap = ComboBoxGenerator.getAccMap(person, false);
 
-        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
         accountCB.setBounds(30, 280, 300, 25);
         accountCB.setVisible(false);
         panel.add(accountCB);
@@ -239,8 +239,8 @@ public class GUINewAccount extends JPanel {
         depositTF.setText("");
 
         accountCB.removeAllItems();
-        accMap = AccountManager.getAccMap(person, false);
-        for (String a : AccountManager.getAccKeys(accMap)) {
+        accMap = ComboBoxGenerator.getAccMap(person, false);
+        for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
             accountCB.addItem(a);
         }
 

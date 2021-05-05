@@ -2,7 +2,7 @@ package GUI;
 
 import Objects.Account;
 import Objects.Person;
-import Util.AccountManager;
+import Util.ComboBoxGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,8 +36,8 @@ public class GUIWithdraw extends JPanel {
         accountChoiceLabel.setBounds(30, 50, 400, 25);
         panel.add(accountChoiceLabel);
 
-        accMap = AccountManager.getAccMap(person, false);
-        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accMap = ComboBoxGenerator.getAccMap(person, false);
+        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
         accountCB.setBounds(30, 80, 300, 25);
         panel.add(accountCB);
 
@@ -82,8 +82,8 @@ public class GUIWithdraw extends JPanel {
         withdrawTF.setText("");
 
         accountCB.removeAllItems();
-        accMap = AccountManager.getAccMap(person, false);
-        for (String a : AccountManager.getAccKeys(accMap)) {
+        accMap = ComboBoxGenerator.getAccMap(person, false);
+        for (String a : ComboBoxGenerator.getAccKeys(accMap)) {
             accountCB.addItem(a);
         }
 

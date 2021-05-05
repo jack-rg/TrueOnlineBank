@@ -4,7 +4,7 @@ import Objects.Account;
 import Objects.Person;
 import Objects.Security;
 import Objects.StockOrder;
-import Util.AccountManager;
+import Util.ComboBoxGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,8 +47,8 @@ public class GUIStockOrderHistory extends JPanel {
         accountLabel.setBounds(30, 50, 200, 25);
         aPanel.add(accountLabel);
 
-        accMap = AccountManager.getAccMap(person, true);
-        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accMap = ComboBoxGenerator.getAccMap(person, true);
+        accountCB = new JComboBox<>(ComboBoxGenerator.getAccKeys(accMap));
         accountCB.setBounds(200, 50, 300, 25);
         accountCB.setSelectedIndex(0);
         aPanel.add(accountCB);
