@@ -74,9 +74,15 @@ public class GUIDeposit extends JPanel {
                 Account account = accMap.get(accountCB.getSelectedItem());
                 CurrencyType cType = (CurrencyType) currencyTypeCB.getSelectedItem();
 
-                account.deposit(Double.parseDouble(depositTF.getText()), "ATM Deposit",
-                        cType, true);
-
+                double depositAmount = Double.parseDouble(depositTF.getText());
+                if(depositAmount <=0){
+                    errorLabel.setText("Please enter a value greater than 0");
+                    errorLabel.setVisible(true);
+                }
+                    else {
+                    account.deposit(Double.parseDouble(depositTF.getText()), "ATM Deposit",
+                            cType, true);
+                }
                 home.update();
             } catch (Exception exception) {
                 errorLabel.setText("Please enter a valid deposit amount.");

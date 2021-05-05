@@ -150,7 +150,11 @@ public class GUITransfer extends JPanel {
             } else {
                 double amount = Double.parseDouble(transferTF.getText());
 
-                if (amount > fromAccount.getBalance()) {
+                if(amount <= 0){
+                    errorLabel.setText("Please input a value greater than 0");
+                    errorLabel.setVisible(true);
+                }
+                else if (amount > fromAccount.getBalance()) {
                     errorLabel.setText("Insufficient funds.");
                     errorLabel.setVisible(true);
                 } else {

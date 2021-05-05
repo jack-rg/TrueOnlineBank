@@ -61,8 +61,12 @@ public class GUIWithdraw extends JPanel {
         submitBtn.addActionListener(e -> {
             try {
                 Account account = accMap.get(accountCB.getSelectedItem());
-
-                if (account.withdraw(Double.parseDouble(withdrawTF.getText()),
+                double amountWithdraw = Double.parseDouble(withdrawTF.getText());
+                if(amountWithdraw <= 0){
+                    errorLabel.setText("Please enter a value greater than 0");
+                    errorLabel.setVisible(true);
+                }
+                else if (account.withdraw(amountWithdraw,
                         "ATM Withdrawal", true)) {
                     home.update();
                 } else {
