@@ -13,7 +13,7 @@ public class Stock {
     private final String name;
     private double price;
 
-    public Stock(String symbol, String name, double price) {
+    public Stock(String name, String symbol, double price) {
         this.symbol = symbol;
         this.name = name;
         this.price = price;
@@ -33,5 +33,9 @@ public class Stock {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String toString() {
+        return "(" + symbol + ") " + name + ": $" + price;
     }
 }

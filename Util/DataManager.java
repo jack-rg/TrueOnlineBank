@@ -87,7 +87,7 @@ public class DataManager {
 
     public static void writeStockOrder(StockOrder stockOrder) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderLog.txt";
-        // if already exists, simply delete one and create one.
+
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
@@ -616,5 +616,47 @@ public class DataManager {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+    }
+
+    public static void writeStock(Stock stock){
+        String file = Paths.get("").toAbsolutePath() + "/Logs/stockLog.txt";
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(
+                    new FileOutputStream(file, true)));
+            String stockFormatter = "%n%s | %s | %.2f";
+            out.printf(stockFormatter, stock.getName(), stock.getSymbol(), stock.getPrice());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static boolean existStock(Stock stock){
+        ArrayList<Stock> stocks = loadStocks();
+        for(Stock s: stocks){
+            if(stock.getName().equals(s.getName()) || stock.getSymbol().equals(s.getSymbol())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static ArrayList<Stock> loadStocks(){
+        ArrayList<Stock> stocks = new ArrayList<Stock>();
+        String file = Paths.get("").toAbsolutePath() + "/Logs/stockLog.txt";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] stockInfo = line.split(" \\| ");
+                String stockName = stockInfo[0];
+                String stockTicker = stockInfo[1];
+                double stockPrice = Double.parseDouble(stockInfo[2]);
+                stocks.add(new Stock(stockName, stockTicker, stockPrice));
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return stocks;
     }
 }

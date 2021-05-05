@@ -34,7 +34,7 @@ public class GUITransfer extends JPanel {
         panel = new JPanel();
         panel.setLayout(null);
 
-        accMap = AccountManager.getAccMap(person);
+        accMap = AccountManager.getAccMap(person, false);
 
         JLabel transferLabel = new JLabel("What type of transfer would you like to do?");
         transferLabel.setBounds(30, 50, 450, 25);
@@ -195,7 +195,7 @@ public class GUITransfer extends JPanel {
 
         submitBtn.setVisible(false);
 
-        accMap = AccountManager.getAccMap(person);
+        accMap = AccountManager.getAccMap(person, false);
 
         toAccountCB.removeAllItems();
         fromAccountCB.removeAllItems();

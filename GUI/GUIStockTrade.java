@@ -1,11 +1,11 @@
 package GUI;
 
 import Objects.*;
-import Types.CurrencyType;
+import Util.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * GUIStockTrade creates the GUI that allows users to trade stocks.
@@ -17,19 +17,18 @@ import java.util.ArrayList;
  */
 public class GUIStockTrade extends JPanel {
     JPanel panel;
-    JSplitPane sp;
 
     JButton buyBtn, sellBtn;
-    JTextField stockNameText;
-    JTextField stockSymbolText;
     JTextField requestAmountText;
     JLabel errorLabel;
+    JComboBox<String> stockCB, accountCB;
+
+    HashMap<String, Stock> stockMap;
+    HashMap<String, Account> accMap;
 
     public GUIStockTrade(Person person) {
-
-
-
         panel = new JPanel();
+        panel.setLayout(null);
 
         errorLabel = new JLabel();
         errorLabel.setBounds(250, 400, 150, 25);
@@ -37,32 +36,32 @@ public class GUIStockTrade extends JPanel {
         errorLabel.setVisible(false);
         panel.add(errorLabel);
 
+        JLabel accountLabel = new JLabel("Please pick an account to trade with: ");
+        accountLabel.setBounds(50, 150, 200, 25);
+        panel.add(accountLabel);
 
-        JLabel stockNameLabel = new JLabel("Enter The stock name: ");
-        stockNameLabel.setBounds(100, 200, 200, 25);
-        panel.add(stockNameLabel);
+        accMap = AccountManager.getAccMap(person, true);
+        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accountCB.setBounds(200, 160, 300, 25);
+        panel.add(accountCB);
 
-        stockNameText = new JTextField(20);
-        stockNameText.setBounds(300, 200, 165, 25);
-        panel.add(stockNameText);
+        JLabel stockLabel = new JLabel("Please pick a stock: ");
+        stockLabel.setBounds(50, 200, 150, 25);
+        panel.add(stockLabel);
 
-        JLabel symbolLabel = new JLabel("Enter The stock symbol: ");
-        symbolLabel.setBounds(100, 230, 200, 25);
-        panel.add(symbolLabel);
+        stockMap = AccountManager.getStockMap();
+        stockCB = new JComboBox<>(AccountManager.getStockKeys(stockMap));
+        stockCB.setBounds(180, 200, 300, 25);
+        panel.add(stockCB);
 
-        JLabel amountLabel = new JLabel("Enter the amount: ");
-        amountLabel.setBounds(100, 260, 200, 25);
+        JLabel amountLabel = new JLabel("Enter the quantity: ");
+        amountLabel.setBounds(100, 240, 200, 25);
         panel.add(amountLabel);
 
-        stockSymbolText = new JTextField(20);
-        stockSymbolText.setBounds(300, 230, 165, 25);
-        panel.add(stockSymbolText);
-
         requestAmountText = new JTextField(20);
-        requestAmountText.setBounds(300, 260, 165, 25);
+        requestAmountText.setBounds(300, 240, 165, 25);
         panel.add(requestAmountText);
 
-        panel.setLayout(null);
         buyBtn = new JButton("BUY");
         buyBtn.setBounds(180, 310, 80, 40);
 
@@ -71,42 +70,33 @@ public class GUIStockTrade extends JPanel {
 
         buyBtn.addActionListener(e -> {
             try {
-                Security securityAccount = person.getSecurityAccount();
-                StockList stockList = new StockList();
-                String stockName = stockNameText.getText();
-                String stockSymbol = stockSymbolText.getText();
+                Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
                 int requestAmount = Integer.parseInt(requestAmountText.getText());
 
-                //System.out.println(stockName);
-                Stock targetStock = stockList.getStockByName(stockName);
+                Stock targetStock = stockMap.get(stockCB.getSelectedItem());
                 securityAccount.updatePosition(targetStock, true, requestAmount);
-                errorLabel.setText("Purchase Complete");
+
+                errorLabel.setText("Purchase complete.");
                 errorLabel.setVisible(true);
             } catch (Exception exception) {
-
+                errorLabel.setText("Unable to complete purchase.");
+                errorLabel.setVisible(true);
             }
         });
 
         sellBtn.addActionListener(e -> {
             try {
-                Security securityAccount = person.getSecurityAccount();
-                StockList stockList = new StockList();
-                String stockName = stockNameText.getText();
-                String stockSymbol = stockSymbolText.getText();
+                Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
                 int requestAmount = Integer.parseInt(requestAmountText.getText());
 
-//                if(!stockList.checkHasStock(stockName, stockSymbol)){
-//                    errorLabel.setText("Cannot find corresponding stock");
-//                    errorLabel.setVisible(true);
-//                }
-
-                Stock targetStock = stockList.getStockByName(stockName);
-//                System.out.println(targetStock.getName());
+                Stock targetStock = stockMap.get(stockCB.getSelectedItem());
                 securityAccount.updatePosition(targetStock, false, requestAmount);
-                errorLabel.setText("Sell Complete");
+
+                errorLabel.setText("Sell complete");
                 errorLabel.setVisible(true);
             } catch (Exception exception) {
-
+                errorLabel.setText("Unable to complete sale.");
+                errorLabel.setVisible(true);
             }
         });
 
@@ -120,6 +110,4 @@ public class GUIStockTrade extends JPanel {
     public JPanel getPanel() {
         return panel;
     }
-
-
 }
