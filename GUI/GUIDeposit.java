@@ -37,7 +37,7 @@ public class GUIDeposit extends JPanel {
         accountChoiceLabel.setBounds(30, 50, 400, 25);
         panel.add(accountChoiceLabel);
 
-        accMap = AccountManager.getAccMap(person);
+        accMap = AccountManager.getAccMap(person, false);
         accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         accountCB.setBounds(30, 80, 300, 25);
         panel.add(accountCB);
@@ -91,7 +91,7 @@ public class GUIDeposit extends JPanel {
         depositTF.setText("");
 
         accountCB.removeAllItems();
-        accMap = AccountManager.getAccMap(person);
+        accMap = AccountManager.getAccMap(person, false);
         for (String a : AccountManager.getAccKeys(accMap)) {
             accountCB.addItem(a);
         }

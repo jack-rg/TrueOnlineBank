@@ -1,11 +1,15 @@
 package GUI;
 
+import Objects.Account;
 import Objects.Person;
+import Objects.Security;
 import Objects.StockOrder;
+import Util.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * GUIStockOrderHistory creates the GUI that allows users to see their entire
@@ -17,17 +21,52 @@ import java.util.ArrayList;
  * @since May 4, 2021
  */
 public class GUIStockOrderHistory extends JPanel {
-    JPanel panel;
-    JSplitPane sp;
+    JPanel panel, topPanel, ordersPanel;
+    JSplitPane sp, bottomSP;
+
+    JComboBox<String> accountCB;
+
+    HashMap<String, Account> accMap;
+    ArrayList<StockOrder> orders;
 
     public GUIStockOrderHistory(Person person) {
-        ArrayList<StockOrder> orders = person.getSecurityAccount().getOrders();
-
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
         sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        sp.setResizeWeight(0.1);
+        sp.setResizeWeight(0.3);
+
+        JPanel aPanel = new JPanel();
+        aPanel.setLayout(null);
+
+        JLabel accountLabel = new JLabel("Please pick an account: ");
+        accountLabel.setBounds(30, 50, 200, 25);
+        aPanel.add(accountLabel);
+
+        accMap = AccountManager.getAccMap(person, true);
+        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accountCB.setBounds(230, 50, 300, 25);
+        aPanel.add(accountCB);
+
+        sp.add(aPanel);
+
+        accountCB.addActionListener(e -> {
+            orders = ((Security) accMap.get(accountCB.getSelectedItem())).getOrders();
+            update();
+        });
+
+        panel.add(sp, BorderLayout.CENTER);
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    }
+
+    public JPanel getPanel() { return panel; }
+
+    public void update() {
+        if (bottomSP != null) {
+            sp.remove(bottomSP);
+        }
+
+        bottomSP = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
         JPanel topPanel = new JPanel();
         topPanel.setBounds(25, 25, 400, 500);
@@ -38,18 +77,14 @@ public class GUIStockOrderHistory extends JPanel {
         titlePanel.add(new JLabel("Quantity"));
         titlePanel.add(new JLabel("Price per Stock"));
         titlePanel.add(new JLabel("Order Type"));
+        bottomSP.add(titlePanel);
 
-        sp.add(titlePanel);
-
-        JPanel ordersPanel = new JPanel(new GridLayout(orders.size(), 1));
+        ordersPanel = new JPanel(new GridLayout(orders.size(), 1));
         for (StockOrder o : orders) {
             ordersPanel.add((new GUIStockOrder(o)).getPanel());
         }
-        sp.add(ordersPanel);
+        bottomSP.add(ordersPanel);
 
-        panel.add(sp, BorderLayout.CENTER);
-        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        sp.add(bottomSP);
     }
-
-    public JPanel getPanel() { return panel; }
 }

@@ -143,13 +143,16 @@ public abstract class Person {
      *
      * @return the security account if the user has one, null otherwise
      */
-    public Security getSecurityAccount() {
+    public ArrayList<Account> getSecurityAccounts() {
+        ArrayList<Account> secAccounts = new ArrayList<>();
+
         for (Account a : accounts) {
             if (a instanceof Security) {
-                return (Security) a;
+                secAccounts.add(a);
             }
         }
-        return null;
+
+        return secAccounts;
     }
 
     public String toString() {

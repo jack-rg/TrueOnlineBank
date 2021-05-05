@@ -1,9 +1,11 @@
 package GUI;
 
-import Objects.Person;
-import Objects.Position;
+import Objects.*;
+import Util.AccountManager;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
 
 /**
  * GUIStockTrade creates the GUI that allows users to trade stocks.
@@ -15,48 +17,88 @@ import javax.swing.*;
  */
 public class GUIStockTrade extends JPanel {
     JPanel panel;
-    JSplitPane sp;
 
     JButton buyBtn, sellBtn;
-    JTextField stockNameText;
-    JTextField stockSymbolText;
     JTextField requestAmountText;
+    JLabel errorLabel;
+    JComboBox<String> stockCB, accountCB;
+
+    HashMap<String, Stock> stockMap;
+    HashMap<String, Account> accMap;
 
     public GUIStockTrade(Person person) {
-
         panel = new JPanel();
-        JLabel userLabel = new JLabel("Enter The stock name: ");
-        userLabel.setBounds(100, 200, 150, 25);
-        panel.add(userLabel);
+        panel.setLayout(null);
 
-        JLabel symbolLabel = new JLabel("Enter The stock symbol: ");
-        symbolLabel.setBounds(100, 230, 150, 25);
-        panel.add(symbolLabel);
+        errorLabel = new JLabel();
+        errorLabel.setBounds(250, 400, 150, 25);
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
+        panel.add(errorLabel);
 
-        JLabel amountLabel = new JLabel("Enter the amount: ");
-        amountLabel.setBounds(100, 260, 150, 25);
+        JLabel accountLabel = new JLabel("Please pick an account to trade with: ");
+        accountLabel.setBounds(30, 150, 250, 25);
+        panel.add(accountLabel);
+
+        accMap = AccountManager.getAccMap(person, true);
+        accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
+        accountCB.setBounds(280, 150, 200, 25);
+        panel.add(accountCB);
+
+        JLabel stockLabel = new JLabel("Please pick a stock: ");
+        stockLabel.setBounds(50, 200, 150, 25);
+        panel.add(stockLabel);
+
+        stockMap = AccountManager.getStockMap();
+        stockCB = new JComboBox<>(AccountManager.getStockKeys(stockMap));
+        stockCB.setBounds(180, 200, 300, 25);
+        panel.add(stockCB);
+
+        JLabel amountLabel = new JLabel("Enter the quantity: ");
+        amountLabel.setBounds(100, 240, 200, 25);
         panel.add(amountLabel);
 
-        stockNameText = new JTextField(20);
-        stockNameText.setBounds(300, 200, 165, 25);
-        panel.add(stockNameText);
-
-        stockSymbolText = new JTextField(20);
-        stockSymbolText.setBounds(300, 230, 165, 25);
-        panel.add(stockSymbolText);
-
         requestAmountText = new JTextField(20);
-        requestAmountText.setBounds(300, 260, 165, 25);
+        requestAmountText.setBounds(300, 240, 165, 25);
         panel.add(requestAmountText);
 
-        panel.setLayout(null);
         buyBtn = new JButton("BUY");
         buyBtn.setBounds(180, 310, 80, 40);
 
         sellBtn = new JButton("SELL");
         sellBtn.setBounds(270,310,80, 40);
 
+        buyBtn.addActionListener(e -> {
+            try {
+                Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
+                int requestAmount = Integer.parseInt(requestAmountText.getText());
 
+                Stock targetStock = stockMap.get(stockCB.getSelectedItem());
+                securityAccount.updatePosition(targetStock, true, requestAmount);
+
+                errorLabel.setText("Purchase complete.");
+                errorLabel.setVisible(true);
+            } catch (Exception exception) {
+                errorLabel.setText("Unable to complete purchase.");
+                errorLabel.setVisible(true);
+            }
+        });
+
+        sellBtn.addActionListener(e -> {
+            try {
+                Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
+                int requestAmount = Integer.parseInt(requestAmountText.getText());
+
+                Stock targetStock = stockMap.get(stockCB.getSelectedItem());
+                securityAccount.updatePosition(targetStock, false, requestAmount);
+
+                errorLabel.setText("Sell complete");
+                errorLabel.setVisible(true);
+            } catch (Exception exception) {
+                errorLabel.setText("Unable to complete sale.");
+                errorLabel.setVisible(true);
+            }
+        });
 
         sellBtn.setVisible(true);
         buyBtn.setVisible(true);

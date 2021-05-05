@@ -38,14 +38,17 @@ public class Security extends Account {
 
     public Security(AccountType accountType, String accountID, String userID, CurrencyType currencyType) {
         super(accountType, accountID, userID, currencyType);
+        this.stockName2position = new HashMap<>();
     }
 
     public Security(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status accountStatus) {
         super(accountType, accountID, userID, currencyType, accountStatus);
+        this.stockName2position = new HashMap<>();
     }
 
     public Security(AccountType accountType, String accountID, String userID, CurrencyType currencyType, Status status, double value) {
         super(accountType, accountID, userID, currencyType, status, value);
+        this.stockName2position = new HashMap<>();
     }
 
     public ArrayList<Position> getPositions() {
@@ -68,6 +71,7 @@ public class Security extends Account {
      * @return true, if bill succeed.
      */
     public boolean updatePosition(Stock targetStock, boolean isBuyBill, int requestQuantity) {
+
         StockOrderType billType;
         boolean requestSucceed = false;
         String targetStockName = targetStock.getName();
@@ -76,15 +80,21 @@ public class Security extends Account {
             System.out.println(INADEQUATE_BALANCE_WARN + CURRENT_BALANCE_INFO + this.getBalance());
             return false;
         }
+        System.out.println("1");
         // Not contains position already, create one
+
+        System.out.println(stockName2position == null);
         if (!stockName2position.containsKey(targetStockName)) {
-            stockName2position.put(targetStockName, new Position(targetStock, 0, 100));
+            //System.out.println(targetStockName);
+            stockName2position.put(targetStockName, new Position(targetStock, 0));
         }
 
+        System.out.println("1 end");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd | HH:mm:ss");
 
         Position targetPosition = stockName2position.get(targetStockName);
 
+        System.out.println("2");
         if (isBuyBill) {
             billType = StockOrderType.BUY;
             requestSucceed = targetPosition.addStock(targetStock, requestQuantity);
@@ -97,14 +107,32 @@ public class Security extends Account {
             // update balance
             this.setBalance(this.getBalance() + targetStock.getPrice() * requestQuantity);
         }
+
         if (!requestSucceed) {
             System.out.println(FAILED_REQUEST_INFO);
             return false;
         }
+
 //        this.accountPositionsDisplay();
 
-        StockOrder stockOrder = new StockOrder(LocalDateTime.now(), targetStock, requestQuantity, targetStock.getPrice(), billType);
-        DataManager.writeStockOrder(stockOrder, this.getUserID());
+        System.out.println("3");
+        String accountID = this.getAccountID();
+        System.out.println(accountID);
+        StockOrder stockOrder = new StockOrder(LocalDateTime.now(), targetStock, requestQuantity, targetStock.getPrice(), billType, accountID);
+        System.out.println("OrderBill created");
+        // TODO: 2021/5/4 debug
+        System.out.println("UserID: " + this.getUserID());
+
+//        System.out.println(stockOrder.getOrderDate() + " "+
+//                stockOrder.getOrderStockSymbol() + " " +
+//                stockOrder.getQuantity()+ " " +
+//                stockOrder.getPricePerStock() + " " +
+//                stockOrder.getAccountId() + " "
+//        );
+
+        DataManager.writeStockOrder(stockOrder);
+
+        System.out.println("end");
 
         return true;
     }

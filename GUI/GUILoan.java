@@ -77,7 +77,7 @@ public class GUILoan extends JPanel {
         accountChoiceLabel.setVisible(false);
         panel.add(accountChoiceLabel);
 
-        accMap = AccountManager.getAccMap(person);
+        accMap = AccountManager.getAccMap(person, false);
         accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
         accountCB.setBounds(30, 200, 300, 25);
         accountCB.setVisible(false);
@@ -126,7 +126,7 @@ public class GUILoan extends JPanel {
             paymentAmountTF.setVisible(true);
             paymentAmountLabel.setVisible(true);
             accountCB.removeAllItems();
-            accMap = AccountManager.getAccMap(person);
+            accMap = AccountManager.getAccMap(person, false);
             for (String a : AccountManager.getAccKeys(accMap)) {
                 accountCB.addItem(a);
             }

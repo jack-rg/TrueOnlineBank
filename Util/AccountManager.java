@@ -2,6 +2,7 @@ package Util;
 
 import Objects.Account;
 import Objects.Person;
+import Objects.Stock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +22,13 @@ public class AccountManager {
      * @param person the person to generate this mapping for
      * @return hashmap of the mapping
      */
-    public static HashMap<String, Account> getAccMap(Person person) {
-        ArrayList<Account> accounts = person.getActiveAccounts();
+    public static HashMap<String, Account> getAccMap(Person person, boolean securityAccount) {
+        ArrayList<Account> accounts;
+        if (securityAccount) {
+            accounts = person.getSecurityAccounts();
+        } else {
+            accounts = person.getActiveAccounts();
+        }
         HashMap<String, Account> accMap = new HashMap<String, Account>();
 
         for (Account a : accounts) {
@@ -40,5 +46,31 @@ public class AccountManager {
      */
     public static String[] getAccKeys(HashMap<String, Account> accMap) {
         return accMap.keySet().toArray(new String[0]);
+    }
+
+    /**
+     * Maps the string represenation of the stock to the stock itself.
+     *
+     * @return hashmap of the mapping
+     */
+    public static HashMap<String, Stock> getStockMap() {
+        ArrayList<Stock> stocks = DataManager.loadStocks();
+        HashMap<String, Stock> stockMap = new HashMap<>();
+
+        for (Stock s : stocks) {
+            stockMap.put(s.toString(), s);
+        }
+
+        return stockMap;
+    }
+
+    /**
+     * Gets the keys of the above mapping in a string array.
+     *
+     * @param stockMap the mapping
+     * @return string array
+     */
+    public static String[] getStockKeys(HashMap<String, Stock> stockMap) {
+        return stockMap.keySet().toArray(new String[0]);
     }
 }

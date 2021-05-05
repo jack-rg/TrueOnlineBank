@@ -38,8 +38,8 @@ public class Stock {
         DataManager.updateStock(this);
     }
 
-
-
-
+    public String toString() {
+        return "(" + symbol + ") " + name + ": $" + price;
+    }
 
 }

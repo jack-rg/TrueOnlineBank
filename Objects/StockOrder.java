@@ -13,13 +13,15 @@ import java.time.LocalDateTime;
  * @since May 4, 2021
  */
 public class StockOrder {
+    String accountId;
     Stock stock;
     int quantity;
     StockOrderType stockOrderType;
     LocalDateTime orderDate;
     double pricePerStock;
 
-    public StockOrder(LocalDateTime orderDate, Stock stock, int quantity, double pricePerStock, StockOrderType side) {
+    public StockOrder(LocalDateTime orderDate, Stock stock, int quantity, double pricePerStock, StockOrderType side, String accountId) {
+        this.accountId = accountId;
         this.stock = stock;
         this.quantity = quantity;
         this.pricePerStock = pricePerStock;
@@ -27,8 +29,8 @@ public class StockOrder {
         this.orderDate = orderDate;
     }
 
-    public String getOrderStockSymbol(){
-        return stock.getSymbol();
+    public Stock getStock() {
+        return stock;
     }
 
     public double getPricePerStock(){
@@ -44,4 +46,8 @@ public class StockOrder {
     }
 
     public StockOrderType getOrderType() { return stockOrderType; }
+
+    public String getAccountId() {
+        return this.accountId;
+    }
 }

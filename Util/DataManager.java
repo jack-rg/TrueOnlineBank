@@ -85,19 +85,21 @@ public class DataManager {
         }
     }
 
-    public static void writeStockOrder(StockOrder stockOrder, String UserID) {
+    public static void writeStockOrder(StockOrder stockOrder) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockOrderLog.txt";
-        // if already exists, simply delete one and create one.
+
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            String transactionFormatter = "%s | %s | %s | %s | %f \n";
+            String transactionFormatter = "%s | %s | %s | %f | %s | %s \n";
 
             out.printf(transactionFormatter,
                     stockOrder.getOrderDate(),
-                    stockOrder.getOrderStockSymbol(),
+                    stockOrder.getStock().getSymbol(),
                     stockOrder.getQuantity(),
-                    stockOrder.getPricePerStock()
+                    stockOrder.getPricePerStock(),
+                    stockOrder.getOrderType(),
+                    stockOrder.getAccountId()
             );
 
             out.flush();
@@ -128,8 +130,8 @@ public class DataManager {
                     } else {
                         orderType = StockOrderType.SELL;
                     }
-
-                    orders.add(new StockOrder(orderDate, stock, quantity, price, orderType));
+                    accountID = position[5];
+                    orders.add(new StockOrder(orderDate, stock, quantity, price, orderType, accountID));
                 }
             }
         } catch (IOException e1) {
@@ -154,7 +156,7 @@ public class DataManager {
                     double totalCost = Double.parseDouble(position[1]);
                     int quantity = Integer.parseInt(position[2]);
 
-                    positions.add(new Position(stock, quantity, totalCost));
+                    positions.add(new Position(stock, quantity));
                 }
             }
         } catch (IOException e1) {
@@ -617,13 +619,12 @@ public class DataManager {
     }
 
 
-    public static void writeStock(Stock stock){
+    public static void writeStock(Stock stock) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockLog.txt";
-
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
-            String stockFormatter = "%n%s | %s | %.2f";
+            String stockFormatter = "%s | %s | %.2f%n";
             out.printf(stockFormatter, stock.getName(), stock.getSymbol(), stock.getPrice());
             out.flush();
             out.close();
@@ -632,17 +633,17 @@ public class DataManager {
         }
     }
 
-    public static boolean existStock(Stock stock){
+    public static boolean existStock(Stock stock) {
         ArrayList<Stock> stocks = loadStocks();
-        for(Stock s: stocks){
-            if(stock.getName().equals(s.getName()) || stock.getSymbol().equals(s.getSymbol())){
+        for (Stock s : stocks) {
+            if (stock.getName().equals(s.getName()) || stock.getSymbol().equals(s.getSymbol())) {
                 return true;
             }
         }
         return false;
     }
 
-    public static ArrayList<Stock> loadStocks(){
+    public static ArrayList<Stock> loadStocks() {
         ArrayList<Stock> stocks = new ArrayList<Stock>();
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockLog.txt";
 
@@ -655,9 +656,7 @@ public class DataManager {
                 String stockName = stockInfo[0];
                 String stockTicker = stockInfo[1];
                 double stockPrice = Double.parseDouble(stockInfo[2]);
-
                 stocks.add(new Stock(stockName, stockTicker, stockPrice));
-
             }
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -667,8 +666,7 @@ public class DataManager {
     }
 
 
-
-    public static void updateStock(Stock stock){
+    public static void updateStock(Stock stock) {
         String file = Paths.get("").toAbsolutePath() + "/Logs/stockLog.txt";
 
         try {
@@ -698,6 +696,5 @@ public class DataManager {
             e1.printStackTrace();
         }
     }
-
 
 }
