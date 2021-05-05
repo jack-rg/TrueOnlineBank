@@ -3,6 +3,10 @@ GRS CS611 Final Project - A GUI Bank ATM with specified features
 
 By: Rachel Peng, Jack Giunta, Yuan Wei
 
+** Since the presentation, we've made some bug fixes: **
+- Creating a new account always uses updated accountIDs.
+- Cannot withdraw or deposit a negative amount.
+
 Files:
 - GUI:
     - GUIAccount: GUIAccount creates the GUI that shows account details.
