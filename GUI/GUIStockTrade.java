@@ -26,7 +26,11 @@ public class GUIStockTrade extends JPanel {
     HashMap<String, Stock> stockMap;
     HashMap<String, Account> accMap;
 
+    Person person;
+
     public GUIStockTrade(Person person) {
+        this.person = person;
+
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -78,6 +82,8 @@ public class GUIStockTrade extends JPanel {
 
                 errorLabel.setText("Purchase complete.");
                 errorLabel.setVisible(true);
+
+                update();
             } catch (Exception exception) {
                 errorLabel.setText("Unable to complete purchase.");
                 errorLabel.setVisible(true);
@@ -94,6 +100,8 @@ public class GUIStockTrade extends JPanel {
 
                 errorLabel.setText("Sell complete");
                 errorLabel.setVisible(true);
+
+                update();
             } catch (Exception exception) {
                 errorLabel.setText("Unable to complete sale.");
                 errorLabel.setVisible(true);
@@ -109,5 +117,13 @@ public class GUIStockTrade extends JPanel {
 
     public JPanel getPanel() {
         return panel;
+    }
+
+    public void update() {
+        accountCB.removeAllItems();
+        accMap = AccountManager.getAccMap(person, false);
+        for (String a : AccountManager.getAccKeys(accMap)) {
+            accountCB.addItem(a);
+        }
     }
 }

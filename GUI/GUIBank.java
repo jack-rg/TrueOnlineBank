@@ -24,7 +24,7 @@ public class GUIBank extends JFrame {
         JFrame frame = new JFrame();
 
         frame.setTitle("Bank");
-        frame.setSize(600, 600);
+        frame.setSize(700, 700);
         frame.setLocation(400, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

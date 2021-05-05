@@ -16,23 +16,32 @@ import java.awt.*;
 public class GUIInvestmentHome extends JPanel {
     JTabbedPane tabbedPane;
 
+    GUIStockPositions stockPositions;
+    GUIStockTrade stockTrade;
+    GUIStockOrderHistory orderHistory;
+
     public GUIInvestmentHome(Person person) {
         super(new GridLayout(1, 1));
 
         tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
-        GUIStockPositions stockPositions = new GUIStockPositions(person);
+        stockPositions = new GUIStockPositions(person);
         tabbedPane.addTab("Positions", stockPositions.getPanel());
 
-        GUIStockTrade stockTrade = new GUIStockTrade(person);
+        stockTrade = new GUIStockTrade(person);
         tabbedPane.addTab("Trade", stockTrade.getPanel());
 
-        GUIStockOrderHistory orderHistory = new GUIStockOrderHistory(person);
+        orderHistory = new GUIStockOrderHistory(person);
         tabbedPane.addTab("Order History", orderHistory.getPanel());
         add(tabbedPane);
     }
 
     public JTabbedPane getTabbedPane() {
         return tabbedPane;
+    }
+
+    public void update() {
+        stockPositions.updateAccounts();
+//        orderHistory.update();
     }
 }

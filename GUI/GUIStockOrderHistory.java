@@ -45,13 +45,15 @@ public class GUIStockOrderHistory extends JPanel {
 
         accMap = AccountManager.getAccMap(person, true);
         accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
-        accountCB.setBounds(230, 50, 300, 25);
+        accountCB.setBounds(200, 50, 300, 25);
+        accountCB.setSelectedIndex(0);
         aPanel.add(accountCB);
 
         sp.add(aPanel);
 
+        update();
+
         accountCB.addActionListener(e -> {
-            orders = ((Security) accMap.get(accountCB.getSelectedItem())).getOrders();
             update();
         });
 
@@ -62,6 +64,8 @@ public class GUIStockOrderHistory extends JPanel {
     public JPanel getPanel() { return panel; }
 
     public void update() {
+        orders = ((Security) accMap.get(accountCB.getSelectedItem())).getOrders();
+
         if (bottomSP != null) {
             sp.remove(bottomSP);
         }

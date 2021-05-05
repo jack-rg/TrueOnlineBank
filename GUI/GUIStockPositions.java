@@ -28,7 +28,11 @@ public class GUIStockPositions extends JPanel{
     HashMap<String, Account> accMap;
     ArrayList<Position> positions;
 
+    Person person;
+
     public GUIStockPositions(Person person) {
+        this.person = person;
+
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
@@ -44,13 +48,15 @@ public class GUIStockPositions extends JPanel{
 
         accMap = AccountManager.getAccMap(person, true);
         accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
-        accountCB.setBounds(230, 50, 300, 25);
+        accountCB.setBounds(200, 50, 300, 25);
+        accountCB.setSelectedIndex(0);
         aPanel.add(accountCB);
 
         sp.add(aPanel);
 
+        update();
+
         accountCB.addActionListener(e -> {
-            positions = ((Security) accMap.get(accountCB.getSelectedItem())).getPositions();
             update();
         });
 
@@ -62,7 +68,9 @@ public class GUIStockPositions extends JPanel{
         return panel;
     }
 
-    private void update() {
+    public void update() {
+        positions = ((Security) accMap.get(accountCB.getSelectedItem())).getPositions();
+
         if (bottomSP != null) {
             sp.remove(bottomSP);
         }
@@ -86,5 +94,13 @@ public class GUIStockPositions extends JPanel{
         bottomSP.add(positionsPanel);
 
         sp.add(bottomSP);
+    }
+
+    public void updateAccounts() {
+        accountCB.removeAllItems();
+        accMap = AccountManager.getAccMap(person, false);
+        for (String a : AccountManager.getAccKeys(accMap)) {
+            accountCB.addItem(a);
+        }
     }
 }
