@@ -1,2 +1,11 @@
-Twitter | TWTR | 1800.0
-Apple | AAPL | 1900.0
+Twitter | TWTR | 500.00
+Apple | AAPL | 1900.00
+Doge | DOGE | 100.00
+Facebook | FB | 1000.00
+AMC | AMC | 10.00
+AirBNB | ABNB | 1301902.00
+Verizon | VZN | 191.00
+TD | TD | 88.00
+Tesla | TSLA | 700.00
+Caterpillar | CAT | 900.00
+New | NEW | 18.00

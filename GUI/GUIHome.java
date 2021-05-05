@@ -23,6 +23,7 @@ public class GUIHome extends JPanel {
     GUILoan loans;
     GUIUsersOverview usersOverview;
     GUIDailyTransactions dailyTransactions;
+    GUIStockManager updateStocks;
 
     public GUIHome(Person person) {
         tabbedPane = new JTabbedPane();
@@ -50,8 +51,8 @@ public class GUIHome extends JPanel {
             dailyTransactions = new GUIDailyTransactions(this);
             tabbedPane.addTab("Daily Transactions", dailyTransactions.getPanel());
 
-            JComponent panel5 = makeTextPanel("Panel #6");
-            tabbedPane.addTab("Update Stocks", panel5);
+            updateStocks = new GUIStockManager(this);
+            tabbedPane.addTab("Update Stocks", updateStocks.getPanel());
         }
 
         add(tabbedPane);

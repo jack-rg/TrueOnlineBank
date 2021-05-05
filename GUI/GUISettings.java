@@ -31,6 +31,7 @@ public class GUISettings {
 
         JTextField usernameTxt = new JTextField(20);
         usernameTxt.setBounds(180, 25, 70, 25);
+        usernameTxt.setText(person.getUserName());
         usernameTxt.setVisible(false);
         panel.add(usernameTxt);
 
@@ -67,11 +68,10 @@ public class GUISettings {
                 }
             }
 
-            usernameTxt.setText("");
 
             usernameLabel.setVisible(true);
             usernameTxt.setVisible(false);
-
+            usernameTxt.setText(usernameTxt.getText());
             changeUsernameBtn.setVisible(true);
             usernameSubmitBtn.setVisible(false);
         });
