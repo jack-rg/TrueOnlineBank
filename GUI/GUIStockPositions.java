@@ -68,7 +68,9 @@ public class GUIStockPositions extends JPanel{
     }
 
     public void update() {
-        positions = ((Security) accMap.get(bCB.getSelectedItem())).getPositions();
+        if (!accMap.isEmpty()) {
+            positions = ((Security) accMap.get(bCB.getSelectedItem())).getPositions();
+        }
 
         if (bottomSP != null) {
             sp.remove(bottomSP);
@@ -86,12 +88,17 @@ public class GUIStockPositions extends JPanel{
         titlePanel.add(new JLabel("Unrealized Profit / Loss"));
         bottomSP.add(titlePanel);
 
-        positionsPanel = new JPanel(new GridLayout(positions.size(), 1));
-        for (Position p : positions) {
-            if (p.getQuantity() > 0) {
-                positionsPanel.add((new GUIPosition(p)).getPanel());
+        if (positions != null && !positions.isEmpty()) {
+            positionsPanel = new JPanel(new GridLayout(positions.size(), 1));
+            for (Position p : positions) {
+                if (p.getQuantity() > 0) {
+                    positionsPanel.add((new GUIPosition(p)).getPanel());
+                }
             }
+        } else {
+            positionsPanel = new JPanel();
         }
+
         bottomSP.add(positionsPanel);
 
         sp.add(bottomSP);
@@ -103,7 +110,10 @@ public class GUIStockPositions extends JPanel{
         for (String s : ComboBoxGenerator.getAccKeys(accMap)) {
             bCB.addItem(s);
         }
-        bCB.setSelectedIndex(0);
+
+        if (!accMap.isEmpty()) {
+            bCB.setSelectedIndex(0);
+        }
 
         update();
     }

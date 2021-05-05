@@ -67,7 +67,9 @@ public class GUIStockOrderHistory extends JPanel {
     public JPanel getPanel() { return panel; }
 
     public void update() {
-        orders = ((Security) accMap.get(cCB.getSelectedItem())).getOrders();
+        if (!accMap.isEmpty()) {
+            orders = ((Security) accMap.get(cCB.getSelectedItem())).getOrders();
+        }
 
         if (bottomSP != null) {
             sp.remove(bottomSP);
@@ -86,10 +88,15 @@ public class GUIStockOrderHistory extends JPanel {
         titlePanel.add(new JLabel("Order Type"));
         bottomSP.add(titlePanel);
 
-        ordersPanel = new JPanel(new GridLayout(orders.size(), 1));
-        for (StockOrder o : orders) {
-            ordersPanel.add((new GUIStockOrder(o)).getPanel());
+        if (orders != null && !orders.isEmpty()) {
+            ordersPanel = new JPanel(new GridLayout(orders.size(), 1));
+            for (StockOrder o : orders) {
+                ordersPanel.add((new GUIStockOrder(o)).getPanel());
+            }
+        } else {
+            ordersPanel = new JPanel();
         }
+
         bottomSP.add(ordersPanel);
 
         sp.add(bottomSP);
@@ -101,7 +108,10 @@ public class GUIStockOrderHistory extends JPanel {
         for (String t : ComboBoxGenerator.getAccKeys(accMap)) {
             cCB.addItem(t);
         }
-        cCB.setSelectedIndex(0);
+
+        if (!accMap.isEmpty()) {
+            cCB.setSelectedIndex(0);
+        }
 
         update();
     }
