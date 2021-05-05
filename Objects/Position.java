@@ -22,11 +22,12 @@ public class Position {
 
 
     // create position
-    public Position(Stock stock, int quantity, double totalCost){
+    public Position(Stock stock, int quantity){
         this.quantity = quantity;
         this.stock = stock;
         this.mktValue = stock.getPrice() * quantity;
-        this.totalCost = totalCost;
+        this.totalCost = 0;
+        this.totalCost += stock.getPrice() * quantity;
         this.avgPrice = totalCost / (double) quantity;
         this.unrealizedPL = (mktValue - totalCost);
         this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
