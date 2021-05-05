@@ -142,7 +142,6 @@ public class GUIStockTrade extends JPanel {
         aCB.removeAllItems();
         accMap = ComboBoxGenerator.getAccMap(person, true);
         for (String g : ComboBoxGenerator.getAccKeys(accMap)) {
-            System.out.println(g);
             aCB.addItem(g);
         }
 
