@@ -25,13 +25,13 @@ public class GUIInvestmentHome extends JPanel {
 
         tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 
-        stockPositions = new GUIStockPositions(person);
+        stockPositions = new GUIStockPositions(person, this);
         tabbedPane.addTab("Positions", stockPositions.getPanel());
 
-        stockTrade = new GUIStockTrade(person);
+        stockTrade = new GUIStockTrade(person, this);
         tabbedPane.addTab("Trade", stockTrade.getPanel());
 
-        orderHistory = new GUIStockOrderHistory(person);
+        orderHistory = new GUIStockOrderHistory(person, this);
         tabbedPane.addTab("Order History", orderHistory.getPanel());
         add(tabbedPane);
     }

@@ -29,7 +29,11 @@ public class GUIStockOrderHistory extends JPanel {
     HashMap<String, Account> accMap;
     ArrayList<StockOrder> orders;
 
-    public GUIStockOrderHistory(Person person) {
+    GUIInvestmentHome home;
+
+    public GUIStockOrderHistory(Person person, GUIInvestmentHome home) {
+        this.home = home;
+
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 

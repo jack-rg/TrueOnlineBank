@@ -79,7 +79,7 @@ public abstract class Person {
         ArrayList<Account> active = new ArrayList<>();
 
         for (Account a : accounts) {
-            if (a.getStatus() == Status.ACTIVE && !(a instanceof Security)) {
+            if (a.getStatus() == Status.ACTIVE) {
                 active.add(a);
             }
         }

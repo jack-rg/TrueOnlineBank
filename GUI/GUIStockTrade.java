@@ -17,25 +17,23 @@ import java.util.HashMap;
  */
 public class GUIStockTrade extends JPanel {
     JPanel panel;
-
     JButton buyBtn, sellBtn;
     JTextField requestAmountText;
     JLabel errorLabel;
     JComboBox<String> stockCB, accountCB;
-
     HashMap<String, Stock> stockMap;
     HashMap<String, Account> accMap;
 
-    Person person;
+    GUIInvestmentHome home;
 
-    public GUIStockTrade(Person person) {
-        this.person = person;
+    public GUIStockTrade(Person person, GUIInvestmentHome home) {
+        this.home = home;
 
         panel = new JPanel();
         panel.setLayout(null);
 
         errorLabel = new JLabel();
-        errorLabel.setBounds(250, 400, 150, 25);
+        errorLabel.setBounds(200, 400, 500, 25);
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
         panel.add(errorLabel);
@@ -70,20 +68,21 @@ public class GUIStockTrade extends JPanel {
         buyBtn.setBounds(180, 310, 80, 40);
 
         sellBtn = new JButton("SELL");
-        sellBtn.setBounds(270,310,80, 40);
+        sellBtn.setBounds(270, 310, 80, 40);
 
         buyBtn.addActionListener(e -> {
             try {
                 Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
                 int requestAmount = Integer.parseInt(requestAmountText.getText());
-
                 Stock targetStock = stockMap.get(stockCB.getSelectedItem());
-                securityAccount.updatePosition(targetStock, true, requestAmount);
-
-                errorLabel.setText("Purchase complete.");
+                boolean buySuccess = securityAccount.updatePosition(targetStock, true, requestAmount);
+                if (buySuccess) {
+                    errorLabel.setText("Purchase complete. Current Balance: " + securityAccount.getBalance());
+                    home.update();
+                } else {
+                    errorLabel.setText("Purchase failed" + ". Current Balance: " + +securityAccount.getBalance());
+                }
                 errorLabel.setVisible(true);
-
-                update();
             } catch (Exception exception) {
                 errorLabel.setText("Unable to complete purchase.");
                 errorLabel.setVisible(true);
@@ -94,14 +93,15 @@ public class GUIStockTrade extends JPanel {
             try {
                 Security securityAccount = (Security) accMap.get(accountCB.getSelectedItem());
                 int requestAmount = Integer.parseInt(requestAmountText.getText());
-
                 Stock targetStock = stockMap.get(stockCB.getSelectedItem());
-                securityAccount.updatePosition(targetStock, false, requestAmount);
-
-                errorLabel.setText("Sell complete");
+                boolean sellSuccess = securityAccount.updatePosition(targetStock, false, requestAmount);
+                if (sellSuccess) {
+                    errorLabel.setText("Sell complete. Current Balance: " + securityAccount.getBalance());
+                    home.update();
+                } else {
+                    errorLabel.setText("Sell failed" + ". Current Balance: " + +securityAccount.getBalance());
+                }
                 errorLabel.setVisible(true);
-
-                update();
             } catch (Exception exception) {
                 errorLabel.setText("Unable to complete sale.");
                 errorLabel.setVisible(true);
@@ -117,13 +117,5 @@ public class GUIStockTrade extends JPanel {
 
     public JPanel getPanel() {
         return panel;
-    }
-
-    public void update() {
-        accountCB.removeAllItems();
-        accMap = AccountManager.getAccMap(person, false);
-        for (String a : AccountManager.getAccKeys(accMap)) {
-            accountCB.addItem(a);
-        }
     }
 }

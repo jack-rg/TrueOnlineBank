@@ -29,9 +29,11 @@ public class GUIStockPositions extends JPanel{
     ArrayList<Position> positions;
 
     Person person;
+    GUIInvestmentHome home;
 
-    public GUIStockPositions(Person person) {
+    public GUIStockPositions(Person person, GUIInvestmentHome home) {
         this.person = person;
+        this.home = home;
 
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -98,7 +100,7 @@ public class GUIStockPositions extends JPanel{
 
     public void updateAccounts() {
         accountCB.removeAllItems();
-        accMap = AccountManager.getAccMap(person, false);
+        accMap = AccountManager.getAccMap(person, true);
         for (String a : AccountManager.getAccKeys(accMap)) {
             accountCB.addItem(a);
         }
