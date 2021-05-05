@@ -37,12 +37,12 @@ public class GUIStockTrade extends JPanel {
         panel.add(errorLabel);
 
         JLabel accountLabel = new JLabel("Please pick an account to trade with: ");
-        accountLabel.setBounds(50, 150, 200, 25);
+        accountLabel.setBounds(30, 150, 250, 25);
         panel.add(accountLabel);
 
         accMap = AccountManager.getAccMap(person, true);
         accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
-        accountCB.setBounds(200, 160, 300, 25);
+        accountCB.setBounds(280, 150, 200, 25);
         panel.add(accountCB);
 
         JLabel stockLabel = new JLabel("Please pick a stock: ");

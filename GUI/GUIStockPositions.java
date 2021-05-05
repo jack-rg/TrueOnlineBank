@@ -8,8 +8,6 @@ import Util.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +21,7 @@ import java.util.HashMap;
  */
 public class GUIStockPositions extends JPanel{
     JPanel panel, topPanel, positionsPanel;
-    JSplitPane sp;
+    JSplitPane sp, bottomSP;
 
     JComboBox<String> accountCB;
 
@@ -34,27 +32,27 @@ public class GUIStockPositions extends JPanel{
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
+        sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        sp.setResizeWeight(0.3);
+
         JPanel aPanel = new JPanel();
         aPanel.setLayout(null);
 
         JLabel accountLabel = new JLabel("Please pick an account: ");
-        accountLabel.setBounds(50, 80, 150, 25);
+        accountLabel.setBounds(30, 50, 200, 25);
         aPanel.add(accountLabel);
 
         accMap = AccountManager.getAccMap(person, true);
         accountCB = new JComboBox<>(AccountManager.getAccKeys(accMap));
-        accountCB.setBounds(180, 80, 300, 25);
+        accountCB.setBounds(230, 50, 300, 25);
         aPanel.add(accountCB);
 
-        panel.add(aPanel, BorderLayout.NORTH);
+        sp.add(aPanel);
 
         accountCB.addActionListener(e -> {
             positions = ((Security) accMap.get(accountCB.getSelectedItem())).getPositions();
             update();
         });
-
-        sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        sp.setResizeWeight(0.1);
 
         panel.add(sp, BorderLayout.CENTER);
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -65,13 +63,11 @@ public class GUIStockPositions extends JPanel{
     }
 
     private void update() {
-        if (topPanel != null) {
-            sp.remove(topPanel);
+        if (bottomSP != null) {
+            sp.remove(bottomSP);
         }
 
-        if (positionsPanel != null) {
-            sp.remove(positionsPanel);
-        }
+        bottomSP = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
         topPanel = new JPanel();
         topPanel.setBounds(25, 25, 400, 500);
@@ -81,13 +77,14 @@ public class GUIStockPositions extends JPanel{
         titlePanel.add(new JLabel("Quantity"));
         titlePanel.add(new JLabel("Total Cost"));
         titlePanel.add(new JLabel("Unrealized Profit / Loss"));
-        sp.add(titlePanel);
+        bottomSP.add(titlePanel);
 
         positionsPanel = new JPanel(new GridLayout(positions.size(), 1));
         for (Position p : positions) {
             positionsPanel.add((new GUIPosition(p)).getPanel());
         }
+        bottomSP.add(positionsPanel);
 
-        sp.add(positionsPanel);
+        sp.add(bottomSP);
     }
 }
