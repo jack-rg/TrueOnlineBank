@@ -17,6 +17,7 @@ public class Position {
     private double mktValue; // currentPrice * quantity
     private double totalCost;
     private double unrealizedPL;
+    private double unrealizedPLRate;
 
     public Position(Stock stock, int quantity, double totalCost, String accountID) {
         this.quantity = quantity;
@@ -26,6 +27,7 @@ public class Position {
 
         this.mktValue = stock.getPrice() * quantity;
         this.unrealizedPL = (mktValue - totalCost);
+        this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
     }
 
     public Stock getStock() {
@@ -46,12 +48,17 @@ public class Position {
 
     public String getAccountID() { return accountID; }
 
+    public double getUnrealizedPLRate() {
+        return unrealizedPLRate;
+    }
+
     public boolean addStock(Stock stock, int addQuantity) {
         double currPrice = stock.getPrice();
         this.totalCost += currPrice * addQuantity;
         this.quantity += addQuantity;
         this.mktValue = quantity * currPrice;
         this.unrealizedPL = mktValue - totalCost;
+        this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
 
         DataManager.writePosition(this);
 
@@ -68,6 +75,7 @@ public class Position {
         this.quantity -= deductQuantity;
         this.mktValue = quantity * currPrice;
         this.unrealizedPL = mktValue - totalCost;
+        this.unrealizedPLRate = (mktValue - totalCost) / totalCost;
 
         DataManager.writePosition(this);
 
