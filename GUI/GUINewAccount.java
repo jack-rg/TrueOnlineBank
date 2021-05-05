@@ -30,13 +30,15 @@ public class GUINewAccount extends JPanel {
     Person person;
 
     HashMap<String, Account> accMap;
+    String userID;
+    String newAccountID;
 
     public GUINewAccount(Person person, GUIAccountsHome home) {
         this.home = home;
         this.person = person;
 
-        String userID = person.getUserID();
-        String accountID = "A" + userID.substring(1) + (person.getRawAccounts().size() + 1);
+        userID = person.getUserID();
+        newAccountID = getNewAccountID();
 
         panel = new JPanel();
         panel.setLayout(null);
@@ -164,13 +166,13 @@ public class GUINewAccount extends JPanel {
                         Account account = accMap.get(accountCB.getSelectedItem());
 
                         if ((amount <= account.getBalance()) && account.withdraw(amount,
-                                "Transfer to Account " + accountID, true)) {
+                                "Transfer to Account " + newAccountID, true)) {
                             if (savingRB.isSelected()) {
-                                createNewUser(person, new Saving(AccountType.SAVING, accountID,
+                                createNewUser(person, new Saving(AccountType.SAVING, newAccountID,
                                         userID, (CurrencyType) currencyTypeCB.getSelectedItem(),
                                         Status.ACTIVE, amount));
                             } else if (checkingRB.isSelected()) {
-                                createNewUser(person, new Checking(AccountType.CHECKING, accountID,
+                                createNewUser(person, new Checking(AccountType.CHECKING, newAccountID,
                                         userID, (CurrencyType) currencyTypeCB.getSelectedItem(),
                                         Status.ACTIVE, amount));
                             } else {
@@ -180,7 +182,7 @@ public class GUINewAccount extends JPanel {
                                     return;
                                 }
 
-                                createNewUser(person, new Security(AccountType.SECURITY, accountID,
+                                createNewUser(person, new Security(AccountType.SECURITY, newAccountID,
                                         userID, (CurrencyType) currencyTypeCB.getSelectedItem(),
                                         Status.ACTIVE, amount));
                             }
@@ -194,13 +196,13 @@ public class GUINewAccount extends JPanel {
                     }
                 } else {
                     if (savingRB.isSelected()) {
-                        createNewUser(person, new Saving(AccountType.SAVING, accountID,
+                        createNewUser(person, new Saving(AccountType.SAVING, newAccountID,
                                 userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     } else if (checkingRB.isSelected()) {
-                        createNewUser(person, new Checking(AccountType.CHECKING, accountID,
+                        createNewUser(person, new Checking(AccountType.CHECKING, newAccountID,
                                 userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     } else {
-                        createNewUser(person, new Security(AccountType.SECURITY, accountID,
+                        createNewUser(person, new Security(AccountType.SECURITY, newAccountID,
                                 userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                     }
                 }
@@ -214,13 +216,13 @@ public class GUINewAccount extends JPanel {
                 }
 
                 if (savingRB.isSelected()) {
-                    createNewUser(person, new Saving(AccountType.SAVING, accountID,
+                    createNewUser(person, new Saving(AccountType.SAVING, newAccountID,
                             userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 } else if (checkingRB.isSelected()) {
-                    createNewUser(person, new Checking(AccountType.CHECKING, accountID,
+                    createNewUser(person, new Checking(AccountType.CHECKING, newAccountID,
                             userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 } else {
-                    createNewUser(person, new Security(AccountType.SECURITY, accountID,
+                    createNewUser(person, new Security(AccountType.SECURITY, newAccountID,
                             userID, (CurrencyType) currencyTypeCB.getSelectedItem()));
                 }
             });
@@ -251,6 +253,7 @@ public class GUINewAccount extends JPanel {
     private void createNewUser(Person person, Account account) {
         person.addNewAccount(account);
         account.chargeOpeningFee();
+        newAccountID = getNewAccountID();
         home.update();
     }
 
@@ -268,5 +271,9 @@ public class GUINewAccount extends JPanel {
         depositL.setVisible(show);
         yesRB.setVisible(show);
         noRB.setVisible(show);
+    }
+
+    private String getNewAccountID() {
+        return "A" + userID.substring(1) + (person.getAccounts().size() + 1);
     }
 }

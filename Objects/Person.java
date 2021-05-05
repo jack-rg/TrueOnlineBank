@@ -62,6 +62,10 @@ public abstract class Person {
         return loan;
     }
 
+    public ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
     public ArrayList<Account> getRawAccounts() {
         accounts = DataManager.loadAccounts(userID);
         return accounts;
@@ -90,8 +94,8 @@ public abstract class Person {
      * @param newAccount the person's new account
      */
     public void addNewAccount(Account newAccount) {
-        DataManager.writeAccount(newAccount);
         accounts.add(newAccount);
+        DataManager.writeAccount(newAccount);
     }
 
     /**

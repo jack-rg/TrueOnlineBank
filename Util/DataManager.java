@@ -25,7 +25,7 @@ public class DataManager {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
-            String accountFormatter = "%s | %s | %s | %s \n";
+            String accountFormatter = "%s | %s | %s | %s\n";
             out.printf(accountFormatter, dtf.format(LocalDateTime.now()), user.getUserName(), user.getPassword(),
                     user.getUserID());
             out.flush();

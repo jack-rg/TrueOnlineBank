@@ -1,11 +1,11 @@
-Twitter | TWTR | 7.0
+Twitter | TWTR | 14.0
 Apple | AAPL | 1900.00
 Doge | DOGE | 100.00
 Facebook | FB | 1000.00
-AMC | AMC | 10.00
+AMC | AMC | 1000.0
 AirBNB | ABNB | 1301902.00
 Verizon | VZN | 191.00
-TD | TD | 88.00
+TD | TD | 100.0
 Tesla | TSLA | 700.00
 Caterpillar | CAT | 900.00
 New | NEW | 18.00
@@ -17,3 +17,4 @@ BP Gas | BP | 0.99
 Jeep | JEEP | 8.00
 Nasdaq | QQQ | 894.00
 SP500 | SPYD | 70.00
+Name | TICKER | 90.00
